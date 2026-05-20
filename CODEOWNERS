@@ -1,0 +1,47 @@
+# CODEOWNERS — MZTrain
+#
+# Cada cambio sobre los ficheros listados requiere revisión por sus
+# propietarios. Este fichero se interpreta por GitHub conforme a la
+# sintaxis oficial: https://docs.github.com/articles/about-code-owners
+#
+# Co-titularidad: ambos autores son revisores obligatorios sobre el
+# código central y los documentos legales.
+
+# Por defecto, todo el repositorio
+*                           @esraderey @raulcruzacosta
+
+# Documentos legales y sellos (modificación requiere ambas firmas)
+/LICENSE                    @esraderey @raulcruzacosta
+/AUTHORSHIP.md              @esraderey @raulcruzacosta
+/NOTICE.md                  @esraderey @raulcruzacosta
+/PRIOR_ART.md               @esraderey @raulcruzacosta
+/CLA.md                     @esraderey @raulcruzacosta
+/TRADEMARK.md               @esraderey @raulcruzacosta
+/SECURITY.md                @esraderey @raulcruzacosta
+/MANIFEST.sha256            @esraderey @raulcruzacosta
+/SEAL.json                  @esraderey @raulcruzacosta
+/scripts/seal.py            @esraderey @raulcruzacosta
+
+# Núcleo: motor de entrenamiento e innovaciones reivindicadas
+/src/mztrain/engine.py            @esraderey @raulcruzacosta
+/src/mztrain/elastic_rank.py      @esraderey @raulcruzacosta
+/src/mztrain/vram_governor.py     @esraderey @raulcruzacosta
+/src/mztrain/layers.py            @esraderey @raulcruzacosta
+/src/mztrain/optimizer.py         @esraderey @raulcruzacosta
+/src/mztrain/gradient.py          @esraderey @raulcruzacosta
+/src/mztrain/scheduler.py         @esraderey @raulcruzacosta
+/src/mztrain/checkpoint.py        @esraderey @raulcruzacosta
+/src/mztrain/refactorize.py       @esraderey @raulcruzacosta
+/src/mztrain/precision.py         @esraderey @raulcruzacosta
+/src/mztrain/projector.py         @esraderey @raulcruzacosta
+
+# Benchmarks (cambios alteran las reivindicaciones empíricas)
+/bench/                     @esraderey @raulcruzacosta
+
+# Tests (regresiones obligan a doble revisión)
+/tests/                     @esraderey @raulcruzacosta
+
+# CI / build (cambios pueden alterar la cadena de custodia)
+/.github/                   @esraderey @raulcruzacosta
+/pyproject.toml             @esraderey @raulcruzacosta
+/setup.py                   @esraderey @raulcruzacosta

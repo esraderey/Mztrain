@@ -1,0 +1,20 @@
+include LICENSE
+include README.md
+include CHANGELOG.md
+include CONTRIBUTING.md
+include AUTHORSHIP.md
+include NOTICE.md
+include PRIOR_ART.md
+include CLA.md
+include TRADEMARK.md
+include SECURITY.md
+include CODEOWNERS
+include MANIFEST.sha256
+include SEAL.json
+include requirements.txt
+include pyproject.toml
+include scripts/seal.py
+recursive-include src/mztrain *.py
+recursive-include tests *.py
+recursive-include examples *.py
+recursive-include docs *.md

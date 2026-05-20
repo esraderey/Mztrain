@@ -1,0 +1,9 @@
+# MZTrain - Dependencias principales
+# Motor de Entrenamiento en Espacio Comprimido
+
+# Core - Requerido
+torch>=2.0.0
+numpy>=1.21.0
+
+# MNEME - Opcional (para compresion avanzada de activaciones)
+# mneme>=2.0.0

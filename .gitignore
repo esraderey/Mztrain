@@ -1,0 +1,150 @@
+# =============================================================
+# MZTrain - .gitignore
+# Ignora artefactos pesados, caches y datos. NO ignora documentos
+# legales (LICENSE, AUTHORSHIP.md, PRIOR_ART.md, etc.) ni el sello
+# criptografico (SEAL.json, MANIFEST.sha256).
+# =============================================================
+
+# ---- Python -------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.so
+*.pyd
+
+# ---- Virtual environments -----------------------------------
+.venv/
+venv/
+env/
+.env/
+ENV/
+
+# ---- IDE / editor -------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- Testing / coverage / type checking ---------------------
+.pytest_cache/
+.tox/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+.cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.benchmarks/
+
+# ---- OS -----------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Logs y temporales --------------------------------------
+*.log
+*.out
+*.err
+.tmp/
+tmp/
+*.tmp
+*.bak
+
+# =============================================================
+# PESOS Y CHECKPOINTS DE MODELOS (no subir a git)
+# =============================================================
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.onnx
+*.tflite
+*.h5
+*.hdf5
+*.npz
+*.npy
+*.pkl
+*.pickle
+*.joblib
+
+# Patrones especificos por si algun checkpoint cambia extension
+zcodebert_*.pt
+zcoder_*.pt
+zcoder_*_watch.pt
+zcoder_*_smoke.pt
+
+# =============================================================
+# STORE PESADO - MNEME y similares
+# =============================================================
+mneme_storage/
+mneme_storage_*/
+*_mneme_storage/
+*.mneme
+*.zspace
+
+# =============================================================
+# DATASETS y datos crudos
+# =============================================================
+data/
+datasets/
+*.csv.gz
+*.parquet
+*.feather
+*.arrow
+MNIST/
+
+# =============================================================
+# Resultados de benchmarks y metricas pesadas (mantener scripts,
+# ignorar outputs)
+# =============================================================
+bench/results/
+bench/logs/
+benchmarks/results/
+analysis_results.json
+zcodebert_completion_benchmark.json
+zcoder_*_metrics.json
+zcoder_1b_*_metrics.json
+*_smoke_metrics.json
+
+# =============================================================
+# Archivos comprimidos / paquetes
+# =============================================================
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.gz
+*.bz2
+*.xz
+
+# =============================================================
+# Outputs sueltos (HTML generados, etc.)
+# =============================================================
+game_*.html
+*.generated.html
+
+# =============================================================
+# Secrets / credenciales (por si acaso, jamas commitearlos)
+# =============================================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+credentials.json
+secrets.json
