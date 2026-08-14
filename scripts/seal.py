@@ -90,6 +90,10 @@ EXCLUDE_DIRS = {
     ".git", ".venv", "venv", "env", "__pycache__", ".pytest_cache",
     ".mypy_cache", ".ruff_cache", ".tox", ".benchmarks", ".tmp",
     "htmlcov", "build", "dist", ".eggs", "node_modules",
+    # artefactos de build de pip/setuptools: se REGENERAN en cada install
+    # (editable o sdist); sellarlos rompia el verify de todo clon git y de
+    # todo paquete PyPI (el clon no los tiene; el sdist los trae recreados)
+    "mztrain.egg-info",
 }
 
 # Directorios de datos excluidos SOLO en la raiz del proyecto. Su nombre puede

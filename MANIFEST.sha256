@@ -1,8 +1,8 @@
 # MZTrain MANIFEST.sha256
 # (c) 2025-2026 MSC Star Team. Distribuido bajo licencia MIT.
-# generated_at_utc = 2026-08-14T07:18:52Z
-# merkle_root_sha256 = 426d833d050ae2f344c6c930299da43e4efed76b97d9f49bc4e6a75dd0ef6605
-# file_count = 124
+# generated_at_utc = 2026-08-14T07:25:59Z
+# merkle_root_sha256 = c15212e970625bdd1e3bd0fadf8db8706620e63cc36fb5da5edb269694554602
+# file_count = 120
 #
 # Verificacion: python scripts/seal.py verify
 # (o, en Linux/macOS: sha256sum -c MANIFEST.sha256)
@@ -76,14 +76,10 @@ d65fee310d60492c23cec223be6dcc28ae872c95a2e6ca418b67bdc4044931a7  examples/examp
 1f88e68e467f711bef13c4587e715323fd3bc996c42f993816ff0bf65a56ca90  pyproject.toml
 96eb4796df2ca30056b7cc5249c30009ffdee79bfaffe3a5d8a1eabbed3348b8  requirements.txt
 981611798b396983db324cf8cabb6c9e76db8aab00c7885e7edd3a058a71cd38  scripts/calc_gpu_params_equiv.py
-f69c0d19e8ed35ed28299381bb33fd3b849290a7f42e3e99da46842e7af2b4f3  scripts/seal.py
+7b79d41cd17b61b2d7bd592bc88729c92ae37358699a4a8fe067432193c17a84  scripts/seal.py
 0273060ddbe06b3b72799684fd512fadf59964e291f8cd8b5e7e19cd89ee8435  scripts/test_zcoder_410m_full.py
 877eed8531948adf2ceea74fc73d62ec70004c9323180f6d23cc1863b9447c17  scripts/train_zcoder_1b.py
 27e4a440a3a0721bf403d9b670c6605315e8b62d011d84cf3d4d737d4f5b1c5c  setup.py
-56b5253ca36f749e2b669dbe9bc0c9ca95bf47bc662c6e974634b66d3508a20a  src/mztrain.egg-info/SOURCES.txt
-01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b  src/mztrain.egg-info/dependency_links.txt
-0b451cc4d8c256c7a7cabe6067cc60c7a5ad9f76aa66d50dcef6da598c0db741  src/mztrain.egg-info/requires.txt
-61d8983f41ebdc8a9e239c999fd422d1480193029d413b73103c3f710691a337  src/mztrain.egg-info/top_level.txt
 4ba428e26021a44701509ca71a8c297df4a3365ba086d28617369f88c02cbfb5  src/mztrain/__init__.py
 db3d866c55bcc3f3c6178bc0513e5c5e9ae7ff287a30c4bd5c9dcc67d347fc55  src/mztrain/adaptive_optimizer.py
 073632151c928f03724d7062ca818425ae9266a9bd9221c06d9e3f5929f50aa8  src/mztrain/checkpoint.py

@@ -23,7 +23,7 @@
     "copyright": "(c) 2025-2026 MSC Star Team.",
     "license": "MIT (ver LICENSE)"
   },
-  "generated_at_utc": "2026-08-14T07:18:52Z",
+  "generated_at_utc": "2026-08-14T07:25:59Z",
   "tool": {
     "name": "scripts/seal.py",
     "python": "3.13.2",
@@ -34,11 +34,11 @@
     "SHA-512",
     "Merkle (SHA-256)"
   ],
-  "file_count": 124,
-  "total_bytes": 1530540,
-  "merkle_root_sha256": "426d833d050ae2f344c6c930299da43e4efed76b97d9f49bc4e6a75dd0ef6605",
-  "files_canonical_sha256": "21c74b7156d3061b81467f66499066a64df1ecf6f48049dff579558ebf30309e",
-  "files_canonical_sha512": "5444339562b65f2f147fd4de97da8c6b3858383d2d1e599cbe3109b37ad7102be485e0c6ff3f40e221ea04cb0c2df1f9a7f060cb19d37f36286545cfbf8b6121",
+  "file_count": 120,
+  "total_bytes": 1528266,
+  "merkle_root_sha256": "c15212e970625bdd1e3bd0fadf8db8706620e63cc36fb5da5edb269694554602",
+  "files_canonical_sha256": "23348bd2c8ceb3e0bb71befb2fcb5b2d9e5a7412c9bbbe7d968af4a9e4223c0c",
+  "files_canonical_sha512": "81b3fd80062549ea8c0bb3546ccfeb5aa234e90fc52de4abf4f73f58b32e32f37866272ec429e0794f61fe767858c0e3c36c104c09a64fb7e3ddd5ba30d39164",
   "files": [
     {
       "path": ".claude/settings.local.json",
@@ -456,9 +456,9 @@
     },
     {
       "path": "scripts/seal.py",
-      "sha256": "f69c0d19e8ed35ed28299381bb33fd3b849290a7f42e3e99da46842e7af2b4f3",
-      "sha512": "8628031d559144809f9681c2e18bfa18cc00907f1c5b65b8ebedebae9cba58b19d2810fb8d23cbdef3d217444cb4731b9a62d80b1b960a023a6aff66ecd113eb",
-      "size": 21658
+      "sha256": "7b79d41cd17b61b2d7bd592bc88729c92ae37358699a4a8fe067432193c17a84",
+      "sha512": "328c1720303674966e0d343573d5fff610987359c3aff33145b23f59f206710be062fa4cc1c59c1f47211c1bfd7e0e4a555f4505f53479eee541beeb82c9ae5e",
+      "size": 21907
     },
     {
       "path": "scripts/test_zcoder_410m_full.py",
@@ -477,30 +477,6 @@
       "sha256": "27e4a440a3a0721bf403d9b670c6605315e8b62d011d84cf3d4d737d4f5b1c5c",
       "sha512": "92fd7b4209d31a5e175689273c65ba00b7c97f7341db97151cc154d94416481d45392fae215d811aa8e1e6f571b2782db33232454f049b6aac426487b85aa64e",
       "size": 3146
-    },
-    {
-      "path": "src/mztrain.egg-info/SOURCES.txt",
-      "sha256": "56b5253ca36f749e2b669dbe9bc0c9ca95bf47bc662c6e974634b66d3508a20a",
-      "sha512": "dfcc8bcfdc816da7a5ac16cc6729b6120b366ed2abfc7671d07adbdcc58f2f6617787f5fd0894dfc51388bc49de4f06fe715679930567cc5dc0924a093df12d4",
-      "size": 2067
-    },
-    {
-      "path": "src/mztrain.egg-info/dependency_links.txt",
-      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-      "sha512": "be688838ca8686e5c90689bf2ab585cef1137c999b48c70b92f67a5c34dc15697b5d11c982ed6d71be1e1e7f7b4e0733884aa97c3f7a339a8ed03577cf74be09",
-      "size": 1
-    },
-    {
-      "path": "src/mztrain.egg-info/requires.txt",
-      "sha256": "0b451cc4d8c256c7a7cabe6067cc60c7a5ad9f76aa66d50dcef6da598c0db741",
-      "sha512": "2225f7c8057e75de707345ede56f7b17f8b1d3f765fda509a91c29189dcd7c7dcf65919defaa85adc8c7f0516fa47e58d06d8d321758a16250ada6d87f98ec9a",
-      "size": 447
-    },
-    {
-      "path": "src/mztrain.egg-info/top_level.txt",
-      "sha256": "61d8983f41ebdc8a9e239c999fd422d1480193029d413b73103c3f710691a337",
-      "sha512": "11a01d096e597c04dc314597913a5a734da552015ee1286643c4aee103b60316d360cfbe901ac60b651b9486d12e61be183a871c92ee485934b9f2aecb1d3dcd",
-      "size": 8
     },
     {
       "path": "src/mztrain/__init__.py",
@@ -789,5 +765,5 @@
   "notice": "Cualquier modificacion posterior a la fecha 'generated_at_utc' sera detectable por divergencia entre el manifesto y los hashes recalculados. Este sello no sustituye a un timestamp RFC 3161 ni a un anclaje en blockchain; se recomienda combinar ambos.",
   "signature_algorithm": "Ed25519",
   "signature_public_key": "1c1765ef1730ea1173e33cebd6a909c86ae8de5dba326e60fb6e6ee5d44a4eb9",
-  "signature": "0062f32b3428b1b20ebff049a5ed389d351ddf0e63da050601813657313eba3589ab93232ad406c6bd08c611ec24b4f904ba9758195986bcfe9ef87b88597e0a"
+  "signature": "fe0eb37138b6cff63f8d5a56edd49ffb52c9204ba4c2169cf3eed27d992b9afe0c2ee84406eaffa5b4ced25ec166fb0d70a50b25963dc2492ee9c1e33cf16800"
 }
