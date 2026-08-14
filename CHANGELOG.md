@@ -5,6 +5,13 @@ Todos los cambios notables en MZTrain se documentan en este archivo.
 El formato esta basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2026-08-14
+
+### Corregido
+- Metadata: correo del proyecto (msc.framework@gmail.com) para ambos autores en pyproject
+  (el segundo autor tenia un placeholder @example.com). Barrido de privacidad del arbol
+  publicado: sin correos personales, rutas locales ni credenciales.
+
 ## [1.3.1] - 2026-08-14
 
 ### Corregido

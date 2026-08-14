@@ -23,7 +23,7 @@
     "copyright": "(c) 2025-2026 MSC Star Team.",
     "license": "MIT (ver LICENSE)"
   },
-  "generated_at_utc": "2026-08-14T07:49:23Z",
+  "generated_at_utc": "2026-08-14T08:41:30Z",
   "tool": {
     "name": "scripts/seal.py",
     "python": "3.13.2",
@@ -35,10 +35,10 @@
     "Merkle (SHA-256)"
   ],
   "file_count": 119,
-  "total_bytes": 1528428,
-  "merkle_root_sha256": "47daed34ca94308fdca283e033f491b18704c2594949ff61e12a4be1dced797e",
-  "files_canonical_sha256": "e0bdbab204b3be34bbc5a9b24c923d82e9bdd5d71ea3eb7cd54c9f2e0127e36b",
-  "files_canonical_sha512": "1897d4bf507d5a9b2854eb8bbd2629336f0cf73f6fd03dc1c88425c3efc0434fc618f252a8ea56c2d2a90707d97b47aa62ba715eb272dd569355987d3b2952ba",
+  "total_bytes": 1528716,
+  "merkle_root_sha256": "b58def9df68e6d1f6ffe4b51b6343bdde119001407addb47cbebf35ae68e34f1",
+  "files_canonical_sha256": "576b2a87682084468d0336d5b1fb1c55857f6c6150fa86dda68e171ffcd56a67",
+  "files_canonical_sha512": "e4fed9cc4e8deac6c10cac642d19aae626571c95b1b9c5b82984a92d3ff1317e2a7583e95ad4e12872028febc392c2b9b7cef652d7c8a7129c29142a2f243ece",
   "files": [
     {
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
@@ -84,9 +84,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "33239ec853718ddc972268d3ad4e16a0b2f5fd099ba81346fcf48ef77b220d46",
-      "sha512": "e60795c372cf6b430e974c37aeada99033e35576a0a2e346d4320c78655f6533efec3ebed90dcec847cda0c77577d681c7981d202797ff05f7b854bcb1e42bf4",
-      "size": 4826
+      "sha256": "27caaefeca3ea9400074115f04052ea8cb9109ea0981c0e8057c7a92b1a7aacb",
+      "sha512": "d1910afbc1ea55198464078de3024add25aa7c33f9c7779f7af34bfa42c3537e7766de3eb962b2e9ed7e92adb3bb2ca132196fdb84388d6414168b96591a5f56",
+      "size": 5119
     },
     {
       "path": "CLA.md",
@@ -432,9 +432,9 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "d95fe3c1dd025a054a39a1f8915c66a904b9b037f9adc3383e24aa457e693fc8",
-      "sha512": "85f02ae05a8d66eaddc06b4ded511763e912d5d598fa96414c68975fea09ebc2124d4c9686bddc0b5060f62995bd68341c09ed8e5489846b48ed035400d6ecba",
-      "size": 5237
+      "sha256": "8b8a77bfc90d4bf6739c61f63bd6aa87993dbf2deadc9c838607732eec5b04f6",
+      "sha512": "103f5ea08dc5f732dc8162928e28e6cd1905e6606fc99047c60904b30f80e00c910e598f35fa9904f1188286f4139b1d331cbdbb18f22da5074db6c038e524c2",
+      "size": 5232
     },
     {
       "path": "requirements.txt",
@@ -468,14 +468,14 @@
     },
     {
       "path": "setup.py",
-      "sha256": "5b6da2c36143d3a8174b302ecc512a6591cc4744e8b481066b4aea2e329e5579",
-      "sha512": "b11494d3f27d4eafaafd47b4fc8b8d8518914c59f672aad8d3cd4c674cab159a6bf3a20a67bafba6d78497cb906906236b1bbdfc0aa760bc6aa72df24d88138d",
+      "sha256": "6cb0b958f970eb0cbf8b692ace70edfe58d29318a6f6664202eb54f7c09272dd",
+      "sha512": "62b744afb813c2c6e827082987d4321ed9e219e7d86e4191564a4abce15093bdc61f8d11305ea7bbb29b61e5881821847b635616acb0a52033497db9285b1108",
       "size": 3146
     },
     {
       "path": "src/mztrain/__init__.py",
-      "sha256": "5e4d2c43acb8eb47c6d741f68685488fbc4cc61b1fb5a72285b7bec97fe067cf",
-      "sha512": "19fbc222f09655c53dd5dd557d4533e51eba02ea562ad241488fbd9bf44c177b5720916b42b449fcb1f2d49355717995839bac5378ceb30cead26754dfefc1e5",
+      "sha256": "831ce609d405b37552ebb40d2fe9dbb5230ab64a74e18d76d255d0d9cb3603d0",
+      "sha512": "8e52caec996500a959e214e2af023a23a9c4f390fdd0bba3263ac54de7a2e257116fb36ba72e7a92c0a27f8077ba958a323f62579f2f41510f87144cb8ac4006",
       "size": 4779
     },
     {
@@ -759,5 +759,5 @@
   "notice": "Cualquier modificacion posterior a la fecha 'generated_at_utc' sera detectable por divergencia entre el manifesto y los hashes recalculados. Este sello no sustituye a un timestamp RFC 3161 ni a un anclaje en blockchain; se recomienda combinar ambos.",
   "signature_algorithm": "Ed25519",
   "signature_public_key": "1c1765ef1730ea1173e33cebd6a909c86ae8de5dba326e60fb6e6ee5d44a4eb9",
-  "signature": "5fbd33573507328884d1dfaa2d899c8510d0c658f4d1b4a03ab901643c78cfe793f8e7553cc34e04632cbe004573b1caee5a2f0b3aa1cdaa41ca3353b24cc001"
+  "signature": "f73fdf858af282db78a42c53663f1dc558e202a2635ba5efb11f26d75696b489919024dbc926468d14729b99e0eaea2a209b0dd3308a1a28dc6cee89354cbe08"
 }
