@@ -5,6 +5,41 @@ Todos los cambios notables en MZTrain se documentan en este archivo.
 El formato esta basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-08-14
+
+### Corregido
+- Sello: `mztrain.egg-info` y `.claude` excluidos del manifiesto (artefactos de build y
+  config local por-maquina rompian `verify` en clones git y sdists en falso).
+- README: la verificacion canonica es el repositorio git; el sdist de PyPI es un
+  subconjunto de instalacion (documentado); URL real del repo; conteo de tests.
+- Higiene de publicacion: `.gitattributes` (bytes exactos en clones — el sello sobrevive
+  cualquier plataforma), checkpoints `.pt` y `data/` fuera del control de versiones.
+
+## [1.3.0] - 2026-08-14
+
+### Agregado
+- **ElasticShape v1** (`mztrain.shape_ops` + `mztrain.elastic_shape`): crecimiento de forma
+  en espacio factorizado — conversion densa→factorizada exacta (SVD), ensanchado/profundizado
+  con cirugia que preserva la funcion, migracion completa del estado Adam, correccion de
+  escala SDPA, compensacion de varianza de LayerNorm, schedule y warmup. Cada modulo con
+  doble revision adversarial independiente y banco aislado (40 tests).
+  Claim validado con preregistro (T8, `docs/evidencia/`): el morph alcanza la calidad del
+  from-scratch en ~54% del reloj (escala 11M-equiv, 3 seeds).
+- `docs/evidencia/`: serie empirica preregistrada T0-T8 completa (preregistros, veredictos
+  formales y JSONs crudos) dentro del arbol sellado.
+- Firma Ed25519 obligatoria con lista de claves de confianza en `scripts/seal.py`.
+
+### Cambiado
+- README reescrito con los resultados medidos (regimen de uso, peaje de calidad iso-parametro
+  ~10% estable con la escala, acantilado WDDM, velocidades bf16, limitaciones conocidas y
+  configuraciones a evitar). Version unificada en pyproject/setup/__init__.
+- Extra `mneme` retirado del empaquetado PyPI (instalacion manual desde su repositorio;
+  evita resolver un paquete homonimo ajeno).
+
+### Corregido
+- Los 5 hallazgos ALTO del peritaje 2026-08-10 y todo lo escalado (18+ anclas de regresion;
+  suite 273 → 347 tests). Detalle en `docs/evidencia/` y PRIOR_ART.
+
 ## [1.0.0] - 2025-01-15
 
 ### Agregado

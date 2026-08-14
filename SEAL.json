@@ -23,7 +23,7 @@
     "copyright": "(c) 2025-2026 MSC Star Team.",
     "license": "MIT (ver LICENSE)"
   },
-  "generated_at_utc": "2026-08-14T07:44:55Z",
+  "generated_at_utc": "2026-08-14T07:49:23Z",
   "tool": {
     "name": "scripts/seal.py",
     "python": "3.13.2",
@@ -35,10 +35,10 @@
     "Merkle (SHA-256)"
   ],
   "file_count": 119,
-  "total_bytes": 1526409,
-  "merkle_root_sha256": "7da518360e8cc997e052dcecb2d5ebfb47412ad1ba85b8ffbc8379ebfba06c54",
-  "files_canonical_sha256": "4d057ee7e1d6f4e9360e23825482a27f358b28e1f8831196d88cb2b09d4f6bab",
-  "files_canonical_sha512": "39d991be4c97f74cfc9208085a599af67a593e7a96a8b246d679f68d308d5d5606823130bcca241ec2df86032d7c7771b2d86b15614d03cc453458b887a68617",
+  "total_bytes": 1528428,
+  "merkle_root_sha256": "47daed34ca94308fdca283e033f491b18704c2594949ff61e12a4be1dced797e",
+  "files_canonical_sha256": "e0bdbab204b3be34bbc5a9b24c923d82e9bdd5d71ea3eb7cd54c9f2e0127e36b",
+  "files_canonical_sha512": "1897d4bf507d5a9b2854eb8bbd2629336f0cf73f6fd03dc1c88425c3efc0434fc618f252a8ea56c2d2a90707d97b47aa62ba715eb272dd569355987d3b2952ba",
   "files": [
     {
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
@@ -84,9 +84,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "1a1bb10850d994702ef1de4602c3b3aca865852a6e1956a3b2261bd952b597d3",
-      "sha512": "7c0e3397fbbbdf2e9697729a597b36e2b4a2946ab4e1bb6514612e9b102e7562455a15da189e92f965efc241b692493c740955ea63ec6f5923010f00c1f87787",
-      "size": 2807
+      "sha256": "33239ec853718ddc972268d3ad4e16a0b2f5fd099ba81346fcf48ef77b220d46",
+      "sha512": "e60795c372cf6b430e974c37aeada99033e35576a0a2e346d4320c78655f6533efec3ebed90dcec847cda0c77577d681c7981d202797ff05f7b854bcb1e42bf4",
+      "size": 4826
     },
     {
       "path": "CLA.md",
@@ -432,8 +432,8 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "1f88e68e467f711bef13c4587e715323fd3bc996c42f993816ff0bf65a56ca90",
-      "sha512": "d0308cd330eeb5054107ea950c0dcad496b4dcae364ce3d24b9cd78f7da88d2f4f5be4375e4f8f79a341f5a9063abe65408787ac4a7eade4a271ba737b63f3db",
+      "sha256": "d95fe3c1dd025a054a39a1f8915c66a904b9b037f9adc3383e24aa457e693fc8",
+      "sha512": "85f02ae05a8d66eaddc06b4ded511763e912d5d598fa96414c68975fea09ebc2124d4c9686bddc0b5060f62995bd68341c09ed8e5489846b48ed035400d6ecba",
       "size": 5237
     },
     {
@@ -468,14 +468,14 @@
     },
     {
       "path": "setup.py",
-      "sha256": "27e4a440a3a0721bf403d9b670c6605315e8b62d011d84cf3d4d737d4f5b1c5c",
-      "sha512": "92fd7b4209d31a5e175689273c65ba00b7c97f7341db97151cc154d94416481d45392fae215d811aa8e1e6f571b2782db33232454f049b6aac426487b85aa64e",
+      "sha256": "5b6da2c36143d3a8174b302ecc512a6591cc4744e8b481066b4aea2e329e5579",
+      "sha512": "b11494d3f27d4eafaafd47b4fc8b8d8518914c59f672aad8d3cd4c674cab159a6bf3a20a67bafba6d78497cb906906236b1bbdfc0aa760bc6aa72df24d88138d",
       "size": 3146
     },
     {
       "path": "src/mztrain/__init__.py",
-      "sha256": "4ba428e26021a44701509ca71a8c297df4a3365ba086d28617369f88c02cbfb5",
-      "sha512": "0ba8133886df8a9528ee88fdc429a64675b7bc39fc9f567651594a3072077105b551eb1dbf16e9f0d72912d6254ecf5531cd3fff99ce7273c16b95fec94476f4",
+      "sha256": "5e4d2c43acb8eb47c6d741f68685488fbc4cc61b1fb5a72285b7bec97fe067cf",
+      "sha512": "19fbc222f09655c53dd5dd557d4533e51eba02ea562ad241488fbd9bf44c177b5720916b42b449fcb1f2d49355717995839bac5378ceb30cead26754dfefc1e5",
       "size": 4779
     },
     {
@@ -759,5 +759,5 @@
   "notice": "Cualquier modificacion posterior a la fecha 'generated_at_utc' sera detectable por divergencia entre el manifesto y los hashes recalculados. Este sello no sustituye a un timestamp RFC 3161 ni a un anclaje en blockchain; se recomienda combinar ambos.",
   "signature_algorithm": "Ed25519",
   "signature_public_key": "1c1765ef1730ea1173e33cebd6a909c86ae8de5dba326e60fb6e6ee5d44a4eb9",
-  "signature": "cf3eecba316b93224ba2fb278c73391e4955a62c6498792b0189085946a4594ac42037500052f0fd50e216525a3ef0ffb0a10028716489fe3f639ec8610e7809"
+  "signature": "5fbd33573507328884d1dfaa2d899c8510d0c658f4d1b4a03ab901643c78cfe793f8e7553cc34e04632cbe004573b1caee5a2f0b3aa1cdaa41ca3353b24cc001"
 }

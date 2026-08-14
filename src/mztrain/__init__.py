@@ -105,7 +105,7 @@ from .elastic_shape import (
     apply_event,
 )
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 __author__ = "MSC Star Team (Esraderey y Raul Cruz Acosta)"
 __email__ = "msc.framework@gmail.com"
 
