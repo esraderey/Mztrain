@@ -355,22 +355,48 @@ class ZTrainEngine:
         4. Migra los estados antiguos a los nuevos (padding con zeros/eps).
         5. Activa un mini-warmup de LR post-crecimiento.
         """
-        # Paso 1: Capturar estados del optimizer para parametros factorizados
-        old_states = {}
+        # Paso 1: Capturar el estado DESCOMPRIMIDO del optimizer de TODOS los
+        # parametros. Recrear el optimizer (paso 3) resetea el estado de Adam;
+        # para no perder el momentum se captura antes y se restaura despues.
+        # - factores U/S/V: seran tensores nuevos (grow_rank los reemplaza) ->
+        #   se migran con reshape.
+        # - resto (bias, LayerNorm, embeddings, ...): su tensor sobrevive ->
+        #   se restauran por identidad. (Antes solo se migraban U/S/V, y el
+        #   formato comprimido se saltaba, reseteando m,v en cada crecimiento.)
+        factor_param_ids = set()
+        captured_factor = {}   # (id(module), pname) -> {'shape','exp_avg','exp_avg_sq','step'}
         for module in self.model.modules():
             if isinstance(module, ZFactorizedLinear):
                 param_names = ['U', 'S', 'V']
                 if isinstance(module, ZSparseFactorizedLinear):
                     param_names.append('sparse_values')
                 for pname in param_names:
-                    param = getattr(module, pname)
-                    if param in self.optimizer.state:
-                        state = self.optimizer.state[param]
-                        old_states[id(module), pname] = {
-                            'shape': param.shape,
-                            'state': {k: v.clone() if isinstance(v, torch.Tensor) else v
-                                      for k, v in state.items()},
-                        }
+                    param = getattr(module, pname, None)
+                    if param is None:
+                        continue
+                    factor_param_ids.add(id(param))
+                    st = self.optimizer.state.get(param)
+                    captured_factor[(id(module), pname)] = {
+                        'shape': param.shape,
+                        'exp_avg': decompress_opt_state(
+                            self.optimizer, st, 'exp_avg', param) if st else None,
+                        'exp_avg_sq': decompress_opt_state(
+                            self.optimizer, st, 'exp_avg_sq', param) if st else None,
+                        'step': int(st.get('step', 0) or 0) if st else 0,
+                    }
+
+        captured_other = {}    # id(param) -> (param, {'exp_avg','exp_avg_sq','step'})
+        for p in self.model.parameters():
+            if id(p) in factor_param_ids:
+                continue
+            st = self.optimizer.state.get(p)
+            if not st:
+                continue
+            captured_other[id(p)] = (p, {
+                'exp_avg': decompress_opt_state(self.optimizer, st, 'exp_avg', p),
+                'exp_avg_sq': decompress_opt_state(self.optimizer, st, 'exp_avg_sq', p),
+                'step': int(st.get('step', 0) or 0),
+            })
 
         # Paso 2: Crecer rango en capas
         grown = 0
@@ -393,72 +419,89 @@ class ZTrainEngine:
         for pg in self.optimizer.param_groups:
             pg['lr'] = old_lr
 
-        # Paso 4: Migrar estados antiguos a nuevos parametros
         migrated = 0
+
+        # Paso 4: Restaurar el estado de los parametros NO factorizados por
+        # identidad (su tensor no cambio con el crecimiento).
+        for _pid, (p, c) in captured_other.items():
+            ea, es = c['exp_avg'], c['exp_avg_sq']
+            self.optimizer.state[p] = {
+                'step': c['step'],
+                'exp_avg': (ea.to(p.device, p.dtype) if ea is not None
+                            else torch.zeros_like(p.data)),
+                'exp_avg_sq': (es.to(p.device, p.dtype) if es is not None
+                               else torch.zeros_like(p.data)),
+                'compressed': False,
+            }
+            migrated += 1
+
+        # Paso 5: Migrar el estado de los factores U/S/V (tensores nuevos):
+        # copiar la region que ya existia y rellenar lo nuevo.
         for module in self.model.modules():
             if not isinstance(module, ZFactorizedLinear):
                 continue
-            for pname in ('U', 'S', 'V'):
+            # ZSparseFactorizedLinear.grow_rank hace re-SVD (base completamente
+            # nueva): el momentum viejo esta en la base antigua y ya no aplica,
+            # asi que no se migra y el estado queda fresco (Adam se re-estabiliza
+            # en pocos pasos). En ZFactorizedLinear puro la base de las primeras
+            # old_rank direcciones se preserva (preserve_weights=True) y por eso
+            # alli si se migra.
+            if isinstance(module, ZSparseFactorizedLinear):
+                continue
+            param_names = ['U', 'S', 'V']
+            for pname in param_names:
                 key = (id(module), pname)
-                if key not in old_states:
+                if key not in captured_factor:
                     continue
+                param = getattr(module, pname, None)
+                if param is None:
+                    continue
+                cap = captured_factor[key]
+                old_shape = cap['shape']
+                new_exp_avg = torch.zeros_like(param.data)
+                new_exp_avg_sq = torch.zeros_like(param.data)
 
-                param = getattr(module, pname)
-                saved = old_states[key]
-                old_shape = saved['shape']
-                old_state = saved['state']
-
-                # Inicializar estado en optimizer (forzar lazy init)
-                if param not in self.optimizer.state:
-                    self.optimizer.state[param] = {
-                        'step': old_state.get('step', 0),
-                        'exp_avg': torch.zeros_like(param.data),
-                        'exp_avg_sq': torch.zeros_like(param.data),
-                        'compressed': False,
-                    }
-
-                new_state = self.optimizer.state[param]
-                new_state['step'] = old_state.get('step', 0)
-
-                for moment_key in ('exp_avg', 'exp_avg_sq'):
-                    old_moment = old_state.get(moment_key)
-                    if old_moment is None or not isinstance(old_moment, torch.Tensor):
+                for moment_key, new_moment in (('exp_avg', new_exp_avg),
+                                               ('exp_avg_sq', new_exp_avg_sq)):
+                    old_moment = cap[moment_key]
+                    if old_moment is None:
                         continue
-
-                    # Si estaba comprimido, descomprimir primero
-                    if old_state.get('compressed', False):
-                        scale_key = moment_key + '_scale'
-                        if scale_key in old_state:
-                            old_moment = old_moment.to(param.dtype) * old_state[scale_key]
-
-                    new_moment = new_state[moment_key]
+                    old_moment = old_moment.to(new_moment.device, new_moment.dtype)
                     # Copiar la region que existia antes
                     if old_moment.dim() == 2 and new_moment.dim() == 2:
                         h = min(old_shape[0], new_moment.shape[0])
                         w = min(old_shape[1], new_moment.shape[1])
-                        new_moment[:h, :w] = old_moment[:h, :w].to(new_moment.dtype)
+                        new_moment[:h, :w] = old_moment[:h, :w]
                     elif old_moment.dim() == 1 and new_moment.dim() == 1:
                         n = min(old_shape[0], new_moment.shape[0])
-                        new_moment[:n] = old_moment[:n].to(new_moment.dtype)
+                        new_moment[:n] = old_moment[:n]
 
-                    # Para exp_avg_sq (varianza), las regiones nuevas necesitan
-                    # un valor pequeno para evitar learning rates gigantes
-                    if moment_key == 'exp_avg_sq':
-                        mask = new_moment == 0
-                        if mask.any():
-                            # Usar media de la varianza existente como estimacion
-                            existing_mean = old_moment.abs().mean()
-                            fill_val = max(float(existing_mean) * 0.1, 1e-8)
-                            new_moment[mask] = fill_val
+                # Para exp_avg_sq (varianza), las regiones nuevas necesitan un
+                # valor pequeno para evitar learning rates gigantes.
+                if cap['exp_avg_sq'] is not None:
+                    mask = new_exp_avg_sq == 0
+                    if mask.any():
+                        existing_mean = cap['exp_avg_sq'].abs().mean()
+                        fill_val = max(float(existing_mean) * 0.1, 1e-8)
+                        new_exp_avg_sq[mask] = fill_val
 
+                self.optimizer.state[param] = {
+                    'step': cap['step'],
+                    'exp_avg': new_exp_avg,
+                    'exp_avg_sq': new_exp_avg_sq,
+                    'compressed': False,
+                }
                 migrated += 1
 
-        # Paso 5: Warmup post-crecimiento — empezar al 10% del LR
-        self._rank_growth_warmup_remaining = self.config.rank_growth_warmup_steps
-        self._rank_growth_warmup_base_lr = old_lr
-        warmup_start_lr = old_lr * 0.1
-        for pg in self.optimizer.param_groups:
-            pg['lr'] = warmup_start_lr
+        # Paso 6: Warmup post-crecimiento — empezar al 10% del LR. Solo si
+        # esta activado: con warmup_steps=0 el LR quedaba clavado en 0.1x
+        # porque la restauracion vive en el step de warmup, que no corre.
+        if self.config.rank_growth_warmup_steps > 0:
+            self._rank_growth_warmup_remaining = self.config.rank_growth_warmup_steps
+            self._rank_growth_warmup_base_lr = old_lr
+            warmup_start_lr = old_lr * 0.1
+            for pg in self.optimizer.param_groups:
+                pg['lr'] = warmup_start_lr
 
         logger.info(
             f"[MZTrain] Rango crecido a {new_rank} en {grown} capas, "
@@ -621,7 +664,10 @@ class ZTrainEngine:
                 sd = SleepingDirection(
                     layer_name=name,
                     u=_to_store(old_U[:, i]),
-                    s=_to_store(old_S[i]),
+                    # S SIEMPRE en fp32 (regla dura de precision.py): cuantizar
+                    # el valor singular a fp16 lo redondea y, al revivir, altera
+                    # la escala de toda la direccion factorizada.
+                    s=old_S[i].detach().to("cpu", torch.float32).clone(),
                     v=_to_store(old_V[i, :]),
                     m_u=_adam_slice("U", "exp_avg"),
                     m_s=_adam_slice("S", "exp_avg"),
@@ -762,11 +808,27 @@ class ZTrainEngine:
             if c["exp_avg"] is not None or c["exp_avg_sq"] is not None:
                 _set_state(p, c["exp_avg"], c["exp_avg_sq"], c["step"])
 
-        # 5. Warmup post-cambio estructural (igual que rank growth).
-        self._rank_growth_warmup_remaining = self.config.rank_growth_warmup_steps
-        self._rank_growth_warmup_base_lr = old_lr
-        for pg in self.optimizer.param_groups:
-            pg["lr"] = old_lr * 0.1
+        # Invalidar el error-feedback de compresion de gradientes de las capas
+        # cuyas direcciones se reordenaron: el residuo de cuantizacion viejo
+        # apunta a las direcciones singulares antiguas. El check por shape de
+        # ZGradientCompressor NO lo detecta cuando el rango se mantiene (dormir
+        # k + revivir/crecer k), asi que se invalida explicitamente por nombre.
+        if changed:
+            changed_param_ids = set()
+            for name in changed:
+                for _p in modules[name].parameters(recurse=True):
+                    changed_param_ids.add(id(_p))
+            for pname, p in self.model.named_parameters():
+                if id(p) in changed_param_ids:
+                    self.grad_compressor.invalidate(pname)
+
+        # 5. Warmup post-cambio estructural (igual que rank growth). Solo si
+        # esta activado: con warmup_steps=0 el LR quedaba clavado en 0.1x.
+        if self.config.rank_growth_warmup_steps > 0:
+            self._rank_growth_warmup_remaining = self.config.rank_growth_warmup_steps
+            self._rank_growth_warmup_base_lr = old_lr
+            for pg in self.optimizer.param_groups:
+                pg["lr"] = old_lr * 0.1
         ec.note_growth()
 
     # ------------------------------------------------------------------
@@ -1004,48 +1066,59 @@ class ZTrainEngine:
         total_loss = 0.0
         num_batches = 0
 
-        for batch_idx, batch in enumerate(train_loader):
-            batch = self._to_device(batch)
-
+        def _fwd_bwd(batch):
+            # SOLO forward + backward. Es idempotente con zero_grad (no toca el
+            # error-feedback del compresor ni el estado del scaler), asi que es
+            # seguro reintentarlo ante un OOM transitorio; el grueso de la VRAM
+            # (activaciones/gradientes) se asigna aqui. El resto del paso
+            # (unscale/compress/clip/step) es STATEFUL y va fuera del reintento.
             self.optimizer.zero_grad()
-
             if self.scaler is not None:
                 with self.precision_manager.forward_context():
                     loss = loss_fn(self.model, batch)
                 self.scaler.scale(loss).backward()
-
-                # unscale_ solo puede llamarse UNA VEZ por step
-                self.scaler.unscale_(self.optimizer)
-
-                if self.config.gradient_compression != GradientCompression.NONE:
-                    self._compress_gradients()
-
-                torch.nn.utils.clip_grad_norm_(
-                    self.model.parameters(), self.config.max_grad_norm
-                )
-
-                # ElasticRank soft sleep: congelar direcciones dormidas
-                # (grad=0) justo antes del step. Barato, sin tocar shapes.
-                if self.elastic_rank is not None:
-                    self.elastic_rank.mask_gradients(self.model)
-
-                self.scaler.step(self.optimizer)
-                self.scaler.update()
             else:
                 loss = loss_fn(self.model, batch)
                 loss.backward()
+            return loss
 
+        def _finish_step():
+            if self.scaler is not None:
+                # unscale_ solo puede llamarse UNA VEZ por step
+                self.scaler.unscale_(self.optimizer)
                 if self.config.gradient_compression != GradientCompression.NONE:
                     self._compress_gradients()
-
                 torch.nn.utils.clip_grad_norm_(
                     self.model.parameters(), self.config.max_grad_norm
                 )
-
+                # ElasticRank soft sleep: congelar direcciones dormidas (grad=0)
+                # justo antes del step. Barato, sin tocar shapes.
                 if self.elastic_rank is not None:
                     self.elastic_rank.mask_gradients(self.model)
-
+                self.scaler.step(self.optimizer)
+                self.scaler.update()
+            else:
+                if self.config.gradient_compression != GradientCompression.NONE:
+                    self._compress_gradients()
+                torch.nn.utils.clip_grad_norm_(
+                    self.model.parameters(), self.config.max_grad_norm
+                )
+                if self.elastic_rank is not None:
+                    self.elastic_rank.mask_gradients(self.model)
                 self.optimizer.step()
+
+        for batch_idx, batch in enumerate(train_loader):
+            batch = self._to_device(batch)
+
+            # Recuperacion de OOM transitorio: solo el forward/backward (el grueso
+            # de la VRAM y re-ejecutable de forma idempotente) se reintenta. Las
+            # operaciones stateful (unscale/compress/step) corren una sola vez para
+            # no duplicar el error-feedback ni el estado del scaler.
+            if self.vram_governor is not None:
+                loss = self.vram_governor.oom_guarded(lambda b=batch: _fwd_bwd(b))
+            else:
+                loss = _fwd_bwd(batch)
+            _finish_step()
 
             total_loss += loss.item()
             num_batches += 1
@@ -1096,8 +1169,12 @@ class ZTrainEngine:
                 if num_refactorized > 0 and self.elastic_rank is not None:
                     self.elastic_rank.reset_after_refactorize(self.model)
                     self.elastic_rank.note_refactorize()
-                # Activar warmup post-refactorizacion (igual que rank growth)
-                if num_refactorized > 0 and self._rank_growth_warmup_remaining <= 0:
+                # Activar warmup post-refactorizacion (igual que rank growth).
+                # Solo si esta activado: con warmup_steps=0 el LR quedaba clavado
+                # en 0.1x y decaia geometricamente en cada refactorizacion.
+                if (num_refactorized > 0
+                        and self._rank_growth_warmup_remaining <= 0
+                        and self.config.rank_growth_warmup_steps > 0):
                     old_lr = self.optimizer.param_groups[0]['lr']
                     self._rank_growth_warmup_remaining = self.config.rank_growth_warmup_steps
                     self._rank_growth_warmup_base_lr = old_lr
@@ -1197,6 +1274,11 @@ class ZTrainEngine:
         Returns:
             Diccionario con metricas finales del entrenamiento.
         """
+        # Limpiar el estado GLOBAL (de clase) del checkpointing de activaciones
+        # de cualquier run/instancia previa: al ser estado de clase se arrastra
+        # entre entrenamientos y acumula entradas no liberadas.
+        ZActivationCheckpoint.reset()
+
         if self.config.rank_schedule == RankSchedule.SPECTRAL:
             self.rank_scheduler = ZSpectralRankScheduler(
                 model=self.model,
@@ -1517,11 +1599,41 @@ class ZTrainEngine:
             path: Ruta del archivo de checkpoint.
         """
         checkpoint = torch.load(path, map_location=self.device, weights_only=True)
+
+        # Reconstruir la topologia al rango del checkpoint ANTES de cargar: si
+        # el entrenamiento habia crecido el rango, el state_dict guardado tiene
+        # tensores mas grandes que el modelo recien construido (initial_rank),
+        # y load_state_dict(strict=True) fallaria con un size mismatch. El
+        # rango objetivo se infiere del propio state_dict (longitud de los
+        # valores singulares 'S'), mas robusto que el rank_scheduler guardado,
+        # que puede estar ausente o desincronizado con las formas reales.
+        sd = checkpoint["model_state_dict"]
+        # Reconstruir CADA capa factorizada a SU rango del checkpoint (longitud
+        # de su 'S'). ElasticRank guarda rangos por-capa distintos, asi que un
+        # unico rango uniforme daria size mismatch en las capas de menor rango.
+        grown_any = False
+        for name, module in self.model.named_modules():
+            if isinstance(module, ZFactorizedLinear):
+                s_val = sd.get(f"{name}.S" if name else "S")
+                if s_val is not None and hasattr(s_val, "dim") and s_val.dim() == 1:
+                    target = int(s_val.shape[0])
+                    if target != module.rank:  # crecer O reducir por-capa
+                        module.resize_rank(target)
+                        grown_any = True
+        if grown_any:
+            # recrear el optimizer para que referencie los tensores nuevos; su
+            # estado se sobrescribe con el del checkpoint justo despues.
+            self.optimizer = self._create_optimizer()
+
         self.model.load_state_dict(checkpoint["model_state_dict"])
         self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         self._metrics = checkpoint.get("metrics", self._metrics)
 
         if self.rank_scheduler and "rank_scheduler" in checkpoint:
             self.rank_scheduler.current_rank = checkpoint["rank_scheduler"]["current_rank"]
+
+        # No arrastrar un warmup espurio activado por la reconstruccion: el LR
+        # correcto ya vino en el optimizer_state_dict cargado.
+        self._rank_growth_warmup_remaining = 0
 
         logger.info(f"[MZTrain] Checkpoint cargado: {path}")

@@ -1,0 +1,452 @@
+{
+  "experiment": "t8_morph",
+  "smoke": false,
+  "prereg": "PREREGISTRO-T8-morph.md",
+  "protocol": {
+    "lr": 0.0003,
+    "wd": 0.01,
+    "r_steps": 4000,
+    "m1": 2000,
+    "m2": 6000,
+    "warmup": 200,
+    "rank": 192,
+    "d_small": 192,
+    "d_big": 384
+  },
+  "env": {
+    "torch": "2.11.0+cu128",
+    "gpu": "NVIDIA GeForce RTX 4060",
+    "mztrain": "1.2.0"
+  },
+  "status": "done",
+  "R": [
+    {
+      "seed": 0,
+      "bpc_final": 2.9507,
+      "wall_train_s": 194.1,
+      "any_nan": false
+    },
+    {
+      "seed": 1,
+      "bpc_final": 2.8308,
+      "wall_train_s": 193.6,
+      "any_nan": false
+    },
+    {
+      "seed": 2,
+      "bpc_final": 2.9248,
+      "wall_train_s": 194.7,
+      "any_nan": false
+    }
+  ],
+  "M": [
+    {
+      "seed": 0,
+      "phase1_wall_s": 44.1,
+      "phase1_bpc": 3.5592,
+      "surgery_wall_s": 0.35,
+      "surgery_drift": 0.0024,
+      "post_surgery_bpc": 3.5601,
+      "any_nan": false,
+      "curve": [
+        {
+          "step2": 250,
+          "wall_total_s": 56.6,
+          "bpc": 3.531
+        },
+        {
+          "step2": 500,
+          "wall_total_s": 68.8,
+          "bpc": 3.3897
+        },
+        {
+          "step2": 750,
+          "wall_total_s": 81.0,
+          "bpc": 3.12
+        },
+        {
+          "step2": 1000,
+          "wall_total_s": 93.2,
+          "bpc": 2.9461
+        },
+        {
+          "step2": 1250,
+          "wall_total_s": 105.4,
+          "bpc": 2.8251
+        },
+        {
+          "step2": 1500,
+          "wall_total_s": 117.5,
+          "bpc": 2.6966
+        },
+        {
+          "step2": 1750,
+          "wall_total_s": 129.7,
+          "bpc": 2.6116
+        },
+        {
+          "step2": 2000,
+          "wall_total_s": 141.9,
+          "bpc": 2.5256
+        },
+        {
+          "step2": 2250,
+          "wall_total_s": 154.1,
+          "bpc": 2.4631
+        },
+        {
+          "step2": 2500,
+          "wall_total_s": 166.3,
+          "bpc": 2.4125
+        },
+        {
+          "step2": 2750,
+          "wall_total_s": 178.4,
+          "bpc": 2.366
+        },
+        {
+          "step2": 3000,
+          "wall_total_s": 190.6,
+          "bpc": 2.3394
+        },
+        {
+          "step2": 3250,
+          "wall_total_s": 202.8,
+          "bpc": 2.2934
+        },
+        {
+          "step2": 3500,
+          "wall_total_s": 215.0,
+          "bpc": 2.2617
+        },
+        {
+          "step2": 3750,
+          "wall_total_s": 227.3,
+          "bpc": 2.2362
+        },
+        {
+          "step2": 4000,
+          "wall_total_s": 239.5,
+          "bpc": 2.2176
+        },
+        {
+          "step2": 4250,
+          "wall_total_s": 251.7,
+          "bpc": 2.2059
+        },
+        {
+          "step2": 4500,
+          "wall_total_s": 263.8,
+          "bpc": 2.1754
+        },
+        {
+          "step2": 4750,
+          "wall_total_s": 275.9,
+          "bpc": 2.1647
+        },
+        {
+          "step2": 5000,
+          "wall_total_s": 288.1,
+          "bpc": 2.1511
+        },
+        {
+          "step2": 5250,
+          "wall_total_s": 300.2,
+          "bpc": 2.1289
+        },
+        {
+          "step2": 5500,
+          "wall_total_s": 312.3,
+          "bpc": 2.1122
+        },
+        {
+          "step2": 5750,
+          "wall_total_s": 324.4,
+          "bpc": 2.1123
+        },
+        {
+          "step2": 6000,
+          "wall_total_s": 336.6,
+          "bpc": 2.0867
+        }
+      ],
+      "t_m_s": 105.4
+    },
+    {
+      "seed": 1,
+      "phase1_wall_s": 43.8,
+      "phase1_bpc": 3.5488,
+      "surgery_wall_s": 0.28,
+      "surgery_drift": 0.014,
+      "post_surgery_bpc": 3.5503,
+      "any_nan": false,
+      "curve": [
+        {
+          "step2": 250,
+          "wall_total_s": 56.2,
+          "bpc": 3.5276
+        },
+        {
+          "step2": 500,
+          "wall_total_s": 68.3,
+          "bpc": 3.3566
+        },
+        {
+          "step2": 750,
+          "wall_total_s": 80.4,
+          "bpc": 3.1301
+        },
+        {
+          "step2": 1000,
+          "wall_total_s": 92.6,
+          "bpc": 2.9741
+        },
+        {
+          "step2": 1250,
+          "wall_total_s": 104.7,
+          "bpc": 2.853
+        },
+        {
+          "step2": 1500,
+          "wall_total_s": 116.8,
+          "bpc": 2.7559
+        },
+        {
+          "step2": 1750,
+          "wall_total_s": 128.9,
+          "bpc": 2.6651
+        },
+        {
+          "step2": 2000,
+          "wall_total_s": 141.1,
+          "bpc": 2.5768
+        },
+        {
+          "step2": 2250,
+          "wall_total_s": 153.2,
+          "bpc": 2.5106
+        },
+        {
+          "step2": 2500,
+          "wall_total_s": 165.3,
+          "bpc": 2.4504
+        },
+        {
+          "step2": 2750,
+          "wall_total_s": 177.5,
+          "bpc": 2.4062
+        },
+        {
+          "step2": 3000,
+          "wall_total_s": 189.6,
+          "bpc": 2.3708
+        },
+        {
+          "step2": 3250,
+          "wall_total_s": 201.8,
+          "bpc": 2.3271
+        },
+        {
+          "step2": 3500,
+          "wall_total_s": 213.9,
+          "bpc": 2.3123
+        },
+        {
+          "step2": 3750,
+          "wall_total_s": 226.0,
+          "bpc": 2.2742
+        },
+        {
+          "step2": 4000,
+          "wall_total_s": 238.2,
+          "bpc": 2.2509
+        },
+        {
+          "step2": 4250,
+          "wall_total_s": 250.3,
+          "bpc": 2.2327
+        },
+        {
+          "step2": 4500,
+          "wall_total_s": 262.5,
+          "bpc": 2.2089
+        },
+        {
+          "step2": 4750,
+          "wall_total_s": 274.6,
+          "bpc": 2.1914
+        },
+        {
+          "step2": 5000,
+          "wall_total_s": 286.8,
+          "bpc": 2.1824
+        },
+        {
+          "step2": 5250,
+          "wall_total_s": 298.9,
+          "bpc": 2.1609
+        },
+        {
+          "step2": 5500,
+          "wall_total_s": 311.0,
+          "bpc": 2.1524
+        },
+        {
+          "step2": 5750,
+          "wall_total_s": 323.2,
+          "bpc": 2.133
+        },
+        {
+          "step2": 6000,
+          "wall_total_s": 335.4,
+          "bpc": 2.1231
+        }
+      ],
+      "t_m_s": 104.7
+    },
+    {
+      "seed": 2,
+      "phase1_wall_s": 43.9,
+      "phase1_bpc": 3.5384,
+      "surgery_wall_s": 0.29,
+      "surgery_drift": 0.0079,
+      "post_surgery_bpc": 3.5397,
+      "any_nan": false,
+      "curve": [
+        {
+          "step2": 250,
+          "wall_total_s": 56.3,
+          "bpc": 3.5185
+        },
+        {
+          "step2": 500,
+          "wall_total_s": 68.5,
+          "bpc": 3.3527
+        },
+        {
+          "step2": 750,
+          "wall_total_s": 80.7,
+          "bpc": 3.1066
+        },
+        {
+          "step2": 1000,
+          "wall_total_s": 92.8,
+          "bpc": 2.9346
+        },
+        {
+          "step2": 1250,
+          "wall_total_s": 104.9,
+          "bpc": 2.8276
+        },
+        {
+          "step2": 1500,
+          "wall_total_s": 117.1,
+          "bpc": 2.7103
+        },
+        {
+          "step2": 1750,
+          "wall_total_s": 129.2,
+          "bpc": 2.6271
+        },
+        {
+          "step2": 2000,
+          "wall_total_s": 141.4,
+          "bpc": 2.555
+        },
+        {
+          "step2": 2250,
+          "wall_total_s": 153.5,
+          "bpc": 2.4865
+        },
+        {
+          "step2": 2500,
+          "wall_total_s": 165.7,
+          "bpc": 2.4432
+        },
+        {
+          "step2": 2750,
+          "wall_total_s": 177.8,
+          "bpc": 2.3975
+        },
+        {
+          "step2": 3000,
+          "wall_total_s": 190.0,
+          "bpc": 2.3526
+        },
+        {
+          "step2": 3250,
+          "wall_total_s": 202.1,
+          "bpc": 2.3221
+        },
+        {
+          "step2": 3500,
+          "wall_total_s": 214.3,
+          "bpc": 2.2936
+        },
+        {
+          "step2": 3750,
+          "wall_total_s": 226.4,
+          "bpc": 2.2617
+        },
+        {
+          "step2": 4000,
+          "wall_total_s": 238.6,
+          "bpc": 2.2315
+        },
+        {
+          "step2": 4250,
+          "wall_total_s": 250.7,
+          "bpc": 2.2101
+        },
+        {
+          "step2": 4500,
+          "wall_total_s": 262.9,
+          "bpc": 2.2043
+        },
+        {
+          "step2": 4750,
+          "wall_total_s": 275.1,
+          "bpc": 2.189
+        },
+        {
+          "step2": 5000,
+          "wall_total_s": 286.9,
+          "bpc": 2.1621
+        },
+        {
+          "step2": 5250,
+          "wall_total_s": 298.7,
+          "bpc": 2.1535
+        },
+        {
+          "step2": 5500,
+          "wall_total_s": 310.6,
+          "bpc": 2.1436
+        },
+        {
+          "step2": 5750,
+          "wall_total_s": 322.7,
+          "bpc": 2.1318
+        },
+        {
+          "step2": 6000,
+          "wall_total_s": 334.8,
+          "bpc": 2.1154
+        }
+      ],
+      "t_m_s": 104.9
+    }
+  ],
+  "analysis": {
+    "Q": 2.9021,
+    "T_R_s": 194.1,
+    "seeds_que_alcanzan_Q": 3,
+    "T_M_s": [
+      105.4,
+      104.7,
+      104.9
+    ],
+    "ratio": 0.541,
+    "veredicto": "CLAIM CONFIRMADO"
+  }
+}

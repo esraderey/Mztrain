@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mztrain"
-version = "1.0.0"
+version = "1.3.0"
 description = "Motor de Entrenamiento en Espacio Comprimido - Entrenamiento de modelos de IA con factorizacion SVD y compresion de memoria via MNEME"
 readme = "README.md"
-license = {text = "BUSL-1.1"}
+license = {text = "MIT"}
 authors = [
     {name = "Esraderey", email = "msc.framework@gmail.com"},
     {name = "Raul Cruz Acosta", email = "raul.cruz.acosta@example.com"}
@@ -24,7 +24,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
-    "License :: Other/Proprietary License",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
@@ -42,9 +42,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-mneme = [
-    "mneme>=2.0.0",
-]
+# NOTA: MNEME es un backend opcional que NO se distribuye por PyPI.
+# Instalarlo manualmente desde su repositorio (ver README, seccion MNEME).
+# No se declara como extra para evitar resolver un paquete ajeno homonimo.
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
@@ -65,8 +65,11 @@ docs = [
     "myst-parser>=1.0.0",
     "sphinx-autodoc-typehints>=1.23.0",
 ]
+seal = [
+    "cryptography>=41.0.0",
+]
 all = [
-    "mneme>=2.0.0",
+    "cryptography>=41.0.0",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
     "black>=23.0.0",

@@ -28,7 +28,7 @@ def read_requirements():
 
 setup(
     name="mztrain",
-    version="1.0.0",
+    version="1.3.0",
     author="Esraderey and Raul Cruz Acosta",
     author_email="msc.framework@gmail.com",
     description=(
@@ -49,7 +49,7 @@ setup(
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
-        "License :: Other/Proprietary License",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
@@ -71,14 +71,10 @@ setup(
             "mypy>=1.0.0",
             "pre-commit>=3.0.0",
         ],
-        "mneme": [
-            "mneme>=2.0.0",
-        ],
         "gpu": [
             "torch[cuda]>=2.0.0",
         ],
         "all": [
-            "mneme>=2.0.0",
             "pytest>=7.0.0",
             "pytest-cov>=4.0.0",
             "black>=23.0.0",

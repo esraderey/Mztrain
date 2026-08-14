@@ -1,0 +1,335 @@
+{
+  "activation_checkpoint": {
+    "bytes_saved": 550502400,
+    "mneme_available": true,
+    "total_compressed": 1200,
+    "total_decompressed": 1200
+  },
+  "amp": "bf16",
+  "config": {
+    "activation": "gelu",
+    "attention_probs_dropout_prob": 0.0,
+    "factor_init_method": "kaiming",
+    "hidden_dropout_prob": 0.0,
+    "hidden_size": 1792,
+    "intermediate_size": 7168,
+    "layer_norm_eps": 1e-12,
+    "max_position_embeddings": 512,
+    "mneme_compression_level": "balanced",
+    "num_attention_heads": 28,
+    "num_hidden_layers": 24,
+    "rank": 64,
+    "type_vocab_size": 2,
+    "use_activation_checkpointing": true,
+    "vocab_size": 50000
+  },
+  "cuda_available": true,
+  "cuda_device": "NVIDIA GeForce RTX 4060",
+  "dataset": {
+    "batch_size": 1,
+    "files": 30,
+    "roots": [
+      "src",
+      "tests"
+    ],
+    "seq_len": 64,
+    "snippets": 191
+  },
+  "device": "cuda",
+  "elapsed_seconds": 47.97645109999985,
+  "gpu_memory": {
+    "allocated_mb": 1390.38671875,
+    "max_allocated_mb": 3817.583984375,
+    "max_reserved_mb": 3994.0,
+    "reserved_mb": 3994.0
+  },
+  "loss": {
+    "final_eval": 4.203496932983398,
+    "history": [
+      {
+        "step": 1,
+        "train_loss": 11.169642448425293
+      },
+      {
+        "step": 2,
+        "train_loss": 10.833333015441895
+      },
+      {
+        "step": 3,
+        "train_loss": 10.439484596252441
+      },
+      {
+        "step": 4,
+        "train_loss": 9.660714149475098
+      },
+      {
+        "step": 5,
+        "train_loss": 9.86259937286377
+      },
+      {
+        "step": 6,
+        "train_loss": 10.116071701049805
+      },
+      {
+        "step": 7,
+        "train_loss": 9.270337104797363
+      },
+      {
+        "step": 8,
+        "train_loss": 8.672618865966797
+      },
+      {
+        "step": 9,
+        "train_loss": 8.101686477661133
+      },
+      {
+        "step": 10,
+        "train_loss": 8.64236068725586
+      },
+      {
+        "step": 11,
+        "train_loss": 6.563492298126221
+      },
+      {
+        "step": 12,
+        "train_loss": 8.035714149475098
+      },
+      {
+        "step": 13,
+        "train_loss": 7.416666507720947
+      },
+      {
+        "step": 14,
+        "train_loss": 7.8618550300598145
+      },
+      {
+        "step": 15,
+        "train_loss": 8.236855506896973
+      },
+      {
+        "step": 16,
+        "train_loss": 6.3881449699401855
+      },
+      {
+        "step": 17,
+        "train_loss": 7.4375
+      },
+      {
+        "step": 18,
+        "train_loss": 8.071676254272461
+      },
+      {
+        "step": 19,
+        "train_loss": 6.546627044677734
+      },
+      {
+        "step": 20,
+        "train_loss": 6.417658805847168
+      },
+      {
+        "step": 21,
+        "train_loss": 5.32118034362793
+      },
+      {
+        "step": 22,
+        "train_loss": 5.7155256271362305
+      },
+      {
+        "step": 23,
+        "train_loss": 5.201760768890381
+      },
+      {
+        "step": 24,
+        "train_loss": 4.14180326461792
+      },
+      {
+        "eval_loss": 4.218811988830566,
+        "step": 25,
+        "train_loss": 5.553199291229248
+      },
+      {
+        "step": 26,
+        "train_loss": 5.441468238830566
+      },
+      {
+        "step": 27,
+        "train_loss": 5.517857074737549
+      },
+      {
+        "step": 28,
+        "train_loss": 5.286210536956787
+      },
+      {
+        "step": 29,
+        "train_loss": 5.602182388305664
+      },
+      {
+        "step": 30,
+        "train_loss": 4.643229007720947
+      },
+      {
+        "step": 31,
+        "train_loss": 4.507564544677734
+      },
+      {
+        "step": 32,
+        "train_loss": 4.071800708770752
+      },
+      {
+        "step": 33,
+        "train_loss": 4.092385768890381
+      },
+      {
+        "step": 34,
+        "train_loss": 5.034970283508301
+      },
+      {
+        "step": 35,
+        "train_loss": 4.530257701873779
+      },
+      {
+        "step": 36,
+        "train_loss": 4.206101417541504
+      },
+      {
+        "step": 37,
+        "train_loss": 3.4754464626312256
+      },
+      {
+        "step": 38,
+        "train_loss": 3.635540723800659
+      },
+      {
+        "step": 39,
+        "train_loss": 4.861111164093018
+      },
+      {
+        "step": 40,
+        "train_loss": 5.351314544677734
+      },
+      {
+        "step": 41,
+        "train_loss": 2.91015625
+      },
+      {
+        "step": 42,
+        "train_loss": 5.070932388305664
+      },
+      {
+        "step": 43,
+        "train_loss": 3.298673152923584
+      },
+      {
+        "step": 44,
+        "train_loss": 4.496837615966797
+      },
+      {
+        "step": 45,
+        "train_loss": 2.9338417053222656
+      },
+      {
+        "step": 46,
+        "train_loss": 4.258184432983398
+      },
+      {
+        "step": 47,
+        "train_loss": 2.0960750579833984
+      },
+      {
+        "step": 48,
+        "train_loss": 3.313988208770752
+      },
+      {
+        "step": 49,
+        "train_loss": 4.037078380584717
+      },
+      {
+        "eval_loss": 3.1510339975357056,
+        "step": 50,
+        "train_loss": 4.9584574699401855
+      }
+    ],
+    "initial_eval": 11.135416507720947,
+    "train_steps": [
+      11.169642448425293,
+      10.833333015441895,
+      10.439484596252441,
+      9.660714149475098,
+      9.86259937286377,
+      10.116071701049805,
+      9.270337104797363,
+      8.672618865966797,
+      8.101686477661133,
+      8.64236068725586,
+      6.563492298126221,
+      8.035714149475098,
+      7.416666507720947,
+      7.8618550300598145,
+      8.236855506896973,
+      6.3881449699401855,
+      7.4375,
+      8.071676254272461,
+      6.546627044677734,
+      6.417658805847168,
+      5.32118034362793,
+      5.7155256271362305,
+      5.201760768890381,
+      4.14180326461792,
+      5.553199291229248,
+      5.441468238830566,
+      5.517857074737549,
+      5.286210536956787,
+      5.602182388305664,
+      4.643229007720947,
+      4.507564544677734,
+      4.071800708770752,
+      4.092385768890381,
+      5.034970283508301,
+      4.530257701873779,
+      4.206101417541504,
+      3.4754464626312256,
+      3.635540723800659,
+      4.861111164093018,
+      5.351314544677734,
+      2.91015625,
+      5.070932388305664,
+      3.298673152923584,
+      4.496837615966797,
+      2.9338417053222656,
+      4.258184432983398,
+      2.0960750579833984,
+      3.313988208770752,
+      4.037078380584717,
+      4.9584574699401855
+    ]
+  },
+  "mneme_storage": {
+    "available": true,
+    "path": "D:\\mztrain\\mneme_storage_zcoder1b",
+    "stored": true
+  },
+  "model": "ZCodeBERTForCausalLM",
+  "model_stats": {
+    "compression_ratio": 0.13824705484220345,
+    "equivalent_params": 1018968832,
+    "factorized_layers": 145,
+    "hidden_size": 1792,
+    "num_heads": 28,
+    "num_layers": 24,
+    "rank": 64,
+    "task": "CausalLM",
+    "total_params": 141154256,
+    "trainable_params": 140869440
+  },
+  "optimizer_stats": {
+    "compressed_params": 684,
+    "full_memory_mb": 1075.1573486328125,
+    "memory_saved_pct": 73.43701480604051,
+    "state_memory_mb": 285.59388732910156,
+    "step_count": 50,
+    "total_params": 684
+  },
+  "scale": "1B_dense_equivalent_compressed",
+  "status": "completed",
+  "torch": "2.11.0+cu128"
+}

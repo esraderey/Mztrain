@@ -1,0 +1,100 @@
+{
+  "activation_checkpoint": {
+    "bytes_saved": 220200960,
+    "mneme_available": true,
+    "total_compressed": 480,
+    "total_decompressed": 480
+  },
+  "amp": "bf16",
+  "config": {
+    "activation": "gelu",
+    "attention_probs_dropout_prob": 0.0,
+    "factor_init_method": "kaiming",
+    "hidden_dropout_prob": 0.0,
+    "hidden_size": 1792,
+    "intermediate_size": 7168,
+    "layer_norm_eps": 1e-12,
+    "max_position_embeddings": 512,
+    "mneme_compression_level": "balanced",
+    "num_attention_heads": 28,
+    "num_hidden_layers": 24,
+    "rank": 64,
+    "type_vocab_size": 2,
+    "use_activation_checkpointing": true,
+    "vocab_size": 50000
+  },
+  "cuda_available": true,
+  "cuda_device": "NVIDIA GeForce RTX 4060",
+  "dataset": {
+    "batch_size": 1,
+    "files": 30,
+    "roots": [
+      "src",
+      "tests"
+    ],
+    "seq_len": 64,
+    "snippets": 191
+  },
+  "device": "cuda",
+  "elapsed_seconds": 19.68925339999987,
+  "gpu_memory": {
+    "allocated_mb": 1810.38671875,
+    "max_allocated_mb": 4215.068359375,
+    "max_reserved_mb": 4370.0,
+    "reserved_mb": 4370.0
+  },
+  "loss": {
+    "final_eval": null,
+    "initial_eval": null,
+    "train_steps": [
+      10.990078926086426,
+      10.990078926086426,
+      10.322421073913574,
+      10.0,
+      10.23759937286377,
+      9.214285850524902,
+      9.158730506896973,
+      9.13740062713623,
+      7.057043552398682,
+      6.45907735824585,
+      8.472718238830566,
+      8.703125,
+      6.023065567016602,
+      8.222222328186035,
+      7.724206447601318,
+      7.468873977661133,
+      4.763330936431885,
+      7.769841194152832,
+      7.858879089355469,
+      6.759920597076416
+    ]
+  },
+  "mneme_storage": {
+    "available": true,
+    "path": "D:\\mztrain\\mneme_storage_zcoder1b",
+    "stored": true
+  },
+  "model": "ZCodeBERTForCausalLM",
+  "model_stats": {
+    "compression_ratio": 0.13824705484220345,
+    "equivalent_params": 1018968832,
+    "factorized_layers": 145,
+    "hidden_size": 1792,
+    "num_heads": 28,
+    "num_layers": 24,
+    "rank": 64,
+    "task": "CausalLM",
+    "total_params": 141154256,
+    "trainable_params": 140869440
+  },
+  "optimizer_stats": {
+    "compressed_params": 684,
+    "full_memory_mb": 1075.1573486328125,
+    "memory_saved_pct": 73.43701480604051,
+    "state_memory_mb": 285.59388732910156,
+    "step_count": 20,
+    "total_params": 684
+  },
+  "scale": "1B_dense_equivalent_compressed",
+  "torch": "2.11.0+cu128"
+}

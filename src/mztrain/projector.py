@@ -287,6 +287,25 @@ class ZGaLoreOptimizer(torch.optim.Optimizer):
         flat = blocks.reshape(-1)[:orig_numel]
         return flat.reshape(shape)
 
+    _V_LOG_FLOOR = 1e-30
+
+    def _compress_v(self, v: torch.Tensor) -> tuple:
+        """Cuantizacion LOGARITMICA del 2o momento de Adam (v >= 0).
+
+        La cuantizacion INT8 LINEAL (_compress_state) colapsa a 0 los valores
+        pequenos de un bloque que contiene un outlier; entonces el denominador de
+        Adam cae a eps y el paso salta a ~1/eps (1e8), divergiendo. Cuantizar
+        log(v) da precision RELATIVA uniforme y preserva los v pequenos (mismo
+        esquema que ZCompressedAdam._compress_v).
+        """
+        safe_v = v.clamp(min=self._V_LOG_FLOOR)
+        return self._compress_state(safe_v.log())
+
+    def _decompress_v(self, compressed: tuple, dtype: torch.dtype) -> torch.Tensor:
+        """Inversa de _compress_v: INT8 -> log_v -> exp -> v."""
+        log_v = self._decompress_state(compressed, dtype)
+        return log_v.exp()
+
     @torch.no_grad()
     def step(self, closure=None):
         """Paso de optimizacion con proyeccion GaLore."""
@@ -335,7 +354,7 @@ class ZGaLoreOptimizer(torch.optim.Optimizer):
                 # Descomprimir si necesario
                 if state['compressed'] and self.compress_states:
                     m_val = self._decompress_state(state['exp_avg'], p.dtype)
-                    v_val = self._decompress_state(state['exp_avg_sq'], p.dtype)
+                    v_val = self._decompress_v(state['exp_avg_sq'], p.dtype)
                 else:
                     m_val = state['exp_avg']
                     v_val = state['exp_avg_sq']
@@ -387,7 +406,7 @@ class ZGaLoreOptimizer(torch.optim.Optimizer):
                 )
                 if should_compress:
                     state['exp_avg'] = self._compress_state(m_val)
-                    state['exp_avg_sq'] = self._compress_state(v_val)
+                    state['exp_avg_sq'] = self._compress_v(v_val)   # log-quant, no lineal
                     state['compressed'] = True
                 else:
                     state['exp_avg'] = m_val

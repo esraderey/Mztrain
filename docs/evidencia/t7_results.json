@@ -1,0 +1,3466 @@
+{
+  "experiment": "t7_dynamics",
+  "smoke": false,
+  "prereg": "PREREGISTRO-T7-dinamica.md",
+  "protocol": {
+    "steps": 4000,
+    "lr": 0.0003,
+    "rebal_every": 250
+  },
+  "env": {
+    "torch": "2.11.0+cu128",
+    "gpu": "NVIDIA GeForce RTX 4060",
+    "mztrain": "1.1.0"
+  },
+  "started_unix": 1786497023.1281357,
+  "status": "done",
+  "runs": [
+    {
+      "name": "F64_wd0/s0",
+      "seed": 0,
+      "wd": 0.0,
+      "no_s_decay": false,
+      "rebal": false,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.04,
+          "smin": 1.224236,
+          "smax": 3.1389,
+          "imbal_logmax": 0.0011
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.05,
+          "smin": 1.225835,
+          "smax": 3.1464,
+          "imbal_logmax": 0.0466
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225917,
+          "smax": 3.1474,
+          "imbal_logmax": 0.0512
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225833,
+          "smax": 3.1487,
+          "imbal_logmax": 0.055
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225827,
+          "smax": 3.1498,
+          "imbal_logmax": 0.0567
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225817,
+          "smax": 3.1507,
+          "imbal_logmax": 0.0611
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225743,
+          "smax": 3.1515,
+          "imbal_logmax": 0.0699
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225696,
+          "smax": 3.1525,
+          "imbal_logmax": 0.0808
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225654,
+          "smax": 3.1529,
+          "imbal_logmax": 0.0878
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225638,
+          "smax": 3.1534,
+          "imbal_logmax": 0.0973
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225559,
+          "smax": 3.1542,
+          "imbal_logmax": 0.1055
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225526,
+          "smax": 3.1548,
+          "imbal_logmax": 0.1102
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.221898,
+          "smax": 3.1616,
+          "imbal_logmax": 0.1733
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.221422,
+          "smax": 3.1606,
+          "imbal_logmax": 0.1648
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220438,
+          "smax": 3.161,
+          "imbal_logmax": 0.1623
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219933,
+          "smax": 3.1615,
+          "imbal_logmax": 0.1638
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219285,
+          "smax": 3.1614,
+          "imbal_logmax": 0.163
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219421,
+          "smax": 3.1624,
+          "imbal_logmax": 0.1654
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219307,
+          "smax": 3.1635,
+          "imbal_logmax": 0.1666
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.21909,
+          "smax": 3.1641,
+          "imbal_logmax": 0.1667
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219113,
+          "smax": 3.1644,
+          "imbal_logmax": 0.1672
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219795,
+          "smax": 3.1644,
+          "imbal_logmax": 0.1671
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220186,
+          "smax": 3.1645,
+          "imbal_logmax": 0.1701
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220032,
+          "smax": 3.1652,
+          "imbal_logmax": 0.1691
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219693,
+          "smax": 3.1655,
+          "imbal_logmax": 0.1698
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220019,
+          "smax": 3.1662,
+          "imbal_logmax": 0.1694
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220007,
+          "smax": 3.1661,
+          "imbal_logmax": 0.1685
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.21999,
+          "smax": 3.1664,
+          "imbal_logmax": 0.1683
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.220098,
+          "smax": 3.1665,
+          "imbal_logmax": 0.1687
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.215662,
+          "smax": 3.1675,
+          "imbal_logmax": 0.1798
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.215552,
+          "smax": 3.168,
+          "imbal_logmax": 0.1781
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216076,
+          "smax": 3.1682,
+          "imbal_logmax": 0.1803
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216249,
+          "smax": 3.1682,
+          "imbal_logmax": 0.1846
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216633,
+          "smax": 3.1685,
+          "imbal_logmax": 0.1882
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216529,
+          "smax": 3.1689,
+          "imbal_logmax": 0.1899
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216468,
+          "smax": 3.1688,
+          "imbal_logmax": 0.1925
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216372,
+          "smax": 3.169,
+          "imbal_logmax": 0.1951
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216396,
+          "smax": 3.1692,
+          "imbal_logmax": 0.1981
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216214,
+          "smax": 3.1695,
+          "imbal_logmax": 0.201
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216056,
+          "smax": 3.1696,
+          "imbal_logmax": 0.2046
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.216053,
+          "smax": 3.1696,
+          "imbal_logmax": 0.2067
+        }
+      ],
+      "val_bpc_full": 3.6258,
+      "any_nan": false,
+      "wall_s": 131.3
+    },
+    {
+      "name": "F64_wd0/s1",
+      "seed": 1,
+      "wd": 0.0,
+      "no_s_decay": false,
+      "rebal": false,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.01,
+          "smin": 1.220036,
+          "smax": 3.1415,
+          "imbal_logmax": 0.0012
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.02,
+          "smin": 1.219612,
+          "smax": 3.1484,
+          "imbal_logmax": 0.0467
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.219901,
+          "smax": 3.1488,
+          "imbal_logmax": 0.057
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.04,
+          "smin": 1.220139,
+          "smax": 3.1489,
+          "imbal_logmax": 0.0618
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220187,
+          "smax": 3.149,
+          "imbal_logmax": 0.0637
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220146,
+          "smax": 3.1491,
+          "imbal_logmax": 0.0674
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.220148,
+          "smax": 3.1491,
+          "imbal_logmax": 0.0705
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.220042,
+          "smax": 3.1491,
+          "imbal_logmax": 0.0748
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219884,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0793
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219797,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0841
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.21967,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0895
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219579,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0914
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.21937,
+          "smax": 3.1493,
+          "imbal_logmax": 0.0951
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219255,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219082,
+          "smax": 3.1493,
+          "imbal_logmax": 0.102
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.218994,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1045
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.218791,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1087
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.218616,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1115
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.2184,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1149
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.218149,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1196
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.217949,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1235
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.21772,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1269
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.217485,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1309
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.217351,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1351
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.217097,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1384
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.216927,
+          "smax": 3.1495,
+          "imbal_logmax": 0.143
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.216746,
+          "smax": 3.1499,
+          "imbal_logmax": 0.1471
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.21655,
+          "smax": 3.1503,
+          "imbal_logmax": 0.1507
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.216218,
+          "smax": 3.1507,
+          "imbal_logmax": 0.1552
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.215912,
+          "smax": 3.1515,
+          "imbal_logmax": 0.1597
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.215677,
+          "smax": 3.1519,
+          "imbal_logmax": 0.177
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.215404,
+          "smax": 3.1525,
+          "imbal_logmax": 0.1982
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.215158,
+          "smax": 3.1531,
+          "imbal_logmax": 0.2168
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214811,
+          "smax": 3.154,
+          "imbal_logmax": 0.2381
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214574,
+          "smax": 3.1546,
+          "imbal_logmax": 0.2585
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214316,
+          "smax": 3.1552,
+          "imbal_logmax": 0.2716
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214102,
+          "smax": 3.1561,
+          "imbal_logmax": 0.2833
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.213773,
+          "smax": 3.1571,
+          "imbal_logmax": 0.297
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.213519,
+          "smax": 3.1578,
+          "imbal_logmax": 0.3082
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.213132,
+          "smax": 3.159,
+          "imbal_logmax": 0.3153
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.212782,
+          "smax": 3.1605,
+          "imbal_logmax": 0.3257
+        }
+      ],
+      "val_bpc_full": 3.2403,
+      "any_nan": false,
+      "wall_s": 131.6
+    },
+    {
+      "name": "F64_wd0/s2",
+      "seed": 2,
+      "wd": 0.0,
+      "no_s_decay": false,
+      "rebal": false,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.219949,
+          "smax": 3.1607,
+          "imbal_logmax": 0.001
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.223098,
+          "smax": 3.1691,
+          "imbal_logmax": 0.0364
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.2222,
+          "smax": 3.1698,
+          "imbal_logmax": 0.0479
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222137,
+          "smax": 3.1703,
+          "imbal_logmax": 0.0569
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221969,
+          "smax": 3.1705,
+          "imbal_logmax": 0.0636
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221784,
+          "smax": 3.1707,
+          "imbal_logmax": 0.0686
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.22126,
+          "smax": 3.1708,
+          "imbal_logmax": 0.0748
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221231,
+          "smax": 3.1709,
+          "imbal_logmax": 0.0803
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221202,
+          "smax": 3.171,
+          "imbal_logmax": 0.0864
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221465,
+          "smax": 3.1711,
+          "imbal_logmax": 0.0904
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222213,
+          "smax": 3.1711,
+          "imbal_logmax": 0.0954
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222065,
+          "smax": 3.1712,
+          "imbal_logmax": 0.1011
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221883,
+          "smax": 3.1713,
+          "imbal_logmax": 0.1034
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221689,
+          "smax": 3.1714,
+          "imbal_logmax": 0.1083
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221569,
+          "smax": 3.1714,
+          "imbal_logmax": 0.1131
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221485,
+          "smax": 3.1715,
+          "imbal_logmax": 0.1151
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221274,
+          "smax": 3.1716,
+          "imbal_logmax": 0.1158
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221094,
+          "smax": 3.1716,
+          "imbal_logmax": 0.1181
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220935,
+          "smax": 3.1716,
+          "imbal_logmax": 0.1219
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220835,
+          "smax": 3.1717,
+          "imbal_logmax": 0.1242
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220744,
+          "smax": 3.1717,
+          "imbal_logmax": 0.1264
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220593,
+          "smax": 3.1718,
+          "imbal_logmax": 0.1299
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220371,
+          "smax": 3.1718,
+          "imbal_logmax": 0.1319
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220147,
+          "smax": 3.1719,
+          "imbal_logmax": 0.1342
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220036,
+          "smax": 3.1719,
+          "imbal_logmax": 0.1348
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219797,
+          "smax": 3.1719,
+          "imbal_logmax": 0.1369
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219614,
+          "smax": 3.172,
+          "imbal_logmax": 0.1399
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219455,
+          "smax": 3.172,
+          "imbal_logmax": 0.1453
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219317,
+          "smax": 3.172,
+          "imbal_logmax": 0.1493
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219139,
+          "smax": 3.172,
+          "imbal_logmax": 0.1523
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218975,
+          "smax": 3.172,
+          "imbal_logmax": 0.1569
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218756,
+          "smax": 3.172,
+          "imbal_logmax": 0.1617
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218583,
+          "smax": 3.172,
+          "imbal_logmax": 0.1647
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218304,
+          "smax": 3.172,
+          "imbal_logmax": 0.1713
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218192,
+          "smax": 3.172,
+          "imbal_logmax": 0.1763
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217952,
+          "smax": 3.172,
+          "imbal_logmax": 0.1826
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217745,
+          "smax": 3.1719,
+          "imbal_logmax": 0.1916
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217508,
+          "smax": 3.1718,
+          "imbal_logmax": 0.1982
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217201,
+          "smax": 3.1718,
+          "imbal_logmax": 0.2072
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217007,
+          "smax": 3.1715,
+          "imbal_logmax": 0.2155
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.01,
+          "smin": 1.216308,
+          "smax": 3.1709,
+          "imbal_logmax": 0.2323
+        }
+      ],
+      "val_bpc_full": 3.4152,
+      "any_nan": false,
+      "wall_s": 138.2
+    },
+    {
+      "name": "Dsmall_wd0/s0",
+      "seed": 0,
+      "wd": 0.0,
+      "no_s_decay": false,
+      "rebal": false,
+      "params": 2902848,
+      "instr": [],
+      "val_bpc_full": 3.0289,
+      "any_nan": false,
+      "wall_s": 89.1
+    },
+    {
+      "name": "Dsmall_wd0/s1",
+      "seed": 1,
+      "wd": 0.0,
+      "no_s_decay": false,
+      "rebal": false,
+      "params": 2902848,
+      "instr": [],
+      "val_bpc_full": 3.0243,
+      "any_nan": false,
+      "wall_s": 88.8
+    },
+    {
+      "name": "Dsmall_wd0/s2",
+      "seed": 2,
+      "wd": 0.0,
+      "no_s_decay": false,
+      "rebal": false,
+      "params": 2902848,
+      "instr": [],
+      "val_bpc_full": 3.0162,
+      "any_nan": false,
+      "wall_s": 87.0
+    },
+    {
+      "name": "F64_noSdecay/s0",
+      "seed": 0,
+      "wd": 0.01,
+      "no_s_decay": true,
+      "rebal": false,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.04,
+          "smin": 1.224236,
+          "smax": 3.1389,
+          "imbal_logmax": 0.0011
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.05,
+          "smin": 1.225836,
+          "smax": 3.1464,
+          "imbal_logmax": 0.0466
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225918,
+          "smax": 3.1474,
+          "imbal_logmax": 0.0512
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225835,
+          "smax": 3.1488,
+          "imbal_logmax": 0.0551
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225829,
+          "smax": 3.1498,
+          "imbal_logmax": 0.0568
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225819,
+          "smax": 3.1507,
+          "imbal_logmax": 0.0612
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225746,
+          "smax": 3.1516,
+          "imbal_logmax": 0.0701
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225697,
+          "smax": 3.1525,
+          "imbal_logmax": 0.0809
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225655,
+          "smax": 3.153,
+          "imbal_logmax": 0.088
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225639,
+          "smax": 3.1535,
+          "imbal_logmax": 0.0977
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225568,
+          "smax": 3.1542,
+          "imbal_logmax": 0.106
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225535,
+          "smax": 3.1548,
+          "imbal_logmax": 0.1104
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225503,
+          "smax": 3.1553,
+          "imbal_logmax": 0.1139
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.2254,
+          "smax": 3.1558,
+          "imbal_logmax": 0.119
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225399,
+          "smax": 3.1562,
+          "imbal_logmax": 0.122
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.22529,
+          "smax": 3.1566,
+          "imbal_logmax": 0.1236
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225151,
+          "smax": 3.157,
+          "imbal_logmax": 0.1279
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225042,
+          "smax": 3.1575,
+          "imbal_logmax": 0.1323
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.224987,
+          "smax": 3.158,
+          "imbal_logmax": 0.1328
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.224893,
+          "smax": 3.1589,
+          "imbal_logmax": 0.1351
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.224751,
+          "smax": 3.1592,
+          "imbal_logmax": 0.1358
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.22467,
+          "smax": 3.1593,
+          "imbal_logmax": 0.138
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.224571,
+          "smax": 3.1598,
+          "imbal_logmax": 0.1376
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.224433,
+          "smax": 3.1604,
+          "imbal_logmax": 0.1398
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.224238,
+          "smax": 3.1605,
+          "imbal_logmax": 0.1409
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.224154,
+          "smax": 3.161,
+          "imbal_logmax": 0.1392
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.224029,
+          "smax": 3.1612,
+          "imbal_logmax": 0.1435
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.223848,
+          "smax": 3.1613,
+          "imbal_logmax": 0.1469
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.223686,
+          "smax": 3.1617,
+          "imbal_logmax": 0.1509
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.223571,
+          "smax": 3.1629,
+          "imbal_logmax": 0.1526
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.223488,
+          "smax": 3.1629,
+          "imbal_logmax": 0.1594
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.223278,
+          "smax": 3.1635,
+          "imbal_logmax": 0.1654
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.223078,
+          "smax": 3.1637,
+          "imbal_logmax": 0.1679
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222879,
+          "smax": 3.1649,
+          "imbal_logmax": 0.1735
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222649,
+          "smax": 3.1662,
+          "imbal_logmax": 0.1774
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222453,
+          "smax": 3.1656,
+          "imbal_logmax": 0.1818
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222255,
+          "smax": 3.1671,
+          "imbal_logmax": 0.1913
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222066,
+          "smax": 3.1676,
+          "imbal_logmax": 0.2025
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221785,
+          "smax": 3.1685,
+          "imbal_logmax": 0.2151
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.22163,
+          "smax": 3.1688,
+          "imbal_logmax": 0.2259
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221432,
+          "smax": 3.1685,
+          "imbal_logmax": 0.2347
+        }
+      ],
+      "val_bpc_full": 3.4106,
+      "any_nan": false,
+      "wall_s": 129.1
+    },
+    {
+      "name": "F64_noSdecay/s1",
+      "seed": 1,
+      "wd": 0.01,
+      "no_s_decay": true,
+      "rebal": false,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.01,
+          "smin": 1.220036,
+          "smax": 3.1415,
+          "imbal_logmax": 0.0012
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.02,
+          "smin": 1.219613,
+          "smax": 3.1484,
+          "imbal_logmax": 0.0467
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.219902,
+          "smax": 3.1488,
+          "imbal_logmax": 0.0571
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.04,
+          "smin": 1.220147,
+          "smax": 3.1489,
+          "imbal_logmax": 0.0618
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220193,
+          "smax": 3.1491,
+          "imbal_logmax": 0.0638
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.220155,
+          "smax": 3.1491,
+          "imbal_logmax": 0.0677
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.220151,
+          "smax": 3.1491,
+          "imbal_logmax": 0.0707
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.220044,
+          "smax": 3.1491,
+          "imbal_logmax": 0.0751
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219888,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0799
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219803,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0848
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219678,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0902
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219589,
+          "smax": 3.1492,
+          "imbal_logmax": 0.0922
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219377,
+          "smax": 3.1493,
+          "imbal_logmax": 0.096
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219263,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1009
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219095,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1031
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.07,
+          "smin": 1.219008,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1056
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.218807,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1099
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.21863,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1124
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.218411,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1158
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.218163,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1205
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.21796,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1246
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.21773,
+          "smax": 3.1493,
+          "imbal_logmax": 0.128
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.217504,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1321
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.217365,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1363
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.217113,
+          "smax": 3.1493,
+          "imbal_logmax": 0.1396
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.216947,
+          "smax": 3.1497,
+          "imbal_logmax": 0.1442
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.216774,
+          "smax": 3.1501,
+          "imbal_logmax": 0.1484
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.216581,
+          "smax": 3.1505,
+          "imbal_logmax": 0.1521
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.216242,
+          "smax": 3.1509,
+          "imbal_logmax": 0.1565
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.06,
+          "smin": 1.215954,
+          "smax": 3.1518,
+          "imbal_logmax": 0.1612
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.21572,
+          "smax": 3.1521,
+          "imbal_logmax": 0.1784
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.215445,
+          "smax": 3.1528,
+          "imbal_logmax": 0.2002
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.215203,
+          "smax": 3.1533,
+          "imbal_logmax": 0.2196
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214869,
+          "smax": 3.1542,
+          "imbal_logmax": 0.2412
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214631,
+          "smax": 3.1548,
+          "imbal_logmax": 0.2627
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214372,
+          "smax": 3.1553,
+          "imbal_logmax": 0.2768
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.214168,
+          "smax": 3.1563,
+          "imbal_logmax": 0.2895
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.213838,
+          "smax": 3.1573,
+          "imbal_logmax": 0.3037
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.213591,
+          "smax": 3.1581,
+          "imbal_logmax": 0.3159
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.213213,
+          "smax": 3.1592,
+          "imbal_logmax": 0.3239
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 63.05,
+          "eff_rank_min": 62.05,
+          "smin": 1.212864,
+          "smax": 3.1608,
+          "imbal_logmax": 0.3344
+        }
+      ],
+      "val_bpc_full": 3.2427,
+      "any_nan": false,
+      "wall_s": 132.7
+    },
+    {
+      "name": "F64_noSdecay/s2",
+      "seed": 2,
+      "wd": 0.01,
+      "no_s_decay": true,
+      "rebal": false,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.219949,
+          "smax": 3.1607,
+          "imbal_logmax": 0.001
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.223098,
+          "smax": 3.1691,
+          "imbal_logmax": 0.0364
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.2222,
+          "smax": 3.1698,
+          "imbal_logmax": 0.048
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222139,
+          "smax": 3.1703,
+          "imbal_logmax": 0.057
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221973,
+          "smax": 3.1705,
+          "imbal_logmax": 0.0637
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221793,
+          "smax": 3.1707,
+          "imbal_logmax": 0.0688
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221268,
+          "smax": 3.1708,
+          "imbal_logmax": 0.0749
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221233,
+          "smax": 3.1709,
+          "imbal_logmax": 0.0805
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221206,
+          "smax": 3.171,
+          "imbal_logmax": 0.0866
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221469,
+          "smax": 3.1711,
+          "imbal_logmax": 0.0908
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222228,
+          "smax": 3.1711,
+          "imbal_logmax": 0.0959
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.222079,
+          "smax": 3.1712,
+          "imbal_logmax": 0.1017
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221898,
+          "smax": 3.1713,
+          "imbal_logmax": 0.104
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221705,
+          "smax": 3.1714,
+          "imbal_logmax": 0.1089
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221588,
+          "smax": 3.1715,
+          "imbal_logmax": 0.1137
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221505,
+          "smax": 3.1715,
+          "imbal_logmax": 0.1159
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221297,
+          "smax": 3.1716,
+          "imbal_logmax": 0.1167
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.221119,
+          "smax": 3.1716,
+          "imbal_logmax": 0.1193
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220965,
+          "smax": 3.1716,
+          "imbal_logmax": 0.1231
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220864,
+          "smax": 3.1717,
+          "imbal_logmax": 0.1255
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220779,
+          "smax": 3.1717,
+          "imbal_logmax": 0.1281
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.22063,
+          "smax": 3.1718,
+          "imbal_logmax": 0.1316
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220408,
+          "smax": 3.1718,
+          "imbal_logmax": 0.1339
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220188,
+          "smax": 3.1719,
+          "imbal_logmax": 0.1353
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.220076,
+          "smax": 3.172,
+          "imbal_logmax": 0.1357
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219841,
+          "smax": 3.172,
+          "imbal_logmax": 0.1379
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219654,
+          "smax": 3.172,
+          "imbal_logmax": 0.1419
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219494,
+          "smax": 3.172,
+          "imbal_logmax": 0.148
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219359,
+          "smax": 3.172,
+          "imbal_logmax": 0.1518
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.02,
+          "smin": 1.219185,
+          "smax": 3.1721,
+          "imbal_logmax": 0.1553
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.219027,
+          "smax": 3.1721,
+          "imbal_logmax": 0.16
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.21882,
+          "smax": 3.1721,
+          "imbal_logmax": 0.1654
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218646,
+          "smax": 3.172,
+          "imbal_logmax": 0.1682
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218377,
+          "smax": 3.1721,
+          "imbal_logmax": 0.1744
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.218265,
+          "smax": 3.172,
+          "imbal_logmax": 0.1798
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.21802,
+          "smax": 3.172,
+          "imbal_logmax": 0.1858
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217815,
+          "smax": 3.172,
+          "imbal_logmax": 0.1944
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217593,
+          "smax": 3.1719,
+          "imbal_logmax": 0.2013
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217286,
+          "smax": 3.1719,
+          "imbal_logmax": 0.2102
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.217086,
+          "smax": 3.1716,
+          "imbal_logmax": 0.216
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.01,
+          "smin": 1.216863,
+          "smax": 3.1712,
+          "imbal_logmax": 0.2209
+        }
+      ],
+      "val_bpc_full": 3.331,
+      "any_nan": false,
+      "wall_s": 132.0
+    },
+    {
+      "name": "F64_rebal/s0",
+      "seed": 0,
+      "wd": 0.01,
+      "no_s_decay": false,
+      "rebal": true,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.04,
+          "smin": 1.224232,
+          "smax": 3.1389,
+          "imbal_logmax": 0.0011
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.05,
+          "smin": 1.225463,
+          "smax": 3.1455,
+          "imbal_logmax": 0.0466
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225176,
+          "smax": 3.1456,
+          "imbal_logmax": 0.0512
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 62.97,
+          "eff_rank_min": 61.89,
+          "smin": 1.232334,
+          "smax": 3.4127,
+          "imbal_logmax": 0.0061
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 62.97,
+          "eff_rank_min": 61.89,
+          "smin": 1.231958,
+          "smax": 3.4122,
+          "imbal_logmax": 0.016
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 62.96,
+          "eff_rank_min": 61.87,
+          "smin": 1.229732,
+          "smax": 3.4628,
+          "imbal_logmax": 0.0002
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 62.95,
+          "eff_rank_min": 61.87,
+          "smin": 1.229288,
+          "smax": 3.4627,
+          "imbal_logmax": 0.0109
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 62.95,
+          "eff_rank_min": 61.87,
+          "smin": 1.228874,
+          "smax": 3.4625,
+          "imbal_logmax": 0.0245
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 62.93,
+          "eff_rank_min": 61.86,
+          "smin": 1.226609,
+          "smax": 3.5292,
+          "imbal_logmax": 0.0042
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 62.93,
+          "eff_rank_min": 61.86,
+          "smin": 1.226224,
+          "smax": 3.5288,
+          "imbal_logmax": 0.0159
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 62.9,
+          "eff_rank_min": 61.84,
+          "smin": 1.224098,
+          "smax": 3.5903,
+          "imbal_logmax": 0.0002
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 62.9,
+          "eff_rank_min": 61.83,
+          "smin": 1.223696,
+          "smax": 3.5902,
+          "imbal_logmax": 0.0059
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 62.9,
+          "eff_rank_min": 61.83,
+          "smin": 1.223278,
+          "smax": 3.5897,
+          "imbal_logmax": 0.0107
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 62.88,
+          "eff_rank_min": 61.81,
+          "smin": 1.221205,
+          "smax": 3.6573,
+          "imbal_logmax": 0.0033
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 62.88,
+          "eff_rank_min": 61.81,
+          "smin": 1.220831,
+          "smax": 3.6576,
+          "imbal_logmax": 0.0082
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 62.85,
+          "eff_rank_min": 61.8,
+          "smin": 1.218485,
+          "smax": 3.7515,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 62.85,
+          "eff_rank_min": 61.79,
+          "smin": 1.217995,
+          "smax": 3.7513,
+          "imbal_logmax": 0.0052
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 62.85,
+          "eff_rank_min": 61.79,
+          "smin": 1.217524,
+          "smax": 3.7515,
+          "imbal_logmax": 0.0096
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 62.83,
+          "eff_rank_min": 61.77,
+          "smin": 1.21519,
+          "smax": 3.8237,
+          "imbal_logmax": 0.0025
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 62.83,
+          "eff_rank_min": 61.77,
+          "smin": 1.21474,
+          "smax": 3.8236,
+          "imbal_logmax": 0.0077
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 62.81,
+          "eff_rank_min": 61.75,
+          "smin": 1.212238,
+          "smax": 3.8974,
+          "imbal_logmax": 0.0002
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 62.8,
+          "eff_rank_min": 61.75,
+          "smin": 1.211804,
+          "smax": 3.8968,
+          "imbal_logmax": 0.0049
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 62.8,
+          "eff_rank_min": 61.75,
+          "smin": 1.211347,
+          "smax": 3.8964,
+          "imbal_logmax": 0.0121
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 62.78,
+          "eff_rank_min": 61.6,
+          "smin": 1.208747,
+          "smax": 3.9401,
+          "imbal_logmax": 0.004
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 62.78,
+          "eff_rank_min": 61.59,
+          "smin": 1.2082,
+          "smax": 3.9398,
+          "imbal_logmax": 0.0115
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 62.75,
+          "eff_rank_min": 61.35,
+          "smin": 1.205712,
+          "smax": 4.0164,
+          "imbal_logmax": 0.0002
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 62.75,
+          "eff_rank_min": 61.34,
+          "smin": 1.205228,
+          "smax": 4.0162,
+          "imbal_logmax": 0.0102
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 62.75,
+          "eff_rank_min": 61.34,
+          "smin": 1.204689,
+          "smax": 4.0162,
+          "imbal_logmax": 0.0202
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 62.71,
+          "eff_rank_min": 61.09,
+          "smin": 1.202203,
+          "smax": 4.0809,
+          "imbal_logmax": 0.0071
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 62.71,
+          "eff_rank_min": 61.09,
+          "smin": 1.201735,
+          "smax": 4.0808,
+          "imbal_logmax": 0.0205
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 62.68,
+          "eff_rank_min": 60.82,
+          "smin": 1.199261,
+          "smax": 4.1496,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 62.67,
+          "eff_rank_min": 60.8,
+          "smin": 1.198665,
+          "smax": 4.1493,
+          "imbal_logmax": 0.0133
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 62.67,
+          "eff_rank_min": 60.78,
+          "smin": 1.198157,
+          "smax": 4.1487,
+          "imbal_logmax": 0.028
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 62.61,
+          "eff_rank_min": 60.13,
+          "smin": 1.19512,
+          "smax": 4.2083,
+          "imbal_logmax": 0.0078
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 62.6,
+          "eff_rank_min": 60.11,
+          "smin": 1.194573,
+          "smax": 4.2086,
+          "imbal_logmax": 0.0269
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 62.52,
+          "eff_rank_min": 59.12,
+          "smin": 1.19146,
+          "smax": 4.5107,
+          "imbal_logmax": 0.0006
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 62.52,
+          "eff_rank_min": 59.11,
+          "smin": 1.190937,
+          "smax": 4.5094,
+          "imbal_logmax": 0.0141
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 62.52,
+          "eff_rank_min": 59.09,
+          "smin": 1.190465,
+          "smax": 4.5096,
+          "imbal_logmax": 0.0308
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 62.43,
+          "eff_rank_min": 58.28,
+          "smin": 1.187603,
+          "smax": 4.6574,
+          "imbal_logmax": 0.0109
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 62.43,
+          "eff_rank_min": 58.27,
+          "smin": 1.187061,
+          "smax": 4.6558,
+          "imbal_logmax": 0.0265
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 62.43,
+          "eff_rank_min": 58.26,
+          "smin": 1.186534,
+          "smax": 4.6537,
+          "imbal_logmax": 0.0396
+        }
+      ],
+      "val_bpc_full": 3.3717,
+      "any_nan": false,
+      "wall_s": 132.6
+    },
+    {
+      "name": "F64_rebal/s1",
+      "seed": 1,
+      "wd": 0.01,
+      "no_s_decay": false,
+      "rebal": true,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.01,
+          "smin": 1.220032,
+          "smax": 3.1415,
+          "imbal_logmax": 0.0012
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.02,
+          "smin": 1.219251,
+          "smax": 3.1474,
+          "imbal_logmax": 0.0467
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.219184,
+          "smax": 3.1469,
+          "imbal_logmax": 0.0571
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 62.98,
+          "eff_rank_min": 62.03,
+          "smin": 1.213821,
+          "smax": 3.394,
+          "imbal_logmax": 0.0066
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 62.98,
+          "eff_rank_min": 62.03,
+          "smin": 1.213453,
+          "smax": 3.3941,
+          "imbal_logmax": 0.0177
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 62.95,
+          "eff_rank_min": 62.02,
+          "smin": 1.211081,
+          "smax": 3.4978,
+          "imbal_logmax": 0.0001
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 62.95,
+          "eff_rank_min": 62.02,
+          "smin": 1.210676,
+          "smax": 3.4985,
+          "imbal_logmax": 0.0099
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 62.95,
+          "eff_rank_min": 62.02,
+          "smin": 1.210306,
+          "smax": 3.4993,
+          "imbal_logmax": 0.0188
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 62.92,
+          "eff_rank_min": 62.01,
+          "smin": 1.207966,
+          "smax": 3.6386,
+          "imbal_logmax": 0.0053
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 62.91,
+          "eff_rank_min": 62.01,
+          "smin": 1.207711,
+          "smax": 3.6393,
+          "imbal_logmax": 0.0138
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 62.88,
+          "eff_rank_min": 61.61,
+          "smin": 1.206613,
+          "smax": 3.7639,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 62.88,
+          "eff_rank_min": 61.6,
+          "smin": 1.206362,
+          "smax": 3.7645,
+          "imbal_logmax": 0.0082
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 62.88,
+          "eff_rank_min": 61.59,
+          "smin": 1.206198,
+          "smax": 3.7645,
+          "imbal_logmax": 0.013
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 62.86,
+          "eff_rank_min": 61.33,
+          "smin": 1.205767,
+          "smax": 3.8792,
+          "imbal_logmax": 0.0038
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 62.86,
+          "eff_rank_min": 61.33,
+          "smin": 1.205554,
+          "smax": 3.8787,
+          "imbal_logmax": 0.0078
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 62.84,
+          "eff_rank_min": 61.14,
+          "smin": 1.206594,
+          "smax": 3.9618,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 62.84,
+          "eff_rank_min": 61.14,
+          "smin": 1.206373,
+          "smax": 3.9612,
+          "imbal_logmax": 0.0064
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 62.84,
+          "eff_rank_min": 61.13,
+          "smin": 1.206133,
+          "smax": 3.9615,
+          "imbal_logmax": 0.0127
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 62.81,
+          "eff_rank_min": 60.97,
+          "smin": 1.203318,
+          "smax": 4.0204,
+          "imbal_logmax": 0.0035
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 62.81,
+          "eff_rank_min": 60.96,
+          "smin": 1.202718,
+          "smax": 4.0205,
+          "imbal_logmax": 0.0089
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 62.79,
+          "eff_rank_min": 60.82,
+          "smin": 1.199905,
+          "smax": 4.0969,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 62.79,
+          "eff_rank_min": 60.82,
+          "smin": 1.199321,
+          "smax": 4.0961,
+          "imbal_logmax": 0.0066
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 62.79,
+          "eff_rank_min": 60.81,
+          "smin": 1.198737,
+          "smax": 4.0953,
+          "imbal_logmax": 0.015
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 62.77,
+          "eff_rank_min": 60.68,
+          "smin": 1.195908,
+          "smax": 4.1373,
+          "imbal_logmax": 0.0044
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 62.77,
+          "eff_rank_min": 60.68,
+          "smin": 1.195262,
+          "smax": 4.137,
+          "imbal_logmax": 0.0139
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 62.74,
+          "eff_rank_min": 60.42,
+          "smin": 1.191484,
+          "smax": 4.2104,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 62.74,
+          "eff_rank_min": 60.41,
+          "smin": 1.19085,
+          "smax": 4.2102,
+          "imbal_logmax": 0.0123
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 62.74,
+          "eff_rank_min": 60.41,
+          "smin": 1.190193,
+          "smax": 4.2094,
+          "imbal_logmax": 0.0294
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 62.7,
+          "eff_rank_min": 60.12,
+          "smin": 1.186238,
+          "smax": 4.307,
+          "imbal_logmax": 0.0166
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 62.7,
+          "eff_rank_min": 60.13,
+          "smin": 1.185472,
+          "smax": 4.3066,
+          "imbal_logmax": 0.0426
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 62.66,
+          "eff_rank_min": 59.82,
+          "smin": 1.181325,
+          "smax": 4.3907,
+          "imbal_logmax": 0.0005
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 62.66,
+          "eff_rank_min": 59.82,
+          "smin": 1.180578,
+          "smax": 4.3912,
+          "imbal_logmax": 0.0315
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 62.66,
+          "eff_rank_min": 59.83,
+          "smin": 1.179657,
+          "smax": 4.3927,
+          "imbal_logmax": 0.0571
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 62.59,
+          "eff_rank_min": 59.4,
+          "smin": 1.175237,
+          "smax": 4.7378,
+          "imbal_logmax": 0.0162
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 62.59,
+          "eff_rank_min": 59.41,
+          "smin": 1.174192,
+          "smax": 4.7404,
+          "imbal_logmax": 0.0435
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 62.51,
+          "eff_rank_min": 59.17,
+          "smin": 1.169796,
+          "smax": 5.1816,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 62.51,
+          "eff_rank_min": 59.17,
+          "smin": 1.169205,
+          "smax": 5.1829,
+          "imbal_logmax": 0.0181
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 62.51,
+          "eff_rank_min": 59.18,
+          "smin": 1.168615,
+          "smax": 5.1837,
+          "imbal_logmax": 0.0314
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 62.44,
+          "eff_rank_min": 58.94,
+          "smin": 1.165083,
+          "smax": 5.483,
+          "imbal_logmax": 0.0075
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 62.44,
+          "eff_rank_min": 58.95,
+          "smin": 1.16423,
+          "smax": 5.4822,
+          "imbal_logmax": 0.0179
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 62.44,
+          "eff_rank_min": 58.96,
+          "smin": 1.163302,
+          "smax": 5.4822,
+          "imbal_logmax": 0.0291
+        }
+      ],
+      "val_bpc_full": 3.2178,
+      "any_nan": false,
+      "wall_s": 132.7
+    },
+    {
+      "name": "F64_rebal/s2",
+      "seed": 2,
+      "wd": 0.01,
+      "no_s_decay": false,
+      "rebal": true,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.219945,
+          "smax": 3.1607,
+          "imbal_logmax": 0.001
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.03,
+          "smin": 1.222725,
+          "smax": 3.1681,
+          "imbal_logmax": 0.0364
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.221458,
+          "smax": 3.1679,
+          "imbal_logmax": 0.048
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 62.96,
+          "eff_rank_min": 61.88,
+          "smin": 1.222062,
+          "smax": 3.496,
+          "imbal_logmax": 0.0092
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 62.96,
+          "eff_rank_min": 61.88,
+          "smin": 1.221478,
+          "smax": 3.4957,
+          "imbal_logmax": 0.0171
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 62.94,
+          "eff_rank_min": 61.87,
+          "smin": 1.217532,
+          "smax": 3.5835,
+          "imbal_logmax": 0.0002
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 62.94,
+          "eff_rank_min": 61.87,
+          "smin": 1.216888,
+          "smax": 3.5832,
+          "imbal_logmax": 0.0138
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 62.94,
+          "eff_rank_min": 61.87,
+          "smin": 1.21633,
+          "smax": 3.5828,
+          "imbal_logmax": 0.0179
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 62.91,
+          "eff_rank_min": 61.86,
+          "smin": 1.212737,
+          "smax": 3.6826,
+          "imbal_logmax": 0.0046
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 62.91,
+          "eff_rank_min": 61.85,
+          "smin": 1.212145,
+          "smax": 3.6822,
+          "imbal_logmax": 0.0093
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 62.89,
+          "eff_rank_min": 61.84,
+          "smin": 1.208577,
+          "smax": 3.7814,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 62.89,
+          "eff_rank_min": 61.84,
+          "smin": 1.208072,
+          "smax": 3.781,
+          "imbal_logmax": 0.0072
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 62.89,
+          "eff_rank_min": 61.84,
+          "smin": 1.207537,
+          "smax": 3.7804,
+          "imbal_logmax": 0.0134
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 62.86,
+          "eff_rank_min": 61.83,
+          "smin": 1.204265,
+          "smax": 3.8683,
+          "imbal_logmax": 0.0039
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 62.86,
+          "eff_rank_min": 61.83,
+          "smin": 1.203791,
+          "smax": 3.8676,
+          "imbal_logmax": 0.0095
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 62.84,
+          "eff_rank_min": 61.81,
+          "smin": 1.201004,
+          "smax": 3.935,
+          "imbal_logmax": 0.0004
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 62.84,
+          "eff_rank_min": 61.81,
+          "smin": 1.20044,
+          "smax": 3.9344,
+          "imbal_logmax": 0.0065
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 62.84,
+          "eff_rank_min": 61.8,
+          "smin": 1.199903,
+          "smax": 3.9338,
+          "imbal_logmax": 0.0109
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 62.81,
+          "eff_rank_min": 61.78,
+          "smin": 1.196924,
+          "smax": 4.0124,
+          "imbal_logmax": 0.003
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 62.81,
+          "eff_rank_min": 61.78,
+          "smin": 1.196469,
+          "smax": 4.0116,
+          "imbal_logmax": 0.0084
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 62.79,
+          "eff_rank_min": 61.76,
+          "smin": 1.193697,
+          "smax": 4.074,
+          "imbal_logmax": 0.0004
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 62.79,
+          "eff_rank_min": 61.76,
+          "smin": 1.193196,
+          "smax": 4.073,
+          "imbal_logmax": 0.0059
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 62.79,
+          "eff_rank_min": 61.76,
+          "smin": 1.192615,
+          "smax": 4.0722,
+          "imbal_logmax": 0.0114
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 62.77,
+          "eff_rank_min": 61.71,
+          "smin": 1.189423,
+          "smax": 4.1224,
+          "imbal_logmax": 0.0037
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 62.77,
+          "eff_rank_min": 61.71,
+          "smin": 1.188962,
+          "smax": 4.1215,
+          "imbal_logmax": 0.0103
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 62.74,
+          "eff_rank_min": 61.65,
+          "smin": 1.18578,
+          "smax": 4.1831,
+          "imbal_logmax": 0.0004
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 62.74,
+          "eff_rank_min": 61.65,
+          "smin": 1.18524,
+          "smax": 4.1823,
+          "imbal_logmax": 0.0086
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 62.74,
+          "eff_rank_min": 61.64,
+          "smin": 1.184729,
+          "smax": 4.181,
+          "imbal_logmax": 0.0152
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 62.71,
+          "eff_rank_min": 61.59,
+          "smin": 1.181774,
+          "smax": 4.2214,
+          "imbal_logmax": 0.0059
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 62.71,
+          "eff_rank_min": 61.59,
+          "smin": 1.181242,
+          "smax": 4.2206,
+          "imbal_logmax": 0.0155
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 62.68,
+          "eff_rank_min": 61.53,
+          "smin": 1.178279,
+          "smax": 4.264,
+          "imbal_logmax": 0.0003
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 62.67,
+          "eff_rank_min": 61.52,
+          "smin": 1.177718,
+          "smax": 4.2633,
+          "imbal_logmax": 0.0138
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 62.67,
+          "eff_rank_min": 61.52,
+          "smin": 1.177202,
+          "smax": 4.2622,
+          "imbal_logmax": 0.0308
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 62.63,
+          "eff_rank_min": 61.32,
+          "smin": 1.174002,
+          "smax": 4.3252,
+          "imbal_logmax": 0.0095
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 62.63,
+          "eff_rank_min": 61.31,
+          "smin": 1.173541,
+          "smax": 4.3242,
+          "imbal_logmax": 0.0323
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 62.57,
+          "eff_rank_min": 60.89,
+          "smin": 1.170357,
+          "smax": 4.391,
+          "imbal_logmax": 0.0004
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 62.57,
+          "eff_rank_min": 60.89,
+          "smin": 1.16982,
+          "smax": 4.3908,
+          "imbal_logmax": 0.0272
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 62.57,
+          "eff_rank_min": 60.89,
+          "smin": 1.169267,
+          "smax": 4.3917,
+          "imbal_logmax": 0.0479
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 62.5,
+          "eff_rank_min": 60.6,
+          "smin": 1.165927,
+          "smax": 4.6602,
+          "imbal_logmax": 0.0125
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 62.49,
+          "eff_rank_min": 60.61,
+          "smin": 1.165383,
+          "smax": 4.663,
+          "imbal_logmax": 0.0314
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 62.49,
+          "eff_rank_min": 60.61,
+          "smin": 1.164842,
+          "smax": 4.6651,
+          "imbal_logmax": 0.0416
+        }
+      ],
+      "val_bpc_full": 3.2751,
+      "any_nan": false,
+      "wall_s": 134.6
+    },
+    {
+      "name": "F64_wd001_instr/s0",
+      "seed": 0,
+      "wd": 0.01,
+      "no_s_decay": false,
+      "rebal": false,
+      "params": 2858112,
+      "instr": [
+        {
+          "step": 0,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.04,
+          "smin": 1.224232,
+          "smax": 3.1389,
+          "imbal_logmax": 0.0011
+        },
+        {
+          "step": 100,
+          "eff_rank_mean": 63.03,
+          "eff_rank_min": 62.05,
+          "smin": 1.225463,
+          "smax": 3.1455,
+          "imbal_logmax": 0.0466
+        },
+        {
+          "step": 200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.225176,
+          "smax": 3.1456,
+          "imbal_logmax": 0.0512
+        },
+        {
+          "step": 300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.224723,
+          "smax": 3.146,
+          "imbal_logmax": 0.0551
+        },
+        {
+          "step": 400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.224348,
+          "smax": 3.1461,
+          "imbal_logmax": 0.0568
+        },
+        {
+          "step": 500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.223968,
+          "smax": 3.1461,
+          "imbal_logmax": 0.0612
+        },
+        {
+          "step": 600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.223527,
+          "smax": 3.146,
+          "imbal_logmax": 0.0701
+        },
+        {
+          "step": 700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.22311,
+          "smax": 3.146,
+          "imbal_logmax": 0.0809
+        },
+        {
+          "step": 800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.222699,
+          "smax": 3.1456,
+          "imbal_logmax": 0.088
+        },
+        {
+          "step": 900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.222314,
+          "smax": 3.1451,
+          "imbal_logmax": 0.0977
+        },
+        {
+          "step": 1000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.221871,
+          "smax": 3.145,
+          "imbal_logmax": 0.1062
+        },
+        {
+          "step": 1100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.221472,
+          "smax": 3.1446,
+          "imbal_logmax": 0.1105
+        },
+        {
+          "step": 1200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.221072,
+          "smax": 3.1442,
+          "imbal_logmax": 0.1138
+        },
+        {
+          "step": 1300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220599,
+          "smax": 3.1438,
+          "imbal_logmax": 0.119
+        },
+        {
+          "step": 1400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.220226,
+          "smax": 3.1432,
+          "imbal_logmax": 0.1227
+        },
+        {
+          "step": 1500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.219763,
+          "smax": 3.1428,
+          "imbal_logmax": 0.1254
+        },
+        {
+          "step": 1600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.21926,
+          "smax": 3.1418,
+          "imbal_logmax": 0.1262
+        },
+        {
+          "step": 1700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.218791,
+          "smax": 3.1415,
+          "imbal_logmax": 0.1289
+        },
+        {
+          "step": 1800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.218379,
+          "smax": 3.1411,
+          "imbal_logmax": 0.1304
+        },
+        {
+          "step": 1900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.05,
+          "smin": 1.217928,
+          "smax": 3.1411,
+          "imbal_logmax": 0.1332
+        },
+        {
+          "step": 2000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.217429,
+          "smax": 3.1405,
+          "imbal_logmax": 0.133
+        },
+        {
+          "step": 2100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216989,
+          "smax": 3.1398,
+          "imbal_logmax": 0.1354
+        },
+        {
+          "step": 2200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216537,
+          "smax": 3.1393,
+          "imbal_logmax": 0.1345
+        },
+        {
+          "step": 2300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.216042,
+          "smax": 3.1391,
+          "imbal_logmax": 0.1366
+        },
+        {
+          "step": 2400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.215491,
+          "smax": 3.1383,
+          "imbal_logmax": 0.1378
+        },
+        {
+          "step": 2500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.215051,
+          "smax": 3.1379,
+          "imbal_logmax": 0.1363
+        },
+        {
+          "step": 2600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.214569,
+          "smax": 3.1372,
+          "imbal_logmax": 0.1376
+        },
+        {
+          "step": 2700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.214028,
+          "smax": 3.1365,
+          "imbal_logmax": 0.14
+        },
+        {
+          "step": 2800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.213515,
+          "smax": 3.1358,
+          "imbal_logmax": 0.1434
+        },
+        {
+          "step": 2900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.213039,
+          "smax": 3.136,
+          "imbal_logmax": 0.1457
+        },
+        {
+          "step": 3000,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.04,
+          "smin": 1.212607,
+          "smax": 3.1351,
+          "imbal_logmax": 0.1525
+        },
+        {
+          "step": 3100,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.212044,
+          "smax": 3.1346,
+          "imbal_logmax": 0.1579
+        },
+        {
+          "step": 3200,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.211506,
+          "smax": 3.1339,
+          "imbal_logmax": 0.1605
+        },
+        {
+          "step": 3300,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.210945,
+          "smax": 3.1342,
+          "imbal_logmax": 0.1656
+        },
+        {
+          "step": 3400,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.210374,
+          "smax": 3.1346,
+          "imbal_logmax": 0.173
+        },
+        {
+          "step": 3500,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.209814,
+          "smax": 3.1331,
+          "imbal_logmax": 0.186
+        },
+        {
+          "step": 3600,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.209281,
+          "smax": 3.1337,
+          "imbal_logmax": 0.1948
+        },
+        {
+          "step": 3700,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.20872,
+          "smax": 3.1333,
+          "imbal_logmax": 0.2065
+        },
+        {
+          "step": 3800,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.208076,
+          "smax": 3.134,
+          "imbal_logmax": 0.2193
+        },
+        {
+          "step": 3900,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.207559,
+          "smax": 3.1327,
+          "imbal_logmax": 0.2292
+        },
+        {
+          "step": 3999,
+          "eff_rank_mean": 63.04,
+          "eff_rank_min": 62.03,
+          "smin": 1.207019,
+          "smax": 3.1317,
+          "imbal_logmax": 0.2372
+        }
+      ],
+      "val_bpc_full": 3.3753,
+      "any_nan": false,
+      "wall_s": 132.9
+    }
+  ],
+  "finished_unix": 1786498628.8181455
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html><head><title>Neon Runner - ZCodeBERT Generated</title>
+<style>
+*{margin:0;padding:0}
+canvas{display:block;margin:20px auto;border:2px solid #88f}
+body{background:#0a0a0a;text-align:center;color:#ddd;font-family:Arial}
+h1{margin:15px;color:#f0f}
+</style></head>
+<body>
+<h1>Neon Runner</h1>
+<canvas id="g" width="700" height="400"></canvas>
+<script>
+const c=document.getElementById('g'),ctx=c.getContext('2d');
+const W=700,H=400;
+const GROUND=H-50;
+let player={x:60,y:GROUND,w:30,h:40,vy:0,jumping:false,ducking:false};
+let obstacles=[];let bgElements=[];let particles=[];
+let score=0,highScore=0,speed=5,frame=0,gameOver=false;
+
+// Fondo
+for(let i=0;i<20;i++){
+  bgElements.push({x:Math.random()*W,y:Math.random()*GROUND*0.8,
+    w:Math.random()*5+1,h:Math.random()*40+10,
+    speed:Math.random()*1.5+0.5,
+    color:'rgba(0,150,200,'+(Math.random()*0.3+0.1)+')'});
+}
+
+document.addEventListener('keydown',e=>{
+  if((e.code==='Space'||e.key==='ArrowUp')&&!player.jumping&&!gameOver){
+    player.vy=-13;player.jumping=true;
+  }
+  if(e.key==='ArrowDown'&&!player.jumping)player.ducking=true;
+  if(e.key==='r'&&gameOver)restart();
+});
+document.addEventListener('keyup',e=>{
+  if(e.key==='ArrowDown')player.ducking=false;
+});
+
+function restart(){
+  gameOver=false;score=0;speed=5;obstacles=[];particles=[];
+  player.y=GROUND;player.vy=0;player.jumping=false;frame=0;
+}
+
+function spawnObstacle(){
+  let type=Math.random();
+  if(type<0.5){
+    // Obstaculo bajo
+    let h=30+Math.random()*20;
+    obstacles.push({x:W,y:GROUND,w:20,h:h,type:'low',color:'#ff4444'});
+  } else if(type<0.8){
+    // Obstaculo alto (agacharse)
+    obstacles.push({x:W,y:GROUND-player.h+15,w:70,h:20,type:'high',color:'#fa0'});
+  } else {
+    // Doble
+    let h=30+Math.random()*20;
+    obstacles.push({x:W,y:GROUND,w:20,h:h,type:'low',color:'#ff44ff'});
+    obstacles.push({x:W+90,y:GROUND,w:20,h:h+10,type:'low',color:'#ff44ff'});
+  }
+}
+
+function update(){
+  if(gameOver)return;
+  frame++;score++;
+
+  // Gravedad
+  player.vy+=0.5;
+  player.y+=player.vy;
+  if(player.y>=GROUND){player.y=GROUND;player.vy=0;player.jumping=false;}
+
+  let pH=player.ducking?player.h*0.45:player.h;
+  let pY=player.ducking?GROUND-(player.h*0.45):player.y-player.h;
+
+  // Spawn
+  if(frame%Math.max(25,80-Math.floor(score/600))===0)spawnObstacle();
+  if(frame%200===0)speed+=0.15;
+
+  // Mover obstaculos
+  for(let i=obstacles.length-1;i>=0;i--){
+    obstacles[i].x-=speed;
+    if(obstacles[i].x+obstacles[i].w<0){obstacles.splice(i,1);continue;}
+
+    let o=obstacles[i];
+    let oY=o.type==='high'?o.y-o.h:o.y-o.h;
+    if(player.x+player.w>o.x&&player.x<o.x+o.w&&
+       pY+pH>oY&&pY<oY+o.h){
+      gameOver=true;
+      if(score>highScore)highScore=score;
+      for(let j=0;j<20;j++){
+        let a=Math.random()*Math.PI*2,s=Math.random()*5+2;
+        particles.push({x:player.x+player.w/2,y:pY+pH/2,
+          vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,
+          color:'#f80',size:Math.random()*4+2});
+      }
+    }
+  }
+
+  // Background
+  bgElements.forEach(b=>{b.x-=b.speed;if(b.x+b.w<0)b.x=W;});
+
+  particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.02;p.vy+=0.1;});
+  particles=particles.filter(p=>p.life>0);
+}
+
+function draw(){
+  // Gradiente de fondo
+  let bg=ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#000011');bg.addColorStop(1,'#1a1a0a');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  // Background elements
+  bgElements.forEach(b=>{ctx.fillStyle=b.color;ctx.fillRect(b.x,b.y,b.w,b.h);});
+
+  // Suelo
+  ctx.fillStyle='#222';ctx.fillRect(0,GROUND,W,50);
+  ctx.strokeStyle='#0f0';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(0,GROUND);ctx.lineTo(W,GROUND);ctx.stroke();
+  // Lineas de velocidad en el suelo
+  for(let i=0;i<10;i++){
+    let lx=((frame*speed*2+i*W/10)%W);
+    ctx.strokeStyle='rgba(0,255,255,0.3)';
+    ctx.beginPath();ctx.moveTo(lx,GROUND+5);ctx.lineTo(lx+15,GROUND+5);ctx.stroke();
+  }
+
+  // Obstaculos con glow
+  obstacles.forEach(o=>{
+    ctx.shadowColor=o.color;ctx.shadowBlur=12;
+    ctx.fillStyle=o.color;
+    let oY=o.y-o.h;
+    ctx.fillRect(o.x,oY,o.w,o.h);
+    ctx.shadowBlur=0;
+  });
+
+  // Jugador
+  let pH=player.ducking?player.h*0.45:player.h;
+  let pY=player.ducking?GROUND-pH:player.y-player.h;
+  ctx.shadowColor='#f80';ctx.shadowBlur=10;
+  ctx.fillStyle='#f80';
+  ctx.fillRect(player.x,pY,player.w,pH);
+  // Ojo
+  ctx.shadowBlur=0;
+  ctx.fillStyle='#f00';
+  ctx.fillRect(player.x+player.w-5-3,pY+5,5,5);
+
+  // Particulas
+  particles.forEach(p=>{
+    ctx.globalAlpha=p.life;ctx.fillStyle=p.color;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+  });
+  ctx.globalAlpha=1;
+
+  // HUD
+  ctx.fillStyle='#ddd';ctx.font='bold 20px Arial';
+  ctx.textAlign='left';
+  ctx.fillText('Score: '+score,15,35);
+  ctx.fillText('Best: '+highScore,15,60);
+  ctx.textAlign='right';
+  ctx.fillText('Speed: '+speed.toFixed(1),W-15,35);
+  ctx.textAlign='left';
+
+  if(gameOver){
+    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#f44';ctx.font='bold 40px Arial';
+    ctx.textAlign='center';ctx.fillText('GAME OVER',W/2,H/2-30);
+    ctx.fillStyle='#ddd';ctx.font='22px Arial';
+    ctx.fillText('Score: '+score,W/2,H/2+10);
+    ctx.fillText('Press R to restart',W/2,H/2+45);
+    ctx.textAlign='left';
+  }
+}
+
+function loop(){update();draw();requestAnimationFrame(loop);}
+loop();
+</script></body></html>

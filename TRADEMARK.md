@@ -3,6 +3,12 @@
 **Versión:** 1.0 — 2026-05-20
 **Titulares:** MSC Star Team (Esraderey y Raúl Cruz Acosta)
 
+> El **código** de MZTrain es libre bajo licencia **MIT** (ver `LICENSE`): puede
+> usarse, modificarse y redistribuirse. Las **marcas** (nombres y logotipos) son
+> un derecho distinto del copyright y NO se conceden con el código; esta política
+> regula su uso. Es el mismo patrón que siguen proyectos como Python o Rust:
+> software libre, marca protegida.
+
 ## 1. Marcas protegidas
 
 Las siguientes denominaciones, abreviaturas, logotipos y signos
@@ -22,7 +28,6 @@ primera publicación pública (2025-01-15 para las originales y
   **ZActivationCheckpoint** — componentes del paquete.
 - **ZFactorizedLinear**, **ZFactorizedAttention**,
   **ZFactorizedTransformerBlock** — capas factorizadas.
-- **MZTrain MSL-R** — denominación de la licencia.
 
 El uso del prefijo "Z" para nombres derivados de la arquitectura
 MZTrain (p. ej. `ZSparseFactorizedLinear`) queda reservado a los
@@ -33,8 +38,8 @@ Titulares.
 Se permite el uso descriptivo y nominativo, en los términos
 estrictamente necesarios para:
 
-- **Atribución y cita** científica o técnica, conforme al
-  Apartado 6 de `LICENSE`.
+- **Atribución y cita** científica o técnica del origen del software
+  (conservando el aviso de copyright que exige la licencia MIT).
 - **Referenciar** la obra en artículos, publicaciones, presentaciones
   y comparativas técnicas siempre que (a) sea evidente que MZTrain es
   un producto independiente de los Titulares, (b) no se sugiera
@@ -64,9 +69,9 @@ Sin licencia escrita previa de los Titulares, queda prohibido:
 
 3.5 Modificar o reemplazar las marcas en archivos del repositorio
     (cabeceras, README, badges, documentación) para representar la
-    obra como propia o de un tercero.
-
-3.6 Uso en aplicaciones que infrinjan `LICENSE` (Apartado 4).
+    obra como propia o de un tercero. (Nota: la licencia MIT permite
+    modificar y redistribuir el CÓDIGO; lo que esta política restringe es el
+    uso de las MARCAS de forma que induzca a confusión sobre el origen.)
 
 ## 4. Uso correcto
 

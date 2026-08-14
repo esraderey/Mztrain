@@ -127,4 +127,8 @@ Al solicitar una funcionalidad:
 
 ## Licencia
 
-Al contribuir, aceptas que tus contribuciones se licencien bajo BUSL-1.1.
+MZTrain se distribuye bajo la licencia **MIT**. Al contribuir, aceptas que tus
+contribuciones se licencien bajo los mismos términos (inbound = outbound). No se
+exige cesión de copyright: conservas la autoría de tu contribución. Basta con
+firmar tus commits (`git commit -s`, Developer Certificate of Origin) para
+declarar que tienes derecho a aportarla.

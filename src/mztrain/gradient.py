@@ -6,9 +6,9 @@ uso de memoria y comunicacion en entrenamiento distribuido.
 
 Mejoras sobre la version original:
 - Filtro de tamano minimo: no comprimir tensores pequenos (biases, norms).
-- Error feedback con buffer comprimido (ConEF): reduce overhead de ~100% a ~12.5%.
+- Error feedback con buffer comprimido (ConEF): reduce overhead de ~100% a ~25%.
 - Block-wise INT8: cuantizacion por bloques en vez de global.
-- Random-K: muestreo aleatorio de gradientes (compresor no sesgado).
+- Random-K: muestreo aleatorio de gradientes (compresor insesgado, sin EF).
 - Estadisticas detalladas por metodo y por parametro.
 """
 
@@ -39,22 +39,24 @@ class ZGradientCompressor:
     Metodos disponibles:
 
     - **TOP_K**: Solo mantiene los K gradientes mas grandes (biased, requiere EF).
-    - **RANDOM_K**: Muestra aleatoria de gradientes (unbiased, contractive).
+    - **RANDOM_K**: Muestra aleatoria reescalada por n/k (insesgado; NO
+      contractivo, se usa sin error-feedback).
     - **QUANTIZE_1BIT**: Solo signo del gradiente escalado por bloque.
     - **QUANTIZE_INT8**: Cuantiza gradientes a INT8 con scaling por bloque.
     - **SVD**: Descompone gradiente matricial con SVD de bajo rango.
 
-    Error feedback: los gradientes descartados por compresion se acumulan
-    y se agregan al siguiente paso, garantizando convergencia.
-    Los buffers de error se almacenan comprimidos (INT4 via ConEF) para
-    reducir el overhead de memoria de ~100% a ~12.5%.
+    Error feedback (solo compresores contractivos: TOP_K/1BIT/INT8/SVD): los
+    gradientes descartados por compresion se acumulan y se agregan al siguiente
+    paso, garantizando convergencia. RANDOM_K queda excluido (su realimentacion
+    diverge). Los buffers de error se almacenan comprimidos a INT8 (ConEF),
+    reduciendo el overhead de memoria de ~100% a ~25%.
 
     Args:
         method: Metodo de compresion a usar.
         top_k_ratio: Ratio de gradientes a mantener para TOP_K / RANDOM_K.
         svd_rank: Rango para compresion SVD de gradientes.
         min_size_to_compress: Minimo de elementos para comprimir un tensor.
-        compress_error_buffer: Comprimir los buffers de error a INT4 (ConEF).
+        compress_error_buffer: Comprimir los buffers de error a INT8 (ConEF).
 
     Example:
         >>> compressor = ZGradientCompressor(GradientCompression.TOP_K, top_k_ratio=0.1)
@@ -111,7 +113,13 @@ class ZGradientCompressor:
         # cuantizacion a traves de un cambio de dimensionalidad). Es un
         # evento raro (boundary de epoch) y resetear el error feedback a 0
         # para ese parametro es la unica semantica correcta.
-        if name in self._error_feedback:
+        # RANDOM_K es un estimador INSESGADO reescalado por n/k: NO es
+        # contractivo (E||g-C(g)||^2 = (1/p-1)||g||^2 > ||g||^2 para k/n<1/2), y
+        # realimentarlo por error-feedback hace divergir el buffer geometricamente.
+        # El error-feedback solo aplica a los compresores contractivos.
+        uses_error_feedback = self.method != GradientCompression.RANDOM_K
+
+        if uses_error_feedback and name in self._error_feedback:
             error_prev = self._decompress_error(self._error_feedback[name], grad.device)
             if error_prev.shape != grad.shape:
                 del self._error_feedback[name]
@@ -133,8 +141,10 @@ class ZGradientCompressor:
         else:
             return grad
 
-        # Almacenar error (comprimido si ConEF activo)
-        self._error_feedback[name] = self._compress_error(error)
+        # Almacenar error solo para los compresores contractivos (ver arriba:
+        # el error-feedback de RANDOM_K diverge).
+        if uses_error_feedback:
+            self._error_feedback[name] = self._compress_error(error)
 
         # Stats
         self._stats["total_compressed"] += 1
@@ -165,10 +175,12 @@ class ZGradientCompressor:
         return compressed.reshape(grad.shape), error.reshape(grad.shape)
 
     def _random_k(self, grad: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        """Muestreo aleatorio de K gradientes.
+        """Muestreo aleatorio de K gradientes, reescalado por n/k.
 
-        Compresor NO sesgado (contractive) — E[C(g)] proporcional a g.
-        No requiere error feedback para convergencia, pero lo mejora.
+        Compresor INSESGADO: E[C(g)] = g. NO es contractivo (la varianza crece,
+        E||g-C(g)||^2 = (1/p-1)||g||^2), asi que se usa CRUDO en SGD, SIN
+        error-feedback (el EF de un operador expansivo diverge; ver compress()).
+        Converge por insesgadez con una penalizacion de varianza ~1/p.
         Complejidad: O(n) por el randperm.
         """
         flat = grad.reshape(-1)
@@ -349,6 +361,20 @@ class ZGradientCompressor:
             )
 
         return stats
+
+    def invalidate(self, name: str) -> None:
+        """Descartar el error-feedback de un parametro cuya topologia u orden
+        de direcciones cambio.
+
+        El check por shape en compress() solo detecta cambios de dimension; no
+        detecta un reordenamiento a rango constante (ElasticRank durmiendo k
+        direcciones y rellenando k), tras el cual el residuo de cuantizacion
+        viejo apuntaria a la direccion singular equivocada. El caller (engine)
+        invoca esto para cada parametro afectado por una cirugia estructural.
+        """
+        if name in self._error_feedback:
+            del self._error_feedback[name]
+            self._stats["error_buffer_resets"] += 1
 
     def reset(self) -> None:
         """Resetear error feedback y estadisticas."""

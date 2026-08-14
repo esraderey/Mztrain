@@ -24,6 +24,7 @@ estructurales agresivas, control de precision/checkpointing/compresion,
 presupuesto de rango cuantitativo, modos QUALITY/DEFENSIVE.
 """
 
+import gc
 import logging
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
@@ -204,20 +205,28 @@ class ZVRAMGovernor:
         vez (si vram_oom_retry). Si vuelve a fallar, re-lanza."""
         try:
             return fn()
-        except torch.cuda.OutOfMemoryError:
+        except torch.cuda.OutOfMemoryError as e:
             self._counters["oom_events"] += 1
             logger.warning("[MZTrain VRAM] OOM capturado")
-            if torch.cuda.is_available():
-                try:
-                    torch.cuda.empty_cache()
-                except Exception:  # pragma: no cover
-                    pass
-            if not bool(self.cfg.vram_oom_retry):
-                raise
-            result = fn()  # reintento unico; si falla, propaga
-            self._counters["oom_recoveries"] += 1
-            logger.info("[MZTrain VRAM] recuperado tras OOM (retry)")
-            return result
+            # Guardar la excepcion solo si NO vamos a reintentar (para re-lanzarla
+            # con su traza). Si reintentamos, dejamos que Python borre 'e' al salir
+            # del handler: su __traceback__ retiene los frames del step fallido (y
+            # con ellos sus tensores), asi que empty_cache() no los liberaria si
+            # limpiaramos aqui dentro.
+            saved = None if bool(self.cfg.vram_oom_retry) else e
+        # Fuera del handler: 'e' ya fue liberado, el traceback no retiene tensores.
+        gc.collect()
+        if torch.cuda.is_available():
+            try:
+                torch.cuda.empty_cache()
+            except Exception:  # pragma: no cover
+                pass
+        if saved is not None:
+            raise saved
+        result = fn()  # reintento unico; si vuelve a fallar, propaga
+        self._counters["oom_recoveries"] += 1
+        logger.info("[MZTrain VRAM] recuperado tras OOM (retry)")
+        return result
 
     # ---- stats ------------------------------------------------------------
 

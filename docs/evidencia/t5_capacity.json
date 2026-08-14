@@ -1,0 +1,151 @@
+{
+  "experiment": "t5_capacity_probe",
+  "batch": 8,
+  "seq": 256,
+  "steps": 10,
+  "note": "AdamW fp32 plano, tokens sinteticos; cota conservadora (sin compress_optimizer_states ni checkpointing de activaciones)",
+  "gpu": "NVIDIA GeForce RTX 4060",
+  "vram_total_gb": 8.59,
+  "torch": "2.11.0+cu128",
+  "mztrain": "1.1.0",
+  "probes": [
+    {
+      "family": "dense",
+      "d": 1024,
+      "layers": 12,
+      "dense_equiv_params": 152345600,
+      "params": 152345600,
+      "ok": true,
+      "peak_vram_gb": 3.521,
+      "s_per_step": 0.324,
+      "tokens_per_s": 6322
+    },
+    {
+      "family": "dense",
+      "d": 1280,
+      "layers": 14,
+      "dense_equiv_params": 276949760,
+      "params": 276949760,
+      "ok": true,
+      "peak_vram_gb": 5.861,
+      "s_per_step": 0.593,
+      "tokens_per_s": 3452
+    },
+    {
+      "family": "dense",
+      "d": 1408,
+      "layers": 16,
+      "dense_equiv_params": 382512768,
+      "params": 382512768,
+      "ok": true,
+      "peak_vram_gb": 7.725,
+      "s_per_step": 17.27,
+      "tokens_per_s": 119
+    },
+    {
+      "family": "dense",
+      "d": 1536,
+      "layers": 16,
+      "dense_equiv_params": 455035392,
+      "params": 455035392,
+      "ok": true,
+      "peak_vram_gb": 9.186,
+      "s_per_step": 24.75,
+      "tokens_per_s": 83
+    },
+    {
+      "family": "dense",
+      "d": 1600,
+      "layers": 18,
+      "dense_equiv_params": 555108800,
+      "params": 555108800,
+      "ok": true,
+      "peak_vram_gb": 11.321,
+      "s_per_step": 26.198,
+      "tokens_per_s": 78
+    },
+    {
+      "family": "dense",
+      "d": 1664,
+      "layers": 20,
+      "dense_equiv_params": 666783104,
+      "params": 666783104,
+      "ok": true,
+      "peak_vram_gb": 13.379,
+      "s_per_step": 25.791,
+      "tokens_per_s": 79
+    },
+    {
+      "family": "fact",
+      "d": 1536,
+      "layers": 20,
+      "dense_equiv_params": 568306176,
+      "params": 127924736,
+      "rank": 256,
+      "ok": true,
+      "peak_vram_gb": 6.008,
+      "s_per_step": 0.384,
+      "tokens_per_s": 5333
+    },
+    {
+      "family": "fact",
+      "d": 1792,
+      "layers": 22,
+      "dense_equiv_params": 850209024,
+      "params": 190435184,
+      "rank": 298,
+      "ok": true,
+      "peak_vram_gb": 7.997,
+      "s_per_step": 4.837,
+      "tokens_per_s": 423
+    },
+    {
+      "family": "fact",
+      "d": 1920,
+      "layers": 24,
+      "dense_equiv_params": 1064307840,
+      "params": 238584960,
+      "rank": 320,
+      "ok": true,
+      "peak_vram_gb": 9.609,
+      "s_per_step": 12.868,
+      "tokens_per_s": 159
+    },
+    {
+      "family": "fact",
+      "d": 2048,
+      "layers": 26,
+      "dense_equiv_params": 1311438848,
+      "params": 293372552,
+      "rank": 341,
+      "ok": true,
+      "peak_vram_gb": 11.209,
+      "s_per_step": 21.028,
+      "tokens_per_s": 97
+    },
+    {
+      "family": "fact",
+      "d": 2176,
+      "layers": 28,
+      "dense_equiv_params": 1593961344,
+      "params": 355944928,
+      "rank": 362,
+      "ok": true,
+      "peak_vram_gb": 13.203,
+      "s_per_step": 32.097,
+      "tokens_per_s": 64
+    },
+    {
+      "family": "fact",
+      "d": 2304,
+      "layers": 30,
+      "dense_equiv_params": 1914234624,
+      "params": 427924224,
+      "rank": 384,
+      "ok": true,
+      "peak_vram_gb": 15.132,
+      "s_per_step": 30.684,
+      "tokens_per_s": 67
+    }
+  ]
+}

@@ -1,0 +1,1846 @@
+[
+  {
+    "epoch": 0,
+    "loss_base": 5.370328,
+    "n_directions": 432,
+    "global": {
+      "median": 0.0,
+      "p10": -1.4e-05,
+      "p90": 8.1e-05,
+      "max": 0.012528,
+      "cv": 5.4929,
+      "p90_p10_ratio": 5.615
+    },
+    "global_spearman": {
+      "spectral": 0.1364,
+      "update": 0.0983,
+      "coherence": 0.2475
+    },
+    "verdict": {
+      "heterogeneous": true,
+      "reading": "HETEROGENEO -> mercado global justificable",
+      "proxies_predictive": {
+        "spectral": false,
+        "update": false,
+        "coherence": false
+      }
+    },
+    "layers": [
+      {
+        "layer": "bert.encoder.layers.0.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -2e-06,
+          "p90": 2e-06,
+          "max": 2e-06,
+          "cv": 20.0647,
+          "p90_p10_ratio": 0.894
+        },
+        "spearman_vs_spectral": -0.05,
+        "spearman_vs_update": 0.0471,
+        "spearman_vs_coherence": 0.05
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1e-06,
+          "p10": -1e-06,
+          "p90": 1e-06,
+          "max": 1e-06,
+          "cv": 2.2124,
+          "p90_p10_ratio": 0.522
+        },
+        "spearman_vs_spectral": 0.15,
+        "spearman_vs_update": 0.1,
+        "spearman_vs_coherence": -0.15
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -3e-06,
+          "p10": -2.1e-05,
+          "p90": 1e-05,
+          "max": 2.5e-05,
+          "cv": 4.3219,
+          "p90_p10_ratio": 0.489
+        },
+        "spearman_vs_spectral": 0.2176,
+        "spearman_vs_update": 0.0441,
+        "spearman_vs_coherence": -0.2176
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 4e-06,
+          "p10": -1e-05,
+          "p90": 5.2e-05,
+          "max": 0.000125,
+          "cv": 2.1899,
+          "p90_p10_ratio": 5.253
+        },
+        "spearman_vs_spectral": 0.2824,
+        "spearman_vs_update": 0.3971,
+        "spearman_vs_coherence": -0.2824
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1e-05,
+          "p10": -2.4e-05,
+          "p90": 1.7e-05,
+          "max": 8.9e-05,
+          "cv": 22.0013,
+          "p90_p10_ratio": 0.708
+        },
+        "spearman_vs_spectral": 0.0676,
+        "spearman_vs_update": 0.1735,
+        "spearman_vs_coherence": -0.0529
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1e-06,
+          "p10": -9e-06,
+          "p90": 9.5e-05,
+          "max": 0.000114,
+          "cv": 1.8304,
+          "p90_p10_ratio": 10.057
+        },
+        "spearman_vs_spectral": 0.0765,
+        "spearman_vs_update": 0.0794,
+        "spearman_vs_coherence": -0.0765
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -0.0,
+          "p90": 1e-06,
+          "max": 1e-06,
+          "cv": 2.6749,
+          "p90_p10_ratio": 7.333
+        },
+        "spearman_vs_spectral": 0.0735,
+        "spearman_vs_update": -0.1353,
+        "spearman_vs_coherence": -0.0735
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -0.0,
+          "p90": 0.0,
+          "max": 1e-06,
+          "cv": 4.1735,
+          "p90_p10_ratio": 0.556
+        },
+        "spearman_vs_spectral": -0.4676,
+        "spearman_vs_update": -0.4235,
+        "spearman_vs_coherence": 0.4676
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -1.3e-05,
+          "p90": 9.3e-05,
+          "max": 0.000158,
+          "cv": 2.169,
+          "p90_p10_ratio": 6.882
+        },
+        "spearman_vs_spectral": -0.1647,
+        "spearman_vs_update": -0.0647,
+        "spearman_vs_coherence": 0.4235
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 9e-06,
+          "p10": -3.6e-05,
+          "p90": 4.2e-05,
+          "max": 7.8e-05,
+          "cv": 8.6122,
+          "p90_p10_ratio": 1.17
+        },
+        "spearman_vs_spectral": 0.0618,
+        "spearman_vs_update": 0.1059,
+        "spearman_vs_coherence": -0.0618
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 5e-06,
+          "p10": -9e-06,
+          "p90": 4e-05,
+          "max": 7.8e-05,
+          "cv": 1.7848,
+          "p90_p10_ratio": 4.49
+        },
+        "spearman_vs_spectral": 0.5853,
+        "spearman_vs_update": 0.5382,
+        "spearman_vs_coherence": -0.5676
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.3e-05,
+          "p10": -4.2e-05,
+          "p90": 6.7e-05,
+          "max": 0.000319,
+          "cv": 7.0591,
+          "p90_p10_ratio": 1.592
+        },
+        "spearman_vs_spectral": 0.3647,
+        "spearman_vs_update": 0.3647,
+        "spearman_vs_coherence": -0.3647
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "cv": 8.1035,
+          "p90_p10_ratio": 0.8
+        },
+        "spearman_vs_spectral": -0.5059,
+        "spearman_vs_update": -0.5088,
+        "spearman_vs_coherence": 0.5059
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -0.0,
+          "p90": 0.0,
+          "max": 1e-06,
+          "cv": 2.3692,
+          "p90_p10_ratio": 5.0
+        },
+        "spearman_vs_spectral": 0.2971,
+        "spearman_vs_update": 0.2118,
+        "spearman_vs_coherence": -0.2971
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 3e-06,
+          "p10": -9e-06,
+          "p90": 2.6e-05,
+          "max": 0.000141,
+          "cv": 3.3334,
+          "p90_p10_ratio": 2.824
+        },
+        "spearman_vs_spectral": -0.3147,
+        "spearman_vs_update": -0.3912,
+        "spearman_vs_coherence": 0.3147
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 3e-06,
+          "p10": -5e-06,
+          "p90": 0.000154,
+          "max": 0.000463,
+          "cv": 2.1866,
+          "p90_p10_ratio": 28.883
+        },
+        "spearman_vs_spectral": 0.35,
+        "spearman_vs_update": 0.4765,
+        "spearman_vs_coherence": -0.35
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 3e-06,
+          "p10": -8e-06,
+          "p90": 4.6e-05,
+          "max": 7.8e-05,
+          "cv": 2.5253,
+          "p90_p10_ratio": 5.692
+        },
+        "spearman_vs_spectral": 0.1147,
+        "spearman_vs_update": 0.4088,
+        "spearman_vs_coherence": -0.1147
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 7e-06,
+          "p10": -5e-05,
+          "p90": 8.7e-05,
+          "max": 0.000226,
+          "cv": 3.3765,
+          "p90_p10_ratio": 1.731
+        },
+        "spearman_vs_spectral": -0.1735,
+        "spearman_vs_update": 0.1118,
+        "spearman_vs_coherence": 0.1735
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "cv": 2.6764,
+          "p90_p10_ratio": 5.0
+        },
+        "spearman_vs_spectral": -0.1824,
+        "spearman_vs_update": -0.1118,
+        "spearman_vs_coherence": 0.1824
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": -0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "cv": 3.3166,
+          "p90_p10_ratio": 6.0
+        },
+        "spearman_vs_spectral": -0.0559,
+        "spearman_vs_update": -0.0853,
+        "spearman_vs_coherence": 0.0559
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1e-06,
+          "p10": -2.7e-05,
+          "p90": 1.7e-05,
+          "max": 3.1e-05,
+          "cv": 7.3846,
+          "p90_p10_ratio": 0.62
+        },
+        "spearman_vs_spectral": -0.1647,
+        "spearman_vs_update": -0.2206,
+        "spearman_vs_coherence": 0.1647
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2e-06,
+          "p10": -1.2e-05,
+          "p90": 4.3e-05,
+          "max": 0.000119,
+          "cv": 1.9622,
+          "p90_p10_ratio": 3.613
+        },
+        "spearman_vs_spectral": 0.2941,
+        "spearman_vs_update": 0.3529,
+        "spearman_vs_coherence": -0.0324
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1e-06,
+          "p10": -5e-06,
+          "p90": 3.3e-05,
+          "max": 9.5e-05,
+          "cv": 2.4199,
+          "p90_p10_ratio": 6.419
+        },
+        "spearman_vs_spectral": 0.4235,
+        "spearman_vs_update": 0.3265,
+        "spearman_vs_coherence": -0.4235
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2e-05,
+          "p10": -1.8e-05,
+          "p90": 7.6e-05,
+          "max": 0.000122,
+          "cv": 1.596,
+          "p90_p10_ratio": 4.161
+        },
+        "spearman_vs_spectral": 0.5088,
+        "spearman_vs_update": 0.5941,
+        "spearman_vs_coherence": -0.5088
+      },
+      {
+        "layer": "bert.pooler.dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": 0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "cv": 0.0,
+          "p90_p10_ratio": 0.0
+        },
+        "spearman_vs_spectral": -1.0,
+        "spearman_vs_update": 1.0,
+        "spearman_vs_coherence": 1.0
+      },
+      {
+        "layer": "mlm_dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 4.7e-05,
+          "p10": 3e-06,
+          "p90": 0.002771,
+          "max": 0.006482,
+          "cv": 1.6854,
+          "p90_p10_ratio": 904.652
+        },
+        "spearman_vs_spectral": 0.0941,
+        "spearman_vs_update": 0.4382,
+        "spearman_vs_coherence": -0.0941
+      },
+      {
+        "layer": "mlm_decoder",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.002772,
+          "p10": 0.000168,
+          "p90": 0.007188,
+          "max": 0.012528,
+          "cv": 0.8785,
+          "p90_p10_ratio": 42.721
+        },
+        "spearman_vs_spectral": 0.1059,
+        "spearman_vs_update": 0.6588,
+        "spearman_vs_coherence": 0.9382
+      }
+    ]
+  },
+  {
+    "epoch": 10,
+    "loss_base": 3.560645,
+    "n_directions": 432,
+    "global": {
+      "median": 2e-06,
+      "p10": -9.5e-05,
+      "p90": 0.000142,
+      "max": 0.00557,
+      "cv": 5.5786,
+      "p90_p10_ratio": 1.497
+    },
+    "global_spearman": {
+      "spectral": -0.0043,
+      "update": -0.0249,
+      "coherence": -0.0121
+    },
+    "verdict": {
+      "heterogeneous": true,
+      "reading": "HETEROGENEO -> mercado global justificable",
+      "proxies_predictive": {
+        "spectral": false,
+        "update": false,
+        "coherence": false
+      }
+    },
+    "layers": [
+      {
+        "layer": "bert.encoder.layers.0.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -4.2e-05,
+          "p10": -0.000118,
+          "p90": 7e-06,
+          "max": 3.6e-05,
+          "cv": 2.1946,
+          "p90_p10_ratio": 0.061
+        },
+        "spearman_vs_spectral": -0.1882,
+        "spearman_vs_update": -0.0824,
+        "spearman_vs_coherence": -0.4029
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2.3e-05,
+          "p10": -9.5e-05,
+          "p90": 7.7e-05,
+          "max": 0.000114,
+          "cv": 10.7015,
+          "p90_p10_ratio": 0.817
+        },
+        "spearman_vs_spectral": 0.0647,
+        "spearman_vs_update": 0.0853,
+        "spearman_vs_coherence": -0.2941
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -3.1e-05,
+          "p10": -0.000144,
+          "p90": 2.3e-05,
+          "max": 3.6e-05,
+          "cv": 2.0944,
+          "p90_p10_ratio": 0.157
+        },
+        "spearman_vs_spectral": -0.2265,
+        "spearman_vs_update": -0.2206,
+        "spearman_vs_coherence": -0.1912
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -4.1e-05,
+          "p10": -0.000335,
+          "p90": 0.000171,
+          "max": 0.000294,
+          "cv": 2.7851,
+          "p90_p10_ratio": 0.512
+        },
+        "spearman_vs_spectral": -0.4235,
+        "spearman_vs_update": -0.3235,
+        "spearman_vs_coherence": 0.2382
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1e-06,
+          "p10": -6.8e-05,
+          "p90": 0.000253,
+          "max": 0.00046,
+          "cv": 2.2047,
+          "p90_p10_ratio": 3.732
+        },
+        "spearman_vs_spectral": 0.3382,
+        "spearman_vs_update": 0.5059,
+        "spearman_vs_coherence": 0.1824
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1e-05,
+          "p10": -0.000168,
+          "p90": 0.000152,
+          "max": 0.000218,
+          "cv": 1531.7222,
+          "p90_p10_ratio": 0.902
+        },
+        "spearman_vs_spectral": 0.0912,
+        "spearman_vs_update": 0.2029,
+        "spearman_vs_coherence": -0.5147
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1e-05,
+          "p10": -4.9e-05,
+          "p90": 2.8e-05,
+          "max": 4e-05,
+          "cv": 3.3707,
+          "p90_p10_ratio": 0.57
+        },
+        "spearman_vs_spectral": 0.0529,
+        "spearman_vs_update": -0.0059,
+        "spearman_vs_coherence": -0.4559
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -5e-06,
+          "p10": -3.4e-05,
+          "p90": 2.3e-05,
+          "max": 3.4e-05,
+          "cv": 3.9681,
+          "p90_p10_ratio": 0.67
+        },
+        "spearman_vs_spectral": -0.2618,
+        "spearman_vs_update": -0.2588,
+        "spearman_vs_coherence": 0.0118
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.5e-05,
+          "p10": -6.1e-05,
+          "p90": 4.8e-05,
+          "max": 0.000105,
+          "cv": 13.2212,
+          "p90_p10_ratio": 0.785
+        },
+        "spearman_vs_spectral": -0.3118,
+        "spearman_vs_update": -0.4529,
+        "spearman_vs_coherence": -0.5882
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -5e-06,
+          "p10": -6e-05,
+          "p90": 0.000114,
+          "max": 0.000123,
+          "cv": 18.1302,
+          "p90_p10_ratio": 1.887
+        },
+        "spearman_vs_spectral": -0.2765,
+        "spearman_vs_update": -0.4735,
+        "spearman_vs_coherence": -0.4176
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -2e-05,
+          "p10": -0.000127,
+          "p90": 0.00017,
+          "max": 0.000253,
+          "cv": 20.5566,
+          "p90_p10_ratio": 1.341
+        },
+        "spearman_vs_spectral": 0.1618,
+        "spearman_vs_update": 0.0765,
+        "spearman_vs_coherence": -0.3147
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2.8e-05,
+          "p10": -6.7e-05,
+          "p90": 0.000129,
+          "max": 0.00017,
+          "cv": 5.9422,
+          "p90_p10_ratio": 1.919
+        },
+        "spearman_vs_spectral": -0.1441,
+        "spearman_vs_update": -0.2294,
+        "spearman_vs_coherence": -0.0206
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1e-06,
+          "p10": -1.6e-05,
+          "p90": 2.5e-05,
+          "max": 3.1e-05,
+          "cv": 7.9543,
+          "p90_p10_ratio": 1.553
+        },
+        "spearman_vs_spectral": 0.0441,
+        "spearman_vs_update": 0.0676,
+        "spearman_vs_coherence": 0.1618
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2e-06,
+          "p10": -1.2e-05,
+          "p90": 9e-06,
+          "max": 1.8e-05,
+          "cv": 20.7927,
+          "p90_p10_ratio": 0.74
+        },
+        "spearman_vs_spectral": -0.2735,
+        "spearman_vs_update": -0.3647,
+        "spearman_vs_coherence": -0.2676
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1.6e-05,
+          "p10": -2.4e-05,
+          "p90": 0.00022,
+          "max": 0.000259,
+          "cv": 1.96,
+          "p90_p10_ratio": 9.244
+        },
+        "spearman_vs_spectral": 0.2559,
+        "spearman_vs_update": 0.3088,
+        "spearman_vs_coherence": 0.1059
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1.2e-05,
+          "p10": -4.4e-05,
+          "p90": 8.8e-05,
+          "max": 0.000235,
+          "cv": 9.6408,
+          "p90_p10_ratio": 1.985
+        },
+        "spearman_vs_spectral": 0.1412,
+        "spearman_vs_update": -0.1412,
+        "spearman_vs_coherence": -0.0706
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1e-06,
+          "p10": -8.6e-05,
+          "p90": 8.5e-05,
+          "max": 9.7e-05,
+          "cv": 197.6505,
+          "p90_p10_ratio": 0.987
+        },
+        "spearman_vs_spectral": -0.2882,
+        "spearman_vs_update": -0.0559,
+        "spearman_vs_coherence": 0.2618
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -5.4e-05,
+          "p10": -0.000142,
+          "p90": 0.0001,
+          "max": 0.000131,
+          "cv": 3.6645,
+          "p90_p10_ratio": 0.705
+        },
+        "spearman_vs_spectral": -0.6912,
+        "spearman_vs_update": -0.6412,
+        "spearman_vs_coherence": 0.2441
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1e-06,
+          "p10": -8e-06,
+          "p90": 1.8e-05,
+          "max": 2.4e-05,
+          "cv": 22.0588,
+          "p90_p10_ratio": 2.178
+        },
+        "spearman_vs_spectral": 0.4,
+        "spearman_vs_update": 0.4118,
+        "spearman_vs_coherence": -0.1588
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 3e-06,
+          "p10": -1.5e-05,
+          "p90": 3.1e-05,
+          "max": 0.000104,
+          "cv": 4.2478,
+          "p90_p10_ratio": 2.051
+        },
+        "spearman_vs_spectral": 0.1176,
+        "spearman_vs_update": 0.1765,
+        "spearman_vs_coherence": 0.0118
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2.7e-05,
+          "p10": -6.3e-05,
+          "p90": 9.8e-05,
+          "max": 0.000127,
+          "cv": 3.1433,
+          "p90_p10_ratio": 1.554
+        },
+        "spearman_vs_spectral": 0.1412,
+        "spearman_vs_update": 0.0941,
+        "spearman_vs_coherence": 0.3588
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.1e-05,
+          "p10": -0.000103,
+          "p90": 6.8e-05,
+          "max": 0.000159,
+          "cv": 13.9237,
+          "p90_p10_ratio": 0.662
+        },
+        "spearman_vs_spectral": -0.2529,
+        "spearman_vs_update": -0.1147,
+        "spearman_vs_coherence": -0.0147
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -3.3e-05,
+          "p10": -0.000176,
+          "p90": 0.000115,
+          "max": 0.000121,
+          "cv": 4.2896,
+          "p90_p10_ratio": 0.653
+        },
+        "spearman_vs_spectral": -0.25,
+        "spearman_vs_update": -0.1853,
+        "spearman_vs_coherence": 0.2618
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2.1e-05,
+          "p10": -6.9e-05,
+          "p90": 0.000116,
+          "max": 0.000169,
+          "cv": 2.9797,
+          "p90_p10_ratio": 1.669
+        },
+        "spearman_vs_spectral": 0.0147,
+        "spearman_vs_update": 0.2471,
+        "spearman_vs_coherence": 0.3471
+      },
+      {
+        "layer": "bert.pooler.dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": 0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "cv": 0.0,
+          "p90_p10_ratio": 0.0
+        },
+        "spearman_vs_spectral": -1.0,
+        "spearman_vs_update": 1.0,
+        "spearman_vs_coherence": 1.0
+      },
+      {
+        "layer": "mlm_dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.00049,
+          "p10": -0.000329,
+          "p90": 0.001384,
+          "max": 0.003808,
+          "cv": 1.8695,
+          "p90_p10_ratio": 4.203
+        },
+        "spearman_vs_spectral": 0.4147,
+        "spearman_vs_update": 0.4706,
+        "spearman_vs_coherence": -0.1
+      },
+      {
+        "layer": "mlm_decoder",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.00211,
+          "p10": 0.00084,
+          "p90": 0.004695,
+          "max": 0.00557,
+          "cv": 0.6294,
+          "p90_p10_ratio": 5.592
+        },
+        "spearman_vs_spectral": 0.1,
+        "spearman_vs_update": -0.0765,
+        "spearman_vs_coherence": 0.45
+      }
+    ]
+  },
+  {
+    "epoch": 20,
+    "loss_base": 3.10787,
+    "n_directions": 432,
+    "global": {
+      "median": 7e-06,
+      "p10": -0.000283,
+      "p90": 0.000426,
+      "max": 0.008678,
+      "cv": 5.2729,
+      "p90_p10_ratio": 1.507
+    },
+    "global_spearman": {
+      "spectral": 0.0404,
+      "update": -0.0157,
+      "coherence": 0.0946
+    },
+    "verdict": {
+      "heterogeneous": true,
+      "reading": "HETEROGENEO -> mercado global justificable",
+      "proxies_predictive": {
+        "spectral": false,
+        "update": false,
+        "coherence": false
+      }
+    },
+    "layers": [
+      {
+        "layer": "bert.encoder.layers.0.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 8.4e-05,
+          "p10": -0.000277,
+          "p90": 0.000339,
+          "max": 0.001109,
+          "cv": 3.9424,
+          "p90_p10_ratio": 1.222
+        },
+        "spearman_vs_spectral": 0.1794,
+        "spearman_vs_update": 0.1706,
+        "spearman_vs_coherence": -0.1147
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 6.1e-05,
+          "p10": -8.4e-05,
+          "p90": 0.000324,
+          "max": 0.000335,
+          "cv": 2.632,
+          "p90_p10_ratio": 3.841
+        },
+        "spearman_vs_spectral": -0.5382,
+        "spearman_vs_update": -0.5912,
+        "spearman_vs_coherence": 0.4912
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -0.00015,
+          "p10": -0.000542,
+          "p90": 0.000406,
+          "max": 0.000554,
+          "cv": 3.0707,
+          "p90_p10_ratio": 0.748
+        },
+        "spearman_vs_spectral": -0.3941,
+        "spearman_vs_update": -0.4059,
+        "spearman_vs_coherence": 0.0294
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 9.3e-05,
+          "p10": -0.000665,
+          "p90": 0.001667,
+          "max": 0.002783,
+          "cv": 3.1746,
+          "p90_p10_ratio": 2.507
+        },
+        "spearman_vs_spectral": 0.0265,
+        "spearman_vs_update": -0.0324,
+        "spearman_vs_coherence": 0.4588
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 4.3e-05,
+          "p10": -0.00033,
+          "p90": 0.00058,
+          "max": 0.00141,
+          "cv": 3.325,
+          "p90_p10_ratio": 1.76
+        },
+        "spearman_vs_spectral": 0.5676,
+        "spearman_vs_update": 0.5647,
+        "spearman_vs_coherence": 0.2824
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 2.6e-05,
+          "p10": -0.000261,
+          "p90": 0.000221,
+          "max": 0.00053,
+          "cv": 11.17,
+          "p90_p10_ratio": 0.848
+        },
+        "spearman_vs_spectral": 0.1206,
+        "spearman_vs_update": 0.1588,
+        "spearman_vs_coherence": -0.2324
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -6.3e-05,
+          "p10": -0.0002,
+          "p90": 5.9e-05,
+          "max": 0.000126,
+          "cv": 1.7714,
+          "p90_p10_ratio": 0.293
+        },
+        "spearman_vs_spectral": -0.5471,
+        "spearman_vs_update": -0.4088,
+        "spearman_vs_coherence": -0.2382
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -2.4e-05,
+          "p10": -9.7e-05,
+          "p90": 0.000146,
+          "max": 0.000326,
+          "cv": 13.3933,
+          "p90_p10_ratio": 1.508
+        },
+        "spearman_vs_spectral": -0.1412,
+        "spearman_vs_update": -0.1824,
+        "spearman_vs_coherence": 0.3529
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -6.1e-05,
+          "p10": -0.000364,
+          "p90": 0.000158,
+          "max": 0.000173,
+          "cv": 2.2541,
+          "p90_p10_ratio": 0.433
+        },
+        "spearman_vs_spectral": -0.2118,
+        "spearman_vs_update": -0.1618,
+        "spearman_vs_coherence": 0.2618
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -3e-05,
+          "p10": -0.000439,
+          "p90": 0.000237,
+          "max": 0.000556,
+          "cv": 4.7493,
+          "p90_p10_ratio": 0.541
+        },
+        "spearman_vs_spectral": -0.1412,
+        "spearman_vs_update": -0.2294,
+        "spearman_vs_coherence": -0.0412
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 5.2e-05,
+          "p10": -0.000193,
+          "p90": 0.000271,
+          "max": 0.000389,
+          "cv": 3.292,
+          "p90_p10_ratio": 1.405
+        },
+        "spearman_vs_spectral": 0.1882,
+        "spearman_vs_update": 0.2265,
+        "spearman_vs_coherence": -0.2382
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000169,
+          "p10": -0.000244,
+          "p90": 0.000235,
+          "max": 0.000274,
+          "cv": 3.68,
+          "p90_p10_ratio": 0.964
+        },
+        "spearman_vs_spectral": 0.1382,
+        "spearman_vs_update": -0.0265,
+        "spearman_vs_coherence": -0.0618
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 4e-06,
+          "p10": -2.9e-05,
+          "p90": 8.7e-05,
+          "max": 0.000132,
+          "cv": 3.1046,
+          "p90_p10_ratio": 2.966
+        },
+        "spearman_vs_spectral": 0.1235,
+        "spearman_vs_update": 0.2765,
+        "spearman_vs_coherence": 0.0971
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1.1e-05,
+          "p10": -4.5e-05,
+          "p90": 8.9e-05,
+          "max": 0.000172,
+          "cv": 3.4464,
+          "p90_p10_ratio": 1.95
+        },
+        "spearman_vs_spectral": 0.0676,
+        "spearman_vs_update": 0.1265,
+        "spearman_vs_coherence": -0.1118
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.6e-05,
+          "p10": -9.1e-05,
+          "p90": 0.000191,
+          "max": 0.000713,
+          "cv": 5.0962,
+          "p90_p10_ratio": 2.099
+        },
+        "spearman_vs_spectral": 0.1765,
+        "spearman_vs_update": 0.0941,
+        "spearman_vs_coherence": 0.1676
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.3e-05,
+          "p10": -0.000134,
+          "p90": 0.000141,
+          "max": 0.000309,
+          "cv": 12.1359,
+          "p90_p10_ratio": 1.057
+        },
+        "spearman_vs_spectral": 0.0118,
+        "spearman_vs_update": 0.0735,
+        "spearman_vs_coherence": 0.1059
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000136,
+          "p10": -0.000154,
+          "p90": 0.000353,
+          "max": 0.000374,
+          "cv": 2.4188,
+          "p90_p10_ratio": 2.294
+        },
+        "spearman_vs_spectral": 0.3265,
+        "spearman_vs_update": 0.2088,
+        "spearman_vs_coherence": 0.0412
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 5.6e-05,
+          "p10": -0.000245,
+          "p90": 0.000397,
+          "max": 0.000437,
+          "cv": 3.6959,
+          "p90_p10_ratio": 1.618
+        },
+        "spearman_vs_spectral": 0.1412,
+        "spearman_vs_update": 0.0294,
+        "spearman_vs_coherence": 0.0029
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.8e-05,
+          "p10": -0.000102,
+          "p90": 5.8e-05,
+          "max": 0.000137,
+          "cv": 3.8215,
+          "p90_p10_ratio": 0.575
+        },
+        "spearman_vs_spectral": -0.1265,
+        "spearman_vs_update": -0.0735,
+        "spearman_vs_coherence": -0.5941
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -0.000112,
+          "p10": -0.000371,
+          "p90": 7.1e-05,
+          "max": 9.4e-05,
+          "cv": 1.2073,
+          "p90_p10_ratio": 0.19
+        },
+        "spearman_vs_spectral": -0.3559,
+        "spearman_vs_update": -0.2794,
+        "spearman_vs_coherence": -0.5824
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -0.000128,
+          "p10": -0.000369,
+          "p90": 7.5e-05,
+          "max": 9.7e-05,
+          "cv": 1.4672,
+          "p90_p10_ratio": 0.204
+        },
+        "spearman_vs_spectral": -0.0765,
+        "spearman_vs_update": -0.2765,
+        "spearman_vs_coherence": -0.0471
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -9.3e-05,
+          "p10": -0.000573,
+          "p90": 6e-06,
+          "max": 5.1e-05,
+          "cv": 2.0564,
+          "p90_p10_ratio": 0.011
+        },
+        "spearman_vs_spectral": -0.6294,
+        "spearman_vs_update": -0.6118,
+        "spearman_vs_coherence": -0.1765
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.00015,
+          "p10": -0.00016,
+          "p90": 0.000421,
+          "max": 0.000468,
+          "cv": 2.1473,
+          "p90_p10_ratio": 2.629
+        },
+        "spearman_vs_spectral": 0.0529,
+        "spearman_vs_update": 0.2088,
+        "spearman_vs_coherence": -0.2647
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1.3e-05,
+          "p10": -0.000254,
+          "p90": 0.000315,
+          "max": 0.000581,
+          "cv": 6.9687,
+          "p90_p10_ratio": 1.239
+        },
+        "spearman_vs_spectral": -0.0147,
+        "spearman_vs_update": 0.0529,
+        "spearman_vs_coherence": 0.2647
+      },
+      {
+        "layer": "bert.pooler.dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": 0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "cv": 0.0,
+          "p90_p10_ratio": 0.0
+        },
+        "spearman_vs_spectral": -1.0,
+        "spearman_vs_update": 1.0,
+        "spearman_vs_coherence": 1.0
+      },
+      {
+        "layer": "mlm_dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000509,
+          "p10": -0.001155,
+          "p90": 0.003139,
+          "max": 0.005014,
+          "cv": 1.9624,
+          "p90_p10_ratio": 2.719
+        },
+        "spearman_vs_spectral": 0.0294,
+        "spearman_vs_update": 0.1588,
+        "spearman_vs_coherence": -0.4324
+      },
+      {
+        "layer": "mlm_decoder",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.003643,
+          "p10": 0.001403,
+          "p90": 0.006991,
+          "max": 0.008678,
+          "cv": 0.5181,
+          "p90_p10_ratio": 4.981
+        },
+        "spearman_vs_spectral": 0.1088,
+        "spearman_vs_update": 0.2647,
+        "spearman_vs_coherence": -0.1794
+      }
+    ]
+  },
+  {
+    "epoch": 30,
+    "loss_base": 2.656683,
+    "n_directions": 432,
+    "global": {
+      "median": 5.6e-05,
+      "p10": -0.000356,
+      "p90": 0.000763,
+      "max": 0.013991,
+      "cv": 4.6107,
+      "p90_p10_ratio": 2.14
+    },
+    "global_spearman": {
+      "spectral": 0.1282,
+      "update": 0.1261,
+      "coherence": 0.1338
+    },
+    "verdict": {
+      "heterogeneous": true,
+      "reading": "HETEROGENEO -> mercado global justificable",
+      "proxies_predictive": {
+        "spectral": false,
+        "update": false,
+        "coherence": false
+      }
+    },
+    "layers": [
+      {
+        "layer": "bert.encoder.layers.0.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -0.000153,
+          "p10": -0.000542,
+          "p90": 0.000781,
+          "max": 0.002195,
+          "cv": 50.3445,
+          "p90_p10_ratio": 1.44
+        },
+        "spearman_vs_spectral": 0.1382,
+        "spearman_vs_update": 0.1324,
+        "spearman_vs_coherence": -0.1441
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -6.2e-05,
+          "p10": -0.000695,
+          "p90": 0.000474,
+          "max": 0.000644,
+          "cv": 5.4968,
+          "p90_p10_ratio": 0.682
+        },
+        "spearman_vs_spectral": 0.0559,
+        "spearman_vs_update": 0.1412,
+        "spearman_vs_coherence": -0.0529
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 3.5e-05,
+          "p10": -0.000892,
+          "p90": 0.000923,
+          "max": 0.001456,
+          "cv": 16.8784,
+          "p90_p10_ratio": 1.035
+        },
+        "spearman_vs_spectral": 0.2735,
+        "spearman_vs_update": 0.25,
+        "spearman_vs_coherence": 0.0265
+      },
+      {
+        "layer": "bert.encoder.layers.0.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000305,
+          "p10": -0.000327,
+          "p90": 0.002004,
+          "max": 0.00336,
+          "cv": 1.8207,
+          "p90_p10_ratio": 6.125
+        },
+        "spearman_vs_spectral": 0.3265,
+        "spearman_vs_update": 0.2618,
+        "spearman_vs_coherence": 0.5735
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 7.5e-05,
+          "p10": -0.000416,
+          "p90": 0.000952,
+          "max": 0.00205,
+          "cv": 3.6948,
+          "p90_p10_ratio": 2.287
+        },
+        "spearman_vs_spectral": 0.1941,
+        "spearman_vs_update": 0.2147,
+        "spearman_vs_coherence": 0.4
+      },
+      {
+        "layer": "bert.encoder.layers.0.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000131,
+          "p10": -0.000353,
+          "p90": 0.000754,
+          "max": 0.001182,
+          "cv": 2.6035,
+          "p90_p10_ratio": 2.136
+        },
+        "spearman_vs_spectral": 0.1147,
+        "spearman_vs_update": 0.1206,
+        "spearman_vs_coherence": -0.3235
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000112,
+          "p10": -0.000239,
+          "p90": 0.000327,
+          "max": 0.000492,
+          "cv": 3.0773,
+          "p90_p10_ratio": 1.365
+        },
+        "spearman_vs_spectral": 0.0147,
+        "spearman_vs_update": 0.2235,
+        "spearman_vs_coherence": -0.0471
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 7.1e-05,
+          "p10": -0.000533,
+          "p90": 0.000233,
+          "max": 0.000551,
+          "cv": 9.6089,
+          "p90_p10_ratio": 0.437
+        },
+        "spearman_vs_spectral": -0.3441,
+        "spearman_vs_update": -0.3206,
+        "spearman_vs_coherence": 0.1441
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.3e-05,
+          "p10": -0.00037,
+          "p90": 0.000601,
+          "max": 0.000859,
+          "cv": 14.8169,
+          "p90_p10_ratio": 1.625
+        },
+        "spearman_vs_spectral": -0.2206,
+        "spearman_vs_update": -0.1941,
+        "spearman_vs_coherence": 0.2706
+      },
+      {
+        "layer": "bert.encoder.layers.1.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -9.4e-05,
+          "p10": -0.000355,
+          "p90": 0.000714,
+          "max": 0.000899,
+          "cv": 6.8407,
+          "p90_p10_ratio": 2.012
+        },
+        "spearman_vs_spectral": -0.0618,
+        "spearman_vs_update": -0.1941,
+        "spearman_vs_coherence": 0.4441
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -8.8e-05,
+          "p10": -0.000266,
+          "p90": 0.000146,
+          "max": 0.000357,
+          "cv": 4.2562,
+          "p90_p10_ratio": 0.547
+        },
+        "spearman_vs_spectral": 0.4471,
+        "spearman_vs_update": 0.1882,
+        "spearman_vs_coherence": 0.0324
+      },
+      {
+        "layer": "bert.encoder.layers.1.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -4.3e-05,
+          "p10": -0.00038,
+          "p90": 0.00045,
+          "max": 0.000593,
+          "cv": 11.1372,
+          "p90_p10_ratio": 1.183
+        },
+        "spearman_vs_spectral": 0.2412,
+        "spearman_vs_update": 0.0324,
+        "spearman_vs_coherence": -0.1618
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.00013,
+          "p10": -6.4e-05,
+          "p90": 0.000603,
+          "max": 0.001329,
+          "cv": 1.3637,
+          "p90_p10_ratio": 9.481
+        },
+        "spearman_vs_spectral": 0.3971,
+        "spearman_vs_update": 0.4941,
+        "spearman_vs_coherence": 0.7029
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -1.2e-05,
+          "p10": -0.000185,
+          "p90": 0.000458,
+          "max": 0.000701,
+          "cv": 3.4636,
+          "p90_p10_ratio": 2.472
+        },
+        "spearman_vs_spectral": 0.1147,
+        "spearman_vs_update": 0.1,
+        "spearman_vs_coherence": 0.5794
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -6.2e-05,
+          "p10": -0.000374,
+          "p90": 0.000311,
+          "max": 0.001276,
+          "cv": 14.184,
+          "p90_p10_ratio": 0.833
+        },
+        "spearman_vs_spectral": -0.2294,
+        "spearman_vs_update": -0.2441,
+        "spearman_vs_coherence": -0.2647
+      },
+      {
+        "layer": "bert.encoder.layers.2.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 5.6e-05,
+          "p10": -0.000255,
+          "p90": 0.000411,
+          "max": 0.000718,
+          "cv": 3.7243,
+          "p90_p10_ratio": 1.616
+        },
+        "spearman_vs_spectral": 0.4912,
+        "spearman_vs_update": 0.2353,
+        "spearman_vs_coherence": -0.3206
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 6.5e-05,
+          "p10": -0.000186,
+          "p90": 0.000555,
+          "max": 0.000765,
+          "cv": 1.6965,
+          "p90_p10_ratio": 2.99
+        },
+        "spearman_vs_spectral": -0.0118,
+        "spearman_vs_update": -0.1206,
+        "spearman_vs_coherence": 0.0353
+      },
+      {
+        "layer": "bert.encoder.layers.2.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 9.9e-05,
+          "p10": -0.000207,
+          "p90": 0.000402,
+          "max": 0.000472,
+          "cv": 2.09,
+          "p90_p10_ratio": 1.944
+        },
+        "spearman_vs_spectral": 0.2176,
+        "spearman_vs_update": 0.2059,
+        "spearman_vs_coherence": -0.0176
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.q_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 8.6e-05,
+          "p10": -6.8e-05,
+          "p90": 0.000373,
+          "max": 0.0007,
+          "cv": 1.7382,
+          "p90_p10_ratio": 5.511
+        },
+        "spearman_vs_spectral": 0.5588,
+        "spearman_vs_update": 0.5588,
+        "spearman_vs_coherence": 0.4353
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.k_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -4.4e-05,
+          "p10": -0.000283,
+          "p90": 0.000317,
+          "max": 0.000603,
+          "cv": 15.8683,
+          "p90_p10_ratio": 1.119
+        },
+        "spearman_vs_spectral": 0.4441,
+        "spearman_vs_update": 0.2735,
+        "spearman_vs_coherence": 0.4412
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.v_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": -3.5e-05,
+          "p10": -0.000497,
+          "p90": 0.000229,
+          "max": 0.001338,
+          "cv": 13.533,
+          "p90_p10_ratio": 0.46
+        },
+        "spearman_vs_spectral": 0.0882,
+        "spearman_vs_update": 0.0618,
+        "spearman_vs_coherence": -0.1382
+      },
+      {
+        "layer": "bert.encoder.layers.3.attention.out_proj",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 1.8e-05,
+          "p10": -0.000648,
+          "p90": 0.000289,
+          "max": 0.0007,
+          "cv": 5.4301,
+          "p90_p10_ratio": 0.446
+        },
+        "spearman_vs_spectral": -0.0794,
+        "spearman_vs_update": 0.0235,
+        "spearman_vs_coherence": 0.0824
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.0",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 6e-05,
+          "p10": -0.00061,
+          "p90": 0.000459,
+          "max": 0.000614,
+          "cv": 52.9332,
+          "p90_p10_ratio": 0.751
+        },
+        "spearman_vs_spectral": 0.0618,
+        "spearman_vs_update": -0.0324,
+        "spearman_vs_coherence": -0.1294
+      },
+      {
+        "layer": "bert.encoder.layers.3.mlp.3",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000107,
+          "p10": -0.000513,
+          "p90": 0.00032,
+          "max": 0.000503,
+          "cv": 8.9483,
+          "p90_p10_ratio": 0.624
+        },
+        "spearman_vs_spectral": 0.1353,
+        "spearman_vs_update": 0.1529,
+        "spearman_vs_coherence": -0.1912
+      },
+      {
+        "layer": "bert.pooler.dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.0,
+          "p10": 0.0,
+          "p90": 0.0,
+          "max": 0.0,
+          "cv": 0.0,
+          "p90_p10_ratio": 0.0
+        },
+        "spearman_vs_spectral": -1.0,
+        "spearman_vs_update": 1.0,
+        "spearman_vs_coherence": 1.0
+      },
+      {
+        "layer": "mlm_dense",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.000806,
+          "p10": -0.000853,
+          "p90": 0.00418,
+          "max": 0.008136,
+          "cv": 1.5854,
+          "p90_p10_ratio": 4.9
+        },
+        "spearman_vs_spectral": 0.3382,
+        "spearman_vs_update": 0.2647,
+        "spearman_vs_coherence": -0.4206
+      },
+      {
+        "layer": "mlm_decoder",
+        "rank": 96,
+        "probed": 16,
+        "rel_delta": {
+          "median": 0.003891,
+          "p10": 0.000747,
+          "p90": 0.009942,
+          "max": 0.013991,
+          "cv": 0.836,
+          "p90_p10_ratio": 13.315
+        },
+        "spearman_vs_spectral": 0.1088,
+        "spearman_vs_update": 0.1088,
+        "spearman_vs_coherence": -0.3176
+      }
+    ]
+  }
+]

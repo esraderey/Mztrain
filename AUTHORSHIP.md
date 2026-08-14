@@ -4,7 +4,7 @@
 **Versión declarada:** 1.0 (con extensiones ElasticRank v1/v2/v3 y VRAM Governor MVP)
 **Fecha de primera publicación:** 2025-01-15
 **Fecha de esta declaración:** 2026-05-20
-**Titular del copyright:** © 2025-2026 MSC Star Team — Todos los derechos reservados
+**Titular del copyright:** © 2025-2026 MSC Star Team — Distribuido bajo licencia MIT
 
 ---
 
@@ -79,15 +79,19 @@ documentada:
    cuando cambia la forma de un factor (rank growth, ElasticRank,
    refactorize).
 
-## 4. Cesión, licencia y reserva de derechos
+## 4. Licencia y autoría
 
-- Los autores **no ceden** la titularidad. La distribución del código se
-  rige por el documento `LICENSE` adjunto, que es una licencia
-  **restringida y propietaria**.
-- Cualquier uso fuera de los términos expresos de `LICENSE` requiere
-  autorización escrita y firmada por ambos co-titulares.
-- En caso de contribuciones externas, se aplica `CLA.md` (cesión
-  ampliada de derechos patrimoniales a favor del equipo MSC Star).
+- El código se distribuye bajo la licencia **MIT** (ver `LICENSE`), permisiva:
+  permite uso, copia, modificación y redistribución conservando el aviso de
+  copyright y la licencia. Esta declaración de autoría **no restringe** esos
+  derechos; documenta la autoría y la fecha de las invenciones (§3).
+- Los autores conservan el **copyright** y el crédito de autoría; MIT exige
+  mantener el aviso de copyright en las copias, lo que preserva la atribución.
+- Las contribuciones externas se aceptan bajo la misma licencia MIT
+  (inbound = outbound); ver `CONTRIBUTING.md`.
+- La publicación de las invenciones (§3, `PRIOR_ART.md`) es **prior art
+  defensivo** —establece fecha de invención frente a patentes de terceros— y es
+  independiente de la licencia MIT del código.
 
 ## 5. Verificación e integridad
 
@@ -128,6 +132,6 @@ mencionados, quienes asumen plena responsabilidad por su contenido.
 
 ---
 
-> Este documento es parte integrante del paquete de defensa legal de
-> MZTrain y debe distribuirse íntegro con cualquier copia autorizada de
-> la obra.
+> Este documento acompaña a MZTrain como declaración de autoría y prior art;
+> se recomienda distribuirlo junto con el código. El aviso de copyright debe
+> conservarse conforme a la licencia MIT (`LICENSE`).

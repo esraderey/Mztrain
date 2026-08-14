@@ -143,7 +143,16 @@ class ZActivationCheckpoint:
                 # Re-raise como RuntimeError para contrato estable del API
                 raise RuntimeError(f"Activation checkpoint not found: {key}")
             cls._stats["total_decompressed"] += 1
-            return tensor.to(dtype)
+            result = tensor.to(dtype)
+            # Liberar la entrada tras cargarla, simetrico al fallback (.pop):
+            # sin esto el store retiene toda activacion del run -> fuga de
+            # memoria proporcional a steps. Se asume la API de eviction
+            # simetrica a register(); si el backend la nombra distinto, ajustar
+            # aqui (el fallo seria visible, no una fuga silenciosa).
+            _evict = getattr(zspace, "remove", None) or getattr(zspace, "delete", None)
+            if callable(_evict):
+                _evict(key)
+            return result
         else:
             if hasattr(cls, "_fallback_store") and key in cls._fallback_store:
                 q, scales, orig_numel = cls._fallback_store.pop(key)

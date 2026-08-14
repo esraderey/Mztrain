@@ -1,0 +1,1546 @@
+{
+  "experiment": "t6_core",
+  "smoke": false,
+  "prereg": "PREREGISTRO-T6-core.md",
+  "protocol": {
+    "seq": 256,
+    "batch": 16,
+    "steps": 4000,
+    "lr0": 0.0003,
+    "eval": "fp32 siempre; train bf16 solo en fase bf16"
+  },
+  "env": {
+    "torch": "2.11.0+cu128",
+    "gpu": "NVIDIA GeForce RTX 4060",
+    "mztrain": "1.1.0"
+  },
+  "started_unix": 1786488549.276438,
+  "status": "done",
+  "phases": {
+    "lr": [
+      {
+        "name": "lr/F_64/0.00015/s0",
+        "seed": 0,
+        "lr": 0.00015,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 3.5929,
+        "val_bpc_quick20": 3.6131,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            357.5858
+          ],
+          [
+            1000,
+            3.7619
+          ],
+          [
+            2000,
+            3.6426
+          ],
+          [
+            3000,
+            3.6148
+          ],
+          [
+            3999,
+            3.6131
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 140.3
+      },
+      {
+        "name": "lr/D_small/0.00015/s0",
+        "seed": 0,
+        "lr": 0.00015,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 3.4774,
+        "val_bpc_quick20": 3.4953,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            174.4511
+          ],
+          [
+            1000,
+            3.7508
+          ],
+          [
+            2000,
+            3.6336
+          ],
+          [
+            3000,
+            3.5671
+          ],
+          [
+            3999,
+            3.4953
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 88.4
+      },
+      {
+        "name": "lr/F_64/0.00015/s1",
+        "seed": 1,
+        "lr": 0.00015,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 3.5546,
+        "val_bpc_quick20": 3.575,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            349.2123
+          ],
+          [
+            1000,
+            3.7729
+          ],
+          [
+            2000,
+            3.6479
+          ],
+          [
+            3000,
+            3.6071
+          ],
+          [
+            3999,
+            3.575
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 130.7
+      },
+      {
+        "name": "lr/D_small/0.00015/s1",
+        "seed": 1,
+        "lr": 0.00015,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 3.4645,
+        "val_bpc_quick20": 3.4853,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            173.2744
+          ],
+          [
+            1000,
+            3.7635
+          ],
+          [
+            2000,
+            3.6224
+          ],
+          [
+            3000,
+            3.5746
+          ],
+          [
+            3999,
+            3.4853
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 92.0
+      },
+      {
+        "name": "lr/F_64/0.00015/s2",
+        "seed": 2,
+        "lr": 0.00015,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 3.5689,
+        "val_bpc_quick20": 3.5889,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            345.4613
+          ],
+          [
+            1000,
+            3.7783
+          ],
+          [
+            2000,
+            3.6585
+          ],
+          [
+            3000,
+            3.6217
+          ],
+          [
+            3999,
+            3.5889
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 147.4
+      },
+      {
+        "name": "lr/D_small/0.00015/s2",
+        "seed": 2,
+        "lr": 0.00015,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 3.4419,
+        "val_bpc_quick20": 3.4608,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            175.1334
+          ],
+          [
+            1000,
+            3.7557
+          ],
+          [
+            2000,
+            3.6162
+          ],
+          [
+            3000,
+            3.5571
+          ],
+          [
+            3999,
+            3.4608
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 89.6
+      },
+      {
+        "name": "lr/F_64/0.0006/s0",
+        "seed": 0,
+        "lr": 0.0006,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 2.9415,
+        "val_bpc_quick20": 2.9639,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            297.5222
+          ],
+          [
+            1000,
+            3.6527
+          ],
+          [
+            2000,
+            3.6037
+          ],
+          [
+            3000,
+            3.3074
+          ],
+          [
+            3999,
+            2.9639
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 133.1
+      },
+      {
+        "name": "lr/D_small/0.0006/s0",
+        "seed": 0,
+        "lr": 0.0006,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 2.5955,
+        "val_bpc_quick20": 2.612,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            147.1391
+          ],
+          [
+            1000,
+            3.6202
+          ],
+          [
+            2000,
+            3.3692
+          ],
+          [
+            3000,
+            2.8896
+          ],
+          [
+            3999,
+            2.612
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 89.8
+      },
+      {
+        "name": "lr/F_64/0.0006/s1",
+        "seed": 1,
+        "lr": 0.0006,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 2.9187,
+        "val_bpc_quick20": 2.9429,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            290.5797
+          ],
+          [
+            1000,
+            3.6732
+          ],
+          [
+            2000,
+            3.5967
+          ],
+          [
+            3000,
+            3.2112
+          ],
+          [
+            3999,
+            2.9429
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 132.0
+      },
+      {
+        "name": "lr/D_small/0.0006/s1",
+        "seed": 1,
+        "lr": 0.0006,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 2.6486,
+        "val_bpc_quick20": 2.6728,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            145.073
+          ],
+          [
+            1000,
+            3.649
+          ],
+          [
+            2000,
+            3.4345
+          ],
+          [
+            3000,
+            2.9796
+          ],
+          [
+            3999,
+            2.6728
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 90.7
+      },
+      {
+        "name": "lr/F_64/0.0006/s2",
+        "seed": 2,
+        "lr": 0.0006,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 2.917,
+        "val_bpc_quick20": 2.9399,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            291.4085
+          ],
+          [
+            1000,
+            3.6693
+          ],
+          [
+            2000,
+            3.5999
+          ],
+          [
+            3000,
+            3.2243
+          ],
+          [
+            3999,
+            2.9399
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 135.9
+      },
+      {
+        "name": "lr/D_small/0.0006/s2",
+        "seed": 2,
+        "lr": 0.0006,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 2.6288,
+        "val_bpc_quick20": 2.6506,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            148.2357
+          ],
+          [
+            1000,
+            3.6143
+          ],
+          [
+            2000,
+            3.2365
+          ],
+          [
+            3000,
+            2.8955
+          ],
+          [
+            3999,
+            2.6506
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 89.1
+      },
+      {
+        "name": "lr/F_64/0.0012/s0",
+        "seed": 0,
+        "lr": 0.0012,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 2.6543,
+        "val_bpc_quick20": 2.671,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            204.3644
+          ],
+          [
+            1000,
+            3.6224
+          ],
+          [
+            2000,
+            3.4865
+          ],
+          [
+            3000,
+            2.9842
+          ],
+          [
+            3999,
+            2.671
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 135.7
+      },
+      {
+        "name": "lr/D_small/0.0012/s0",
+        "seed": 0,
+        "lr": 0.0012,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 2.391,
+        "val_bpc_quick20": 2.4035,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            108.8494
+          ],
+          [
+            1000,
+            3.6007
+          ],
+          [
+            2000,
+            3.0593
+          ],
+          [
+            3000,
+            2.653
+          ],
+          [
+            3999,
+            2.4035
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 92.2
+      },
+      {
+        "name": "lr/F_64/0.0012/s1",
+        "seed": 1,
+        "lr": 0.0012,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 3.5684,
+        "val_bpc_quick20": 3.587,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            201.6015
+          ],
+          [
+            1000,
+            3.6758
+          ],
+          [
+            2000,
+            3.6971
+          ],
+          [
+            3000,
+            3.6043
+          ],
+          [
+            3999,
+            3.587
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 129.1
+      },
+      {
+        "name": "lr/D_small/0.0012/s1",
+        "seed": 1,
+        "lr": 0.0012,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 2.4007,
+        "val_bpc_quick20": 2.4173,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            106.282
+          ],
+          [
+            1000,
+            3.6152
+          ],
+          [
+            2000,
+            3.082
+          ],
+          [
+            3000,
+            2.6832
+          ],
+          [
+            3999,
+            2.4173
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 87.3
+      },
+      {
+        "name": "lr/F_64/0.0012/s2",
+        "seed": 2,
+        "lr": 0.0012,
+        "amp": false,
+        "params_ini": 2858112,
+        "val_bpc_full": 2.6539,
+        "val_bpc_quick20": 2.672,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.786,
+        "bpc_curve": [
+          [
+            0,
+            204.2194
+          ],
+          [
+            1000,
+            4.6033
+          ],
+          [
+            2000,
+            3.2431
+          ],
+          [
+            3000,
+            2.8759
+          ],
+          [
+            3999,
+            2.672
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 131.2
+      },
+      {
+        "name": "lr/D_small/0.0012/s2",
+        "seed": 2,
+        "lr": 0.0012,
+        "amp": false,
+        "params_ini": 2902848,
+        "val_bpc_full": 2.4468,
+        "val_bpc_quick20": 2.4602,
+        "params_fin": 2902848,
+        "peak_vram_train_gb": 0.432,
+        "bpc_curve": [
+          [
+            0,
+            110.5547
+          ],
+          [
+            1000,
+            3.5711
+          ],
+          [
+            2000,
+            3.0497
+          ],
+          [
+            3000,
+            2.7076
+          ],
+          [
+            3999,
+            2.4602
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 92.0
+      }
+    ],
+    "anneal": [
+      {
+        "name": "anneal/A_192to64/s0",
+        "seed": 0,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 7579776,
+        "val_bpc_full": 3.4478,
+        "val_bpc_quick20": 3.4745,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.949,
+        "bpc_curve": [
+          [
+            0,
+            314.7638
+          ],
+          [
+            1000,
+            5.0714
+          ],
+          [
+            2000,
+            4.8658
+          ],
+          [
+            3000,
+            6.6527
+          ],
+          [
+            3999,
+            3.4745
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 165.3
+      },
+      {
+        "name": "anneal/F_192_fijo/s0",
+        "seed": 0,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 7579776,
+        "val_bpc_full": 2.9448,
+        "val_bpc_quick20": 2.9764,
+        "params_fin": 7579776,
+        "peak_vram_train_gb": 0.949,
+        "bpc_curve": [
+          [
+            0,
+            314.7638
+          ],
+          [
+            1000,
+            3.677
+          ],
+          [
+            2000,
+            3.6079
+          ],
+          [
+            3000,
+            3.3051
+          ],
+          [
+            3999,
+            2.9764
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 196.1
+      },
+      {
+        "name": "anneal/A_192to64/s1",
+        "seed": 1,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 7579776,
+        "val_bpc_full": 3.2142,
+        "val_bpc_quick20": 3.2396,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.949,
+        "bpc_curve": [
+          [
+            0,
+            312.5061
+          ],
+          [
+            1000,
+            5.4169
+          ],
+          [
+            2000,
+            4.6111
+          ],
+          [
+            3000,
+            6.1151
+          ],
+          [
+            3999,
+            3.2396
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 165.0
+      },
+      {
+        "name": "anneal/F_192_fijo/s1",
+        "seed": 1,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 7579776,
+        "val_bpc_full": 2.83,
+        "val_bpc_quick20": 2.8538,
+        "params_fin": 7579776,
+        "peak_vram_train_gb": 0.949,
+        "bpc_curve": [
+          [
+            0,
+            312.5061
+          ],
+          [
+            1000,
+            3.6734
+          ],
+          [
+            2000,
+            3.5423
+          ],
+          [
+            3000,
+            3.1346
+          ],
+          [
+            3999,
+            2.8538
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 198.2
+      },
+      {
+        "name": "anneal/A_192to64/s2",
+        "seed": 2,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 7579776,
+        "val_bpc_full": 3.2717,
+        "val_bpc_quick20": 3.3021,
+        "params_fin": 2858112,
+        "peak_vram_train_gb": 0.949,
+        "bpc_curve": [
+          [
+            0,
+            306.1991
+          ],
+          [
+            1000,
+            5.815
+          ],
+          [
+            2000,
+            5.3022
+          ],
+          [
+            3000,
+            5.8207
+          ],
+          [
+            3999,
+            3.3021
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 156.5
+      },
+      {
+        "name": "anneal/F_192_fijo/s2",
+        "seed": 2,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 7579776,
+        "val_bpc_full": 2.9249,
+        "val_bpc_quick20": 2.9639,
+        "params_fin": 7579776,
+        "peak_vram_train_gb": 0.949,
+        "bpc_curve": [
+          [
+            0,
+            306.1991
+          ],
+          [
+            1000,
+            3.6885
+          ],
+          [
+            2000,
+            3.5636
+          ],
+          [
+            3000,
+            3.2049
+          ],
+          [
+            3999,
+            2.9639
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 192.3
+      }
+    ],
+    "ffn": [
+      {
+        "name": "ffn/FF_64/s0",
+        "seed": 0,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 5511552,
+        "val_bpc_full": 3.1115,
+        "val_bpc_quick20": 3.1365,
+        "params_fin": 5511552,
+        "peak_vram_train_gb": 0.795,
+        "bpc_curve": [
+          [
+            0,
+            335.602
+          ],
+          [
+            1000,
+            3.7019
+          ],
+          [
+            2000,
+            3.6296
+          ],
+          [
+            3000,
+            3.2791
+          ],
+          [
+            3999,
+            3.1365
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 156.3
+      },
+      {
+        "name": "ffn/D_iso/s0",
+        "seed": 0,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 5598450,
+        "val_bpc_full": 2.8315,
+        "val_bpc_quick20": 2.855,
+        "params_fin": 5598450,
+        "peak_vram_train_gb": 0.739,
+        "bpc_curve": [
+          [
+            0,
+            224.2677
+          ],
+          [
+            1000,
+            3.6511
+          ],
+          [
+            2000,
+            3.505
+          ],
+          [
+            3000,
+            3.1611
+          ],
+          [
+            3999,
+            2.855
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 186.8
+      },
+      {
+        "name": "ffn/FF_64/s1",
+        "seed": 1,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 5511552,
+        "val_bpc_full": 3.0186,
+        "val_bpc_quick20": 3.0428,
+        "params_fin": 5511552,
+        "peak_vram_train_gb": 0.795,
+        "bpc_curve": [
+          [
+            0,
+            324.9742
+          ],
+          [
+            1000,
+            3.6747
+          ],
+          [
+            2000,
+            3.56
+          ],
+          [
+            3000,
+            3.2416
+          ],
+          [
+            3999,
+            3.0428
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 156.0
+      },
+      {
+        "name": "ffn/D_iso/s1",
+        "seed": 1,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 5598450,
+        "val_bpc_full": 2.8159,
+        "val_bpc_quick20": 2.8387,
+        "params_fin": 5598450,
+        "peak_vram_train_gb": 0.739,
+        "bpc_curve": [
+          [
+            0,
+            219.1342
+          ],
+          [
+            1000,
+            3.6781
+          ],
+          [
+            2000,
+            3.5122
+          ],
+          [
+            3000,
+            3.1654
+          ],
+          [
+            3999,
+            2.8387
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 186.3
+      },
+      {
+        "name": "ffn/FF_64/s2",
+        "seed": 2,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 5511552,
+        "val_bpc_full": 3.0812,
+        "val_bpc_quick20": 3.1186,
+        "params_fin": 5511552,
+        "peak_vram_train_gb": 0.795,
+        "bpc_curve": [
+          [
+            0,
+            321.9563
+          ],
+          [
+            1000,
+            3.7084
+          ],
+          [
+            2000,
+            3.5986
+          ],
+          [
+            3000,
+            3.2792
+          ],
+          [
+            3999,
+            3.1186
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 160.5
+      },
+      {
+        "name": "ffn/D_iso/s2",
+        "seed": 2,
+        "lr": 0.0003,
+        "amp": false,
+        "params_ini": 5598450,
+        "val_bpc_full": 2.8609,
+        "val_bpc_quick20": 2.8824,
+        "params_fin": 5598450,
+        "peak_vram_train_gb": 0.739,
+        "bpc_curve": [
+          [
+            0,
+            218.4753
+          ],
+          [
+            1000,
+            3.6478
+          ],
+          [
+            2000,
+            3.5514
+          ],
+          [
+            3000,
+            3.2245
+          ],
+          [
+            3999,
+            2.8824
+          ]
+        ],
+        "any_nan": false,
+        "wall_s": 192.8
+      }
+    ],
+    "ffn_meta": {
+      "ffn_params": 5511552,
+      "d_iso": 270,
+      "mismatch_pct": 1.58
+    },
+    "bf16": {
+      "s1": [
+        {
+          "name": "bf16/D_full/s0",
+          "seed": 0,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 11114112,
+          "val_bpc_full": 2.7478,
+          "val_bpc_quick20": 2.7767,
+          "params_fin": 11114112,
+          "peak_vram_train_gb": 0.586,
+          "bpc_curve": [
+            [
+              0,
+              301.5429
+            ],
+            [
+              1000,
+              3.6455
+            ],
+            [
+              2000,
+              3.4648
+            ],
+            [
+              3000,
+              3.0957
+            ],
+            [
+              3999,
+              2.7767
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 98.6
+        },
+        {
+          "name": "bf16/F_64/s0",
+          "seed": 0,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 2858112,
+          "val_bpc_full": 3.3733,
+          "val_bpc_quick20": 3.3931,
+          "params_fin": 2858112,
+          "peak_vram_train_gb": 0.484,
+          "bpc_curve": [
+            [
+              0,
+              340.049
+            ],
+            [
+              1000,
+              3.7795
+            ],
+            [
+              2000,
+              3.6557
+            ],
+            [
+              3000,
+              3.5745
+            ],
+            [
+              3999,
+              3.3931
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 114.3
+        },
+        {
+          "name": "bf16/D_small/s0",
+          "seed": 0,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 2902848,
+          "val_bpc_full": 3.0345,
+          "val_bpc_quick20": 3.0586,
+          "params_fin": 2902848,
+          "peak_vram_train_gb": 0.288,
+          "bpc_curve": [
+            [
+              0,
+              165.9225
+            ],
+            [
+              1000,
+              3.6613
+            ],
+            [
+              2000,
+              3.5683
+            ],
+            [
+              3000,
+              3.4191
+            ],
+            [
+              3999,
+              3.0586
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 59.3
+        },
+        {
+          "name": "bf16/D_full/s1",
+          "seed": 1,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 11114112,
+          "val_bpc_full": 2.7283,
+          "val_bpc_quick20": 2.7471,
+          "params_fin": 11114112,
+          "peak_vram_train_gb": 0.586,
+          "bpc_curve": [
+            [
+              0,
+              297.1411
+            ],
+            [
+              1000,
+              3.6446
+            ],
+            [
+              2000,
+              3.3913
+            ],
+            [
+              3000,
+              3.0227
+            ],
+            [
+              3999,
+              2.7471
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 97.5
+        },
+        {
+          "name": "bf16/F_64/s1",
+          "seed": 1,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 2858112,
+          "val_bpc_full": 3.2444,
+          "val_bpc_quick20": 3.2643,
+          "params_fin": 2858112,
+          "peak_vram_train_gb": 0.484,
+          "bpc_curve": [
+            [
+              0,
+              331.93
+            ],
+            [
+              1000,
+              3.6878
+            ],
+            [
+              2000,
+              3.6213
+            ],
+            [
+              3000,
+              3.5414
+            ],
+            [
+              3999,
+              3.2643
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 109.3
+        },
+        {
+          "name": "bf16/D_small/s1",
+          "seed": 1,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 2902848,
+          "val_bpc_full": 3.0301,
+          "val_bpc_quick20": 3.0526,
+          "params_fin": 2902848,
+          "peak_vram_train_gb": 0.288,
+          "bpc_curve": [
+            [
+              0,
+              164.4512
+            ],
+            [
+              1000,
+              3.653
+            ],
+            [
+              2000,
+              3.5723
+            ],
+            [
+              3000,
+              3.4303
+            ],
+            [
+              3999,
+              3.0526
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 57.5
+        },
+        {
+          "name": "bf16/D_full/s2",
+          "seed": 2,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 11114112,
+          "val_bpc_full": 2.7396,
+          "val_bpc_quick20": 2.7672,
+          "params_fin": 11114112,
+          "peak_vram_train_gb": 0.586,
+          "bpc_curve": [
+            [
+              0,
+              288.9394
+            ],
+            [
+              1000,
+              3.6666
+            ],
+            [
+              2000,
+              3.3548
+            ],
+            [
+              3000,
+              3.0711
+            ],
+            [
+              3999,
+              2.7672
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 98.9
+        },
+        {
+          "name": "bf16/F_64/s2",
+          "seed": 2,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 2858112,
+          "val_bpc_full": 3.4613,
+          "val_bpc_quick20": 3.4853,
+          "params_fin": 2858112,
+          "peak_vram_train_gb": 0.484,
+          "bpc_curve": [
+            [
+              0,
+              329.6829
+            ],
+            [
+              1000,
+              3.7205
+            ],
+            [
+              2000,
+              3.6293
+            ],
+            [
+              3000,
+              3.5758
+            ],
+            [
+              3999,
+              3.4853
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 122.1
+        },
+        {
+          "name": "bf16/D_small/s2",
+          "seed": 2,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 2902848,
+          "val_bpc_full": 3.0256,
+          "val_bpc_quick20": 3.0458,
+          "params_fin": 2902848,
+          "peak_vram_train_gb": 0.288,
+          "bpc_curve": [
+            [
+              0,
+              166.7055
+            ],
+            [
+              1000,
+              3.6536
+            ],
+            [
+              2000,
+              3.5516
+            ],
+            [
+              3000,
+              3.3686
+            ],
+            [
+              3999,
+              3.0458
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 63.4
+        }
+      ],
+      "s2": [
+        {
+          "name": "bf16-s2/D_full/s0",
+          "seed": 0,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 57623808,
+          "val_bpc_full": 2.6018,
+          "val_bpc_quick20": 2.6266,
+          "params_fin": 57623808,
+          "peak_vram_train_gb": 1.819,
+          "bpc_curve": [
+            [
+              0,
+              319.3127
+            ],
+            [
+              1000,
+              3.6362
+            ],
+            [
+              2000,
+              3.177
+            ],
+            [
+              3000,
+              2.8642
+            ],
+            [
+              3999,
+              2.6266
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 410.4
+        },
+        {
+          "name": "bf16-s2/F_128/s0",
+          "seed": 0,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 13587712,
+          "val_bpc_full": 3.3428,
+          "val_bpc_quick20": 3.3585,
+          "params_fin": 13587712,
+          "peak_vram_train_gb": 1.26,
+          "bpc_curve": [
+            [
+              0,
+              496.179
+            ],
+            [
+              1000,
+              6.5532
+            ],
+            [
+              2000,
+              3.6261
+            ],
+            [
+              3000,
+              3.5701
+            ],
+            [
+              3999,
+              3.3585
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 219.7
+        },
+        {
+          "name": "bf16-s2/D_small/s0",
+          "seed": 0,
+          "lr": 0.0003,
+          "amp": true,
+          "params_ini": 13480208,
+          "val_bpc_full": 2.6343,
+          "val_bpc_quick20": 2.6636,
+          "params_fin": 13480208,
+          "peak_vram_train_gb": 1.076,
+          "bpc_curve": [
+            [
+              0,
+              261.2342
+            ],
+            [
+              1000,
+              3.6845
+            ],
+            [
+              2000,
+              3.3629
+            ],
+            [
+              3000,
+              2.96
+            ],
+            [
+              3999,
+              2.6636
+            ]
+          ],
+          "any_nan": false,
+          "wall_s": 239.9
+        }
+      ],
+      "ladder": [
+        {
+          "name": "ladder/dense/d1280L14",
+          "dense_equiv_params": 276949760,
+          "params": 276949760,
+          "peak_vram_gb": 5.713,
+          "tokens_per_s": 7780
+        },
+        {
+          "name": "ladder/dense/d1408L16",
+          "dense_equiv_params": 382512768,
+          "params": 382512768,
+          "peak_vram_gb": 7.681,
+          "tokens_per_s": 770
+        },
+        {
+          "name": "ladder/fact/d1792L22",
+          "dense_equiv_params": 850209024,
+          "params": 190435184,
+          "peak_vram_gb": 5.993,
+          "tokens_per_s": 6303
+        },
+        {
+          "name": "ladder/fact/d1920L24",
+          "dense_equiv_params": 1064307840,
+          "params": 238584960,
+          "peak_vram_gb": 7.203,
+          "tokens_per_s": 6361
+        },
+        {
+          "name": "ladder/fact/d2048L26",
+          "dense_equiv_params": 1311438848,
+          "params": 293372552,
+          "peak_vram_gb": 8.416,
+          "tokens_per_s": 690
+        }
+      ]
+    }
+  },
+  "finished_unix": 1786494637.604087
+}

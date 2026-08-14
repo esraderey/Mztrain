@@ -1,0 +1,665 @@
+{
+  "architecture": {
+    "Small (test)": {
+      "real_params": 6630128,
+      "equiv_params": 7224448,
+      "compression": "9.0%",
+      "factorized_layers": 25
+    },
+    "Base (BERT-Base)": {
+      "real_params": 44378256,
+      "equiv_params": 124404480,
+      "compression": "64.4%",
+      "factorized_layers": 73
+    },
+    "Large (BERT-Large)": {
+      "real_params": 66393488,
+      "equiv_params": 354989056,
+      "compression": "81.3%",
+      "factorized_layers": 145
+    },
+    "memory_analysis": {
+      "traditional_total_mb": 973.5,
+      "mztrain_total_mb": 281.1,
+      "savings_pct": 71.1
+    },
+    "benchmark": {
+      "avg_forward_ms": 71.8,
+      "tokens_per_sec": 57026,
+      "peak_gpu_mb": 1701.0
+    }
+  },
+  "training": {
+    "train_losses": [
+      14.1458,
+      96.8036,
+      128.4572,
+      95.8912,
+      42.7378,
+      17.6057,
+      6.2905,
+      8.8166,
+      6.0392,
+      7.2294,
+      4.9913,
+      4.807,
+      13.3346,
+      4.7852,
+      4.1206,
+      5.0532,
+      4.4068,
+      4.1316,
+      3.9779
+    ],
+    "val_losses": [
+      16.0103,
+      136.9725,
+      101.6408,
+      55.9339,
+      13.8877,
+      7.4755,
+      4.432,
+      5.0451,
+      4.6957,
+      4.6669,
+      4.1258,
+      62.457,
+      5.9843,
+      3.9783,
+      3.9998,
+      5.3577,
+      4.1572,
+      4.051,
+      3.9799
+    ],
+    "mlm_accuracies": [
+      0.27,
+      0.41,
+      0.38,
+      1.6,
+      19.4,
+      19.24,
+      19.37,
+      19.16,
+      19.52,
+      19.53,
+      19.19,
+      0.06,
+      1.2,
+      19.2,
+      19.7,
+      1.27,
+      19.74,
+      19.81,
+      19.09
+    ],
+    "top5_accuracies": [
+      0.32,
+      1.73,
+      2.62,
+      4.81,
+      20.84,
+      36.91,
+      33.31,
+      28.51,
+      37.23,
+      37.16,
+      35.61,
+      0.6,
+      31.97,
+      37.18,
+      37.26,
+      32.39,
+      37.89,
+      37.47,
+      36.6
+    ],
+    "perplexities": [
+      99999.0,
+      99999.0,
+      99999.0,
+      99999.0,
+      99999.0,
+      1764.2,
+      84.1,
+      155.3,
+      109.5,
+      106.4,
+      61.9,
+      99999.0,
+      397.2,
+      53.4,
+      54.6,
+      212.2,
+      63.9,
+      57.5,
+      53.5
+    ],
+    "ranks": [
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32,
+      32
+    ],
+    "learning_rates": [
+      1.6666666666666667e-05,
+      3.3333333333333335e-05,
+      5e-05,
+      5e-05,
+      4.999682116415026e-05,
+      4.998728546500082e-05,
+      4.9971395327545466e-05,
+      4.9949154792755286e-05,
+      4.992056951655103e-05,
+      4.988564676836475e-05,
+      4.984439542929117e-05,
+      4.979682598982912e-05,
+      4.974295054721377e-05,
+      4.9682782802340184e-05,
+      4.9616338056279124e-05,
+      4.9543633206385834e-05,
+      4.9464686742003006e-05,
+      4.937951873975871e-05,
+      4.928815085846087e-05
+    ],
+    "epoch_times": [
+      189.8,
+      192.0,
+      189.9,
+      190.4,
+      196.5,
+      206.0,
+      198.5,
+      199.9,
+      193.7,
+      197.1,
+      207.9,
+      203.7,
+      197.7,
+      201.5,
+      199.2,
+      205.2,
+      198.7,
+      198.9,
+      198.7
+    ],
+    "gpu_memory_mb": [
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0,
+      6118.0
+    ],
+    "total_epochs": 20,
+    "total_time_s": 3765.9,
+    "best_val_loss": 3.9783,
+    "final_rank": 32,
+    "global_steps": 10089,
+    "optimizer_stats": {
+      "total_params": 348,
+      "compressed_params": 0,
+      "state_memory_mb": 224.5985107421875,
+      "full_memory_mb": 224.5985107421875,
+      "memory_saved_pct": 0.0,
+      "step_count": 10089
+    }
+  },
+  "precision": {
+    "per_category": {
+      "Keywords Python": {
+        "accuracy": 19.51,
+        "top5": 31.71,
+        "total": 41
+      },
+      "Keywords JavaScript": {
+        "accuracy": 23.81,
+        "top5": 42.86,
+        "total": 42
+      },
+      "Operadores": {
+        "accuracy": 46.88,
+        "top5": 53.12,
+        "total": 32
+      },
+      "Estructuras": {
+        "accuracy": 6.06,
+        "top5": 18.18,
+        "total": 33
+      },
+      "Strings y literales": {
+        "accuracy": 17.65,
+        "top5": 23.53,
+        "total": 17
+      }
+    },
+    "fresh_data": {
+      "loss": 3.9556,
+      "perplexity": 52.2,
+      "accuracy": 18.93,
+      "top5_accuracy": 37.7,
+      "tokens": 4828
+    },
+    "confidence": {
+      "avg": 0.1805,
+      "correct": 0.1814,
+      "wrong": 0.1802,
+      "separation": 0.0011
+    },
+    "classification": {
+      "overall_accuracy": 100.0,
+      "per_language": {
+        "python": 100.0,
+        "javascript": 100.0,
+        "java": 100.0,
+        "go": 100.0,
+        "ruby": 100.0,
+        "php": 100.0
+      }
+    }
+  },
+  "coherence": {
+    "predictions": [
+      {
+        "name": "Funcion Python - Sort",
+        "predictions": [
+          {
+            "position": 22,
+            "original": "=",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1836
+          },
+          {
+            "position": 2,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1839
+          },
+          {
+            "position": 27,
+            "original": "t",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1845
+          },
+          {
+            "position": 14,
+            "original": "    ",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1846
+          },
+          {
+            "position": 16,
+            "original": "e",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1847
+          }
+        ]
+      },
+      {
+        "name": "Clase Python - Stack",
+        "predictions": [
+          {
+            "position": 64,
+            "original": ":",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1751
+          },
+          {
+            "position": 70,
+            "original": ".",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1795
+          },
+          {
+            "position": 59,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1801
+          },
+          {
+            "position": 57,
+            "original": "    ",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1801
+          },
+          {
+            "position": 51,
+            "original": "append",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1817
+          }
+        ]
+      },
+      {
+        "name": "Loop con condicion",
+        "predictions": [
+          {
+            "position": 1,
+            "original": "def",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1825
+          },
+          {
+            "position": 17,
+            "original": "e",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1758
+          },
+          {
+            "position": 70,
+            "original": "s",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1813
+          },
+          {
+            "position": 76,
+            "original": "(",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": true,
+            "confidence": 0.1776
+          },
+          {
+            "position": 31,
+            "original": "=",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1823
+          }
+        ]
+      },
+      {
+        "name": "Try/Except",
+        "predictions": [
+          {
+            "position": 65,
+            "original": "o",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1846
+          },
+          {
+            "position": 61,
+            "original": "v",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1846
+          },
+          {
+            "position": 43,
+            "original": "return",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1846
+          },
+          {
+            "position": 21,
+            "original": "\n",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": true,
+            "confidence": 0.1861
+          },
+          {
+            "position": 6,
+            "original": "e",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1837
+          }
+        ]
+      },
+      {
+        "name": "List comprehension",
+        "predictions": [
+          {
+            "position": 9,
+            "original": "s",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1823
+          },
+          {
+            "position": 14,
+            "original": "return",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1823
+          },
+          {
+            "position": 24,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1823
+          },
+          {
+            "position": 18,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1823
+          },
+          {
+            "position": 16,
+            "original": "[",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1839
+          }
+        ]
+      },
+      {
+        "name": "JavaScript async",
+        "predictions": [
+          {
+            "position": 4,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1807
+          },
+          {
+            "position": 42,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1807
+          },
+          {
+            "position": 18,
+            "original": "const",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1807
+          },
+          {
+            "position": 7,
+            "original": "t",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1811
+          },
+          {
+            "position": 22,
+            "original": "=",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1807
+          }
+        ]
+      },
+      {
+        "name": "Java clase",
+        "predictions": [
+          {
+            "position": 20,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1837
+          },
+          {
+            "position": 73,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1838
+          },
+          {
+            "position": 64,
+            "original": "\n",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": true,
+            "confidence": 0.172
+          },
+          {
+            "position": 59,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1837
+          },
+          {
+            "position": 111,
+            "original": "    ",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1838
+          }
+        ]
+      },
+      {
+        "name": "Go funcion",
+        "predictions": [
+          {
+            "position": 93,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1833
+          },
+          {
+            "position": 84,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1843
+          },
+          {
+            "position": 10,
+            "original": "i",
+            "predicted": " ",
+            "correct": false,
+            "in_top5": false,
+            "confidence": 0.1825
+          },
+          {
+            "position": 60,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1825
+          },
+          {
+            "position": 80,
+            "original": " ",
+            "predicted": " ",
+            "correct": true,
+            "in_top5": true,
+            "confidence": 0.1825
+          }
+        ]
+      }
+    ],
+    "coherence_accuracy": 32.5,
+    "coherence_top5": 40.0,
+    "total_tokens": 40
+  },
+  "mneme": {
+    "available": false,
+    "estimated_compression": {
+      "original_mb": 243.4,
+      "mztrain_mb": 112.4,
+      "mztrain_mneme_mb": 7.9,
+      "total_savings_pct": 96.8
+    }
+  }
+}

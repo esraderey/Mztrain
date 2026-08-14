@@ -1,0 +1,5 @@
+# Sin conversion de fin-de-linea: el sello criptografico (SEAL.json) hasheia
+# BYTES exactos. Con autocrlf, un clon en otra plataforma reescribiria los
+# archivos y `python scripts/seal.py verify` fallaria en falso (hallazgo M3
+# del peritaje). Este archivo garantiza que todo clon reciba bytes identicos.
+* -text

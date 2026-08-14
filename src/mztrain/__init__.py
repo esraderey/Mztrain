@@ -88,12 +88,41 @@ from .models.zcodebert import (
 )
 from .data.tokenizer import CodeTokenizer
 from .data.dataset import SyntheticCodeGenerator, CodeDataset, MLMDataset, CausalCodeDataset
+from .shape_ops import (
+    dense_to_factorized,
+    pad_adam_entry,
+    pad_state_tensor,
+    scale_output_rows,
+    widen_embedding,
+    widen_factorized_linear,
+    widen_layernorm,
+    zero_block_outputs,
+)
+from .elastic_shape import (
+    GrowthEvent,
+    LrWarmup,
+    ShapeSchedule,
+    apply_event,
+)
 
-__version__ = "1.1.0"
+__version__ = "1.3.0"
 __author__ = "MSC Star Team (Esraderey y Raul Cruz Acosta)"
 __email__ = "msc.framework@gmail.com"
 
 __all__ = [
+    # ElasticShape v1 (crecimiento de forma; claim T8 en docs/evidencia/)
+    "dense_to_factorized",
+    "pad_adam_entry",
+    "pad_state_tensor",
+    "scale_output_rows",
+    "widen_embedding",
+    "widen_factorized_linear",
+    "widen_layernorm",
+    "zero_block_outputs",
+    "GrowthEvent",
+    "LrWarmup",
+    "ShapeSchedule",
+    "apply_event",
     # Config
     "ZTrainConfig",
     "RankSchedule",

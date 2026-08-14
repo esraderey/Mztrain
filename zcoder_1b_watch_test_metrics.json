@@ -1,0 +1,110 @@
+{
+  "activation_checkpoint": {
+    "bytes_saved": 55050240,
+    "mneme_available": true,
+    "total_compressed": 120,
+    "total_decompressed": 120
+  },
+  "amp": "bf16",
+  "config": {
+    "activation": "gelu",
+    "attention_probs_dropout_prob": 0.0,
+    "factor_init_method": "kaiming",
+    "hidden_dropout_prob": 0.0,
+    "hidden_size": 1792,
+    "intermediate_size": 7168,
+    "layer_norm_eps": 1e-12,
+    "max_position_embeddings": 512,
+    "mneme_compression_level": "balanced",
+    "num_attention_heads": 28,
+    "num_hidden_layers": 24,
+    "rank": 64,
+    "type_vocab_size": 2,
+    "use_activation_checkpointing": true,
+    "vocab_size": 50000
+  },
+  "cuda_available": true,
+  "cuda_device": "NVIDIA GeForce RTX 4060",
+  "dataset": {
+    "batch_size": 1,
+    "files": 30,
+    "roots": [
+      "src",
+      "tests"
+    ],
+    "seq_len": 64,
+    "snippets": 191
+  },
+  "device": "cuda",
+  "elapsed_seconds": 5.267168100000163,
+  "gpu_memory": {
+    "allocated_mb": 1496.720703125,
+    "max_allocated_mb": 3901.40234375,
+    "max_reserved_mb": 4100.0,
+    "reserved_mb": 4100.0
+  },
+  "loss": {
+    "final_eval": 9.398809432983398,
+    "history": [
+      {
+        "step": 1,
+        "train_loss": 11.169642448425293
+      },
+      {
+        "eval_loss": 10.445436477661133,
+        "step": 2,
+        "train_loss": 10.833333015441895
+      },
+      {
+        "step": 3,
+        "train_loss": 10.439484596252441
+      },
+      {
+        "eval_loss": 9.714781761169434,
+        "step": 4,
+        "train_loss": 9.660714149475098
+      },
+      {
+        "step": 5,
+        "train_loss": 9.86259937286377
+      }
+    ],
+    "initial_eval": 10.990078926086426,
+    "train_steps": [
+      11.169642448425293,
+      10.833333015441895,
+      10.439484596252441,
+      9.660714149475098,
+      9.86259937286377
+    ]
+  },
+  "mneme_storage": {
+    "available": true,
+    "path": "D:\\mztrain\\mneme_storage_zcoder1b",
+    "stored": true
+  },
+  "model": "ZCodeBERTForCausalLM",
+  "model_stats": {
+    "compression_ratio": 0.13824705484220345,
+    "equivalent_params": 1018968832,
+    "factorized_layers": 145,
+    "hidden_size": 1792,
+    "num_heads": 28,
+    "num_layers": 24,
+    "rank": 64,
+    "task": "CausalLM",
+    "total_params": 141154256,
+    "trainable_params": 140869440
+  },
+  "optimizer_stats": {
+    "compressed_params": 684,
+    "full_memory_mb": 1075.1573486328125,
+    "memory_saved_pct": 73.43701480604051,
+    "state_memory_mb": 285.59388732910156,
+    "step_count": 5,
+    "total_params": 684
+  },
+  "scale": "1B_dense_equivalent_compressed",
+  "status": "completed",
+  "torch": "2.11.0+cu128"
+}

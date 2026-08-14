@@ -92,17 +92,19 @@ class ZRankScheduler:
             return self.initial_rank
 
         elif self.schedule == RankSchedule.LINEAR:
-            progress = epoch / max(self.total_epochs, 1)
+            # progress llega a 1.0 en la ultima epoch (epoch == total_epochs-1)
+            # y se satura ahi, asi el rango alcanza max_rank dentro del plan.
+            progress = min(epoch / max(self.total_epochs - 1, 1), 1.0)
             rank = int(
                 self.initial_rank + progress * (self.max_rank - self.initial_rank)
             )
 
         elif self.schedule == RankSchedule.EXPONENTIAL:
-            doublings = epoch // self.growth_interval
+            doublings = epoch // max(self.growth_interval, 1)
             rank = int(self.initial_rank * (self.growth_factor ** doublings))
 
         elif self.schedule == RankSchedule.COSINE:
-            progress = epoch / max(self.total_epochs, 1)
+            progress = min(epoch / max(self.total_epochs - 1, 1), 1.0)
             cosine_factor = 0.5 * (1 - math.cos(math.pi * progress))
             rank = int(
                 self.initial_rank + cosine_factor * (self.max_rank - self.initial_rank)
@@ -168,11 +170,16 @@ class ZSpectralRankScheduler:
     Algoritmo:
         CADA growth_interval epochs:
         1. Muestrear K capas factorizadas
-        2. Computar SVD truncada del peso reconstruido
-        3. Calcular energy ratio: E(r) = sum(sigma_i^2, i=1..r) / sum(sigma_j^2, all j)
-        4. SI E(r) < energy_threshold -> CRECER
-        5. SI E(r) > energy_ceiling Y loss estancado -> NO crecer, ajustar LR
-        6. Zona intermedia -> usar growth_factor como fallback
+        2. Sobre los r valores singulares ALMACENADOS (S del factor) calcular un
+           proxy de "planitud" del espectro: ratio = 1 - sigma_min/sigma_max
+           (0 = plano, 1 = empinado). AVISO: es un proxy de numero de condicion
+           sobre el rango actual, funcion SOLO de los dos extremos; NO es la
+           energia acumulada E(r)=sum(s_i^2)/sum(s_j^2) ni un SVD del peso
+           reconstruido. Es sensible a un unico sigma_min pequeno (un outlier
+           puede hacer que un espectro plano lea ~1).
+        3. SI ratio < energy_threshold (plano) -> CRECER
+        4. SI ratio > energy_ceiling (empinado) Y loss estancado -> NO crecer, LR
+        5. Zona intermedia -> usar growth_factor como fallback
 
     Interfaz compatible con ZRankScheduler: get_rank(epoch, current_loss).
 
@@ -279,15 +286,16 @@ class ZSpectralRankScheduler:
 
     @torch.no_grad()
     def _compute_spectral_energy(self) -> Optional[float]:
-        """Calcular energy ratio promedio de capas muestreadas.
+        """Proxy de suficiencia de rango: promedio de (1 - sigma_min/sigma_max)
+        sobre los valores singulares ALMACENADOS de las capas muestreadas.
 
-        E(r) = sum(sigma_i^2, i=1..r) / sum(sigma_j^2, all j)
+        NO es la energia acumulada E(r)=sum(s_i^2)/sum(s_j^2) (que sobre los r
+        valores retenidos daria 1 trivialmente): es un proxy de numero de
+        condicion, funcion solo de los dos extremos del espectro. Heuristico.
 
         Returns:
-            Energy ratio promedio, o None si no hay capas factorizadas.
+            Proxy promedio en [0,1), o None si no hay capas factorizadas.
         """
-        from .projector import randomized_svd
-
         # Recoger capas factorizadas
         factorized_layers = []
         for name, module in self.model.named_modules():

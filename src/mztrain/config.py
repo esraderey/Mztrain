@@ -438,6 +438,15 @@ class ZTrainConfig:
             )
         if self.min_params_to_factorize < 1:
             raise ValueError(f"min_params_to_factorize debe ser >= 1")
+        if self.rank_growth_interval < 1:
+            raise ValueError(
+                f"rank_growth_interval debe ser >= 1, recibido: {self.rank_growth_interval}"
+            )
+        if self.rank_growth_warmup_steps < 0:
+            raise ValueError(
+                f"rank_growth_warmup_steps debe ser >= 0, recibido: "
+                f"{self.rank_growth_warmup_steps}"
+            )
         if not 0.0 < self.energy_retention <= 1.0:
             raise ValueError(f"energy_retention debe estar en (0, 1], recibido: {self.energy_retention}")
         if self.learning_rate <= 0:

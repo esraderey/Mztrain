@@ -9,6 +9,11 @@ on:
 env:
   PYTHON_DEFAULT_VERSION: "3.11"
 
+# Token de solo lectura por defecto (principio de menor privilegio); los jobs
+# que necesiten mas lo elevan explicitamente.
+permissions:
+  contents: read
+
 jobs:
   # ==========================================
   # Code Quality
@@ -107,9 +112,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install bandit safety
 
-      - name: Security scan with bandit
+      - name: Security scan with bandit (report, all severities)
         run: bandit -r src/mztrain/ -s B101 -f json -o bandit-report.json
         continue-on-error: true
+
+      - name: Upload bandit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: bandit-report.json
+        if: always()
+
+      - name: Bandit gate (fail on HIGH severity)
+        run: bandit -r src/mztrain/ -s B101 -lll
 
       - name: Check dependencies with safety
         run: safety check --full-report
@@ -144,3 +159,20 @@ jobs:
         with:
           name: dist
           path: dist/
+
+  # ==========================================
+  # Integrity seal
+  # ==========================================
+  seal-verify:
+    name: Verify integrity seal
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT_VERSION }}
+
+      - name: Verify cryptographic seal
+        run: python scripts/seal.py verify

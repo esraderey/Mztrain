@@ -68,6 +68,7 @@ class ZFactorizedLinear(nn.Module):
         bias: bool = True,
         init_method: str = "svd",
         existing_weight: Optional[torch.Tensor] = None,
+        epsi_scaling: bool = True,
     ):
         super().__init__()
         self.in_features = in_features
@@ -102,6 +103,17 @@ class ZFactorizedLinear(nn.Module):
         # S nunca cae a FP8 (regla critica: singular values siempre FP32).
         self._use_fp8 = False
 
+        # EPSI: escalar los S retenidos para preservar la energia de Frobenius.
+        # Necesario al inicializar (evita el colapso de activaciones, bug #7).
+        # Al transferir un peso real para inferencia inmediata, epsi_scaling=False
+        # da la SVD truncada fiel al mapa lineal original (ver factorize_existing_model).
+        self._epsi_scaling = epsi_scaling
+
+        # Metrica de reconstruccion: la fija _init_from_weight con el error real;
+        # queda en 0.0 si no se inicializa desde un peso existente. (Antes se
+        # reseteaba a 0.0 DESPUES de _init_from_weight, perdiendo el valor real.)
+        self._reconstruction_error = 0.0
+
         # Inicializar factores
         if existing_weight is not None:
             self._init_from_weight(existing_weight)
@@ -114,23 +126,27 @@ class ZFactorizedLinear(nn.Module):
 
         # Metricas
         self._forward_count = 0
-        self._reconstruction_error = 0.0
 
     def _init_svd(self) -> None:
         """Inicializar via SVD truncada con Energy-Preserving Scaling (EPSI).
 
         Bug anterior: truncar los top-r singular values de una matriz Xavier
-        perdia 50-70% de la energia de Frobenius, causando que Var(y) ~= rho*Var(y_dense)
-        con rho << 1. Las activaciones colapsaban a traves de capas profundas y
-        los gradientes eran subescalados, impidiendo convergencia en pretraining.
+        perdia 50-70% de la energia de Frobenius, colapsando la varianza AGREGADA
+        de las activaciones (sum_j Var(y_j) = ||W||_F^2). Las activaciones
+        decaian a traves de capas profundas, impidiendo convergencia.
 
         Fix (EPSI):
         1. Usar kaiming_uniform_ como matriz target (mismo init que nn.Linear).
-        2. Escalar los singular values retenidos por alpha = sqrt(||W||_F / ||W_r||_F)
-           para preservar la norma de Frobenius total.
+        2. Escalar los singular values retenidos por
+           alpha = ||W||_F / ||W_r||_F = sqrt(energia_total / energia_retenida)
+           (>= 1), que preserva EXACTAMENTE la energia de Frobenius total.
 
-        Con este fix, Var(output) ~= 1.07-1.16x del dense (casi perfecto) en
-        lugar de 0.32-0.50x (colapso severo) del init anterior.
+        ALCANCE de la garantia: EPSI preserva la varianza AGREGADA/pooled
+        (sum_j Var(y_j)), no la varianza POR-NEURONA. Un escalar global reparte
+        la energia pero no restaura una fila (neurona) que la truncacion vacio:
+        con entrada blanca (Cov(x)=I) la suma se conserva pero neuronas
+        individuales pueden inflarse o colapsar. La medicion pooled "~1.07-1.16x
+        del dense" corresponde a esa cantidad agregada, no a Var(y_j) por neurona.
         """
         W = torch.empty(self.out_features, self.in_features)
         # Kaiming uniform matching nn.Linear default init
@@ -191,9 +207,15 @@ class ZFactorizedLinear(nn.Module):
         U, S, Vh = torch.linalg.svd(W.float(), full_matrices=False)
 
         # EPSI: preservar la energia de Frobenius total escalando los S retenidos.
-        total_energy = S.pow(2).sum()
-        retained_energy = S[:self.rank].pow(2).sum().clamp(min=1e-12)
-        alpha = (total_energy / retained_energy).sqrt()
+        # Con epsi_scaling=False se usa la SVD truncada pura (alpha=1), que es la
+        # mejor aproximacion rango-r del mapa lineal original (fidelidad de mapa),
+        # a costa de posible colapso de varianza si el rango es agresivo.
+        if getattr(self, "_epsi_scaling", True):
+            total_energy = S.pow(2).sum()
+            retained_energy = S[:self.rank].pow(2).sum().clamp(min=1e-12)
+            alpha = (total_energy / retained_energy).sqrt()
+        else:
+            alpha = torch.ones((), dtype=S.dtype, device=S.device)
 
         S_scaled = S[:self.rank] * alpha
 
@@ -323,6 +345,31 @@ class ZFactorizedLinear(nn.Module):
             new_m[:n] = self.sleep_mask[:n].to(device=device)
         self.wake_gate = new_g
         self.sleep_mask = new_m
+
+    def resize_rank(self, new_rank: int) -> None:
+        """Ajustar la topologia (crecer O reducir) a new_rank, reinicializando
+        los factores y buffers a esa forma.
+
+        Pensado para reconstruir la topologia ANTES de load_state_dict (los
+        valores se sobrescriben con el checkpoint), soportando checkpoints de
+        ElasticRank con rango por-capa no uniforme, incluidas capas por debajo
+        del rango actual (que grow_rank, solo-crece, no puede reconstruir).
+        """
+        new_rank = min(new_rank, self._max_possible_rank)
+        if new_rank == self.rank:
+            return
+        old_rank = self.rank
+        device = self.U.device
+        dtype = self.U.dtype
+        self.rank = new_rank
+        self.U = nn.Parameter(
+            torch.empty(self.out_features, new_rank, device=device, dtype=dtype)
+        )
+        self.S = nn.Parameter(torch.empty(new_rank, device=device, dtype=dtype))
+        self.V = nn.Parameter(
+            torch.empty(new_rank, self.in_features, device=device, dtype=dtype)
+        )
+        self._resync_elastic_buffers(old_rank)
 
     def elastic_replace_factors(
         self,

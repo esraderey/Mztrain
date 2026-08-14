@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html><head><title>Neon Breakout - ZCodeBERT Generated</title>
+<style>
+*{margin:0;padding:0}
+canvas{display:block;margin:20px auto;border:2px solid #88f;background:#000}
+body{background:#0a0a0a;text-align:center;color:#ddd;font-family:Arial}
+h1{margin:15px;color:#f0f;text-shadow:0 0 10px #f0f}
+</style></head>
+<body>
+<h1>Neon Breakout</h1>
+<canvas id="g" width="700" height="400"></canvas>
+<script>
+const c=document.getElementById('g'),ctx=c.getContext('2d');
+const W=700,H=400;
+let ballX=W/2,ballY=H-60,ballR=5;
+let dx=3.5,dy=-3;
+let paddleX=W/2-110/2,paddleW=110,paddleH=14;
+let score=0,lives=3,level=1;
+const ROWS=6,COLS=8;
+const brickW=(W-4*(COLS+1))/COLS;
+const brickH=24;
+let bricks=[];let particles=[];let powerups=[];
+const neonColors=['#ff006a','#00ff88','#00aaff','#ff9800','#ff00ff'];
+
+function initBricks(){
+  bricks=[];
+  for(let r=0;r<ROWS;r++){
+    bricks[r]=[];
+    for(let col=0;col<COLS;col++){
+      bricks[r][col]={
+        x:col*(brickW+4)+4,
+        y:r*(brickH+4)+45,
+        alive:true,
+        hp:ROWS-r>ROWS/2?2:1,
+        color:neonColors[r%neonColors.length]
+      };
+    }
+  }
+}
+initBricks();
+
+c.addEventListener('mousemove',e=>{
+  let rect=c.getBoundingClientRect();
+  paddleX=e.clientX-rect.left-paddleW/2;
+  paddleX=Math.max(0,Math.min(W-paddleW,paddleX));
+});
+
+function spawnParticles(x,y,color){
+  for(let i=0;i<10;i++){
+    let a=Math.random()*Math.PI*2,s=Math.random()*4+1;
+    particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,color,size:Math.random()*3+1});
+  }
+}
+
+function update(){
+  ballX+=dx;ballY+=dy;
+  if(ballX<ballR||ballX>W-ballR)dx=-dx;
+  if(ballY<ballR)dy=-dy;
+  if(ballY>H){
+    lives--;
+    if(lives<=0){
+      alert('Game Over! Score: '+score);
+      score=0;lives=3;level=1;initBricks();
+    }
+    ballX=W/2;ballY=H-60;dx=3.5;dy=-3;
+  }
+
+  // Paddle
+  if(ballY+ballR>=H-paddleH-15&&ballY+ballR<=H-15+5&&
+     ballX>=paddleX&&ballX<=paddleX+paddleW){
+    dy=-Math.abs(dy);
+    dx+=((ballX-paddleX-paddleW/2)/paddleW)*5;
+  }
+
+  // Bricks
+  let allClear=true;
+  for(let r=0;r<ROWS;r++){
+    for(let col=0;col<COLS;col++){
+      let b=bricks[r][col];
+      if(!b.alive)continue;
+      allClear=false;
+      if(ballX+ballR>b.x&&ballX-ballR<b.x+brickW&&
+         ballY+ballR>b.y&&ballY-ballR<b.y+brickH){
+        dy=-dy;b.hp--;
+        if(b.hp<=0){b.alive=false;score+=15;
+          spawnParticles(b.x+brickW/2,b.y+brickH/2,b.color);}
+      }
+    }
+  }
+  if(allClear){level++;initBricks();dy=-Math.abs(dy)*1.1;}
+
+  particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.025;p.vy+=0.02;});
+  particles=particles.filter(p=>p.life>0);
+}
+
+function draw(){
+  ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+
+  // Bricks con glow
+  for(let r=0;r<ROWS;r++){
+    for(let col=0;col<COLS;col++){
+      let b=bricks[r][col];
+      if(!b.alive)continue;
+      ctx.shadowColor=b.color;ctx.shadowBlur=12;
+      ctx.fillStyle=b.color;
+      ctx.fillRect(b.x,b.y,brickW,brickH);
+      if(b.hp>1){
+        ctx.fillStyle='rgba(255,255,255,0.3)';
+        ctx.fillRect(b.x,b.y,brickW,brickH/2);
+      }
+    }
+  }
+  ctx.shadowBlur=0;
+
+  // Ball con glow
+  ctx.shadowColor='#fff';ctx.shadowBlur=12;
+  ctx.fillStyle='#fff';
+  ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);ctx.fill();
+  ctx.shadowBlur=0;
+
+  // Trail
+  ctx.fillStyle='rgba(0,255,255,0.3)';
+  ctx.beginPath();ctx.arc(ballX-dx*2,ballY-dy*2,ballR*0.8,0,Math.PI*2);ctx.fill();
+
+  // Paddle con glow
+  ctx.shadowColor='#0f0';ctx.shadowBlur=12;
+  ctx.fillStyle='#0f0';
+  let grad=ctx.createLinearGradient(paddleX,0,paddleX+paddleW,0);
+  grad.addColorStop(0,'#ff00ff80');grad.addColorStop(0.5,'#0f0');
+  grad.addColorStop(1,'#00ffff80');
+  ctx.fillStyle=grad;
+  ctx.beginPath();
+  ctx.roundRect(paddleX,H-paddleH-15,paddleW,paddleH,6);
+  ctx.fill();
+  ctx.shadowBlur=0;
+
+  // Particulas
+  particles.forEach(p=>{
+    ctx.globalAlpha=p.life;ctx.fillStyle=p.color;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+  });
+  ctx.globalAlpha=1;
+
+  // HUD
+  ctx.fillStyle='#ddd';ctx.font='20px Arial';
+  ctx.textAlign='left';ctx.fillText('Score: '+score,10,25);
+  ctx.textAlign='right';ctx.fillText('Lives: '+lives+'  Level: '+level,W-10,25);
+  ctx.textAlign='left';
+}
+
+function loop(){update();draw();requestAnimationFrame(loop);}
+loop();
+</script></body></html>

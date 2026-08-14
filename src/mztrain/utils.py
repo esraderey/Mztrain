@@ -32,17 +32,26 @@ def factorize_existing_model(
     rank: int = 64,
     min_params: int = 4096,
     exclude_patterns: Optional[List[str]] = None,
+    preserve_map: bool = False,
 ) -> Tuple[nn.Module, Dict[str, Any]]:
     """Factorizar un modelo existente para entrenamiento MZTrain.
 
-    Convierte capas nn.Linear a ZFactorizedLinear, preservando los
-    pesos originales via descomposicion SVD truncada.
+    Convierte capas nn.Linear a ZFactorizedLinear via SVD truncada. Por
+    defecto aplica EPSI (escala los valores singulares para preservar la
+    energia de Frobenius): esto conserva la VARIANZA de las activaciones —
+    buena inicializacion para re-entrenar — pero NO reproduce exactamente el
+    mapa lineal original cuando el espectro no esta concentrado en el top-r.
+    Con ``preserve_map=True`` se usa la SVD truncada pura, que es la mejor
+    aproximacion rango-r del mapa (mejor para inferencia inmediata sin
+    re-entrenar), a costa de posible colapso de varianza con rangos agresivos.
 
     Args:
         model: Modelo PyTorch existente.
         rank: Rango de factorizacion.
         min_params: Minimo de parametros para factorizar una capa.
         exclude_patterns: Patrones de nombre de capa a excluir.
+        preserve_map: Si True, desactiva EPSI y preserva el mapa lineal
+            (SVD truncada fiel) en vez de la varianza.
 
     Returns:
         Tupla (modelo_factorizado, estadisticas).
@@ -87,6 +96,7 @@ def factorize_existing_model(
             rank=rank,
             bias=module.bias is not None,
             existing_weight=module.weight.data,
+            epsi_scaling=not preserve_map,
         )
         if module.bias is not None:
             z_linear.bias.data.copy_(module.bias.data)
@@ -159,6 +169,9 @@ def estimate_memory_savings(
                 factorized_params += m * r + r + r * k
                 if module.bias is not None:
                     factorized_params += m
+                    # el bias tambien es "factorizable" a efectos de conteo:
+                    # sin esto queda en non_factorizable y se suma dos veces.
+                    factorizable_params += m
 
     # Memoria tradicional (FP32)
     param_bytes = total_params * 4
