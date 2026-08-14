@@ -94,6 +94,9 @@ EXCLUDE_DIRS = {
     # (editable o sdist); sellarlos rompia el verify de todo clon git y de
     # todo paquete PyPI (el clon no los tiene; el sdist los trae recreados)
     "mztrain.egg-info",
+    # configuracion local de herramientas (por-maquina, fuera de git):
+    # sellarla rompia el verify de todo clon
+    ".claude",
 }
 
 # Directorios de datos excluidos SOLO en la raiz del proyecto. Su nombre puede

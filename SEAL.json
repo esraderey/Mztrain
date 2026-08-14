@@ -23,7 +23,7 @@
     "copyright": "(c) 2025-2026 MSC Star Team.",
     "license": "MIT (ver LICENSE)"
   },
-  "generated_at_utc": "2026-08-14T07:25:59Z",
+  "generated_at_utc": "2026-08-14T07:30:26Z",
   "tool": {
     "name": "scripts/seal.py",
     "python": "3.13.2",
@@ -34,18 +34,12 @@
     "SHA-512",
     "Merkle (SHA-256)"
   ],
-  "file_count": 120,
-  "total_bytes": 1528266,
-  "merkle_root_sha256": "c15212e970625bdd1e3bd0fadf8db8706620e63cc36fb5da5edb269694554602",
-  "files_canonical_sha256": "23348bd2c8ceb3e0bb71befb2fcb5b2d9e5a7412c9bbbe7d968af4a9e4223c0c",
-  "files_canonical_sha512": "81b3fd80062549ea8c0bb3546ccfeb5aa234e90fc52de4abf4f73f58b32e32f37866272ec429e0794f61fe767858c0e3c36c104c09a64fb7e3ddd5ba30d39164",
+  "file_count": 119,
+  "total_bytes": 1525942,
+  "merkle_root_sha256": "add2a4de5c39484e2463b4e018830a41a9d24aaebf9406571b3f4d8af620f1b3",
+  "files_canonical_sha256": "70f8fc7459833c0d5bb4f2d7390f1e27ed784ade33d5012ab983e07b984d18cc",
+  "files_canonical_sha512": "73e343829192c40fa38c8e8dfade3a56bbb20cb89f72966a395449f12c1ffba49ad084f70c76b606cc5d221e89477c61eba823c6713cdc19f76ff0a1d671544a",
   "files": [
-    {
-      "path": ".claude/settings.local.json",
-      "sha256": "77612fee7731197177a01e6502b15a30598c07acbc165d276201751df5f8b961",
-      "sha512": "5e3c0f708ae91b6575cbafb1c7bce32599002b60b0729d139d8b1cbd4984385085702193bf2276a3e3b6a85b58a497ec9631345a9bbcfa5848ec65ea943e0cd8",
-      "size": 2455
-    },
     {
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
       "sha256": "1fbf938299511566feb7610a4d998fa099afea4c74b297453c4d0581354c996f",
@@ -456,9 +450,9 @@
     },
     {
       "path": "scripts/seal.py",
-      "sha256": "7b79d41cd17b61b2d7bd592bc88729c92ae37358699a4a8fe067432193c17a84",
-      "sha512": "328c1720303674966e0d343573d5fff610987359c3aff33145b23f59f206710be062fa4cc1c59c1f47211c1bfd7e0e4a555f4505f53479eee541beeb82c9ae5e",
-      "size": 21907
+      "sha256": "7240f477f4c259464e4a43eec9c3dc697558aa0dbe2cd491645a9ce714756988",
+      "sha512": "1da619bd08a4f4b47123a452ae54a7c9aaca0cfb9e4f8c7ea7d47465b38888e73e37be35054a3e97b3e23930973ecce5473e0b08ca79e051e6ecc4150d63a4ac",
+      "size": 22038
     },
     {
       "path": "scripts/test_zcoder_410m_full.py",
@@ -765,5 +759,5 @@
   "notice": "Cualquier modificacion posterior a la fecha 'generated_at_utc' sera detectable por divergencia entre el manifesto y los hashes recalculados. Este sello no sustituye a un timestamp RFC 3161 ni a un anclaje en blockchain; se recomienda combinar ambos.",
   "signature_algorithm": "Ed25519",
   "signature_public_key": "1c1765ef1730ea1173e33cebd6a909c86ae8de5dba326e60fb6e6ee5d44a4eb9",
-  "signature": "fe0eb37138b6cff63f8d5a56edd49ffb52c9204ba4c2169cf3eed27d992b9afe0c2ee84406eaffa5b4ced25ec166fb0d70a50b25963dc2492ee9c1e33cf16800"
+  "signature": "79d6d522a3ce74cf8677c1d4af451684ea09e7a55129504ead5ea58ccef90b4af8a79f93fdd76acfc32259ad457c2a7913909580b930db16dfe8552ddadba405"
 }

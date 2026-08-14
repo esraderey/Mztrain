@@ -1,13 +1,12 @@
 # MZTrain MANIFEST.sha256
 # (c) 2025-2026 MSC Star Team. Distribuido bajo licencia MIT.
-# generated_at_utc = 2026-08-14T07:25:59Z
-# merkle_root_sha256 = c15212e970625bdd1e3bd0fadf8db8706620e63cc36fb5da5edb269694554602
-# file_count = 120
+# generated_at_utc = 2026-08-14T07:30:26Z
+# merkle_root_sha256 = add2a4de5c39484e2463b4e018830a41a9d24aaebf9406571b3f4d8af620f1b3
+# file_count = 119
 #
 # Verificacion: python scripts/seal.py verify
 # (o, en Linux/macOS: sha256sum -c MANIFEST.sha256)
 
-77612fee7731197177a01e6502b15a30598c07acbc165d276201751df5f8b961  .claude/settings.local.json
 1fbf938299511566feb7610a4d998fa099afea4c74b297453c4d0581354c996f  .github/PULL_REQUEST_TEMPLATE.md
 a67acaeb496c342d98510db42ba61940a90d2dd021c5f5c9f5312bac4b88cee0  .github/SECURITY.md
 78b8d52b6c9f8756374cbfed9737d9d3af203a56331a9d15c6e1b554da8f1ea3  .github/dependabot.yml
@@ -76,7 +75,7 @@ d65fee310d60492c23cec223be6dcc28ae872c95a2e6ca418b67bdc4044931a7  examples/examp
 1f88e68e467f711bef13c4587e715323fd3bc996c42f993816ff0bf65a56ca90  pyproject.toml
 96eb4796df2ca30056b7cc5249c30009ffdee79bfaffe3a5d8a1eabbed3348b8  requirements.txt
 981611798b396983db324cf8cabb6c9e76db8aab00c7885e7edd3a058a71cd38  scripts/calc_gpu_params_equiv.py
-7b79d41cd17b61b2d7bd592bc88729c92ae37358699a4a8fe067432193c17a84  scripts/seal.py
+7240f477f4c259464e4a43eec9c3dc697558aa0dbe2cd491645a9ce714756988  scripts/seal.py
 0273060ddbe06b3b72799684fd512fadf59964e291f8cd8b5e7e19cd89ee8435  scripts/test_zcoder_410m_full.py
 877eed8531948adf2ceea74fc73d62ec70004c9323180f6d23cc1863b9447c17  scripts/train_zcoder_1b.py
 27e4a440a3a0721bf403d9b670c6605315e8b62d011d84cf3d4d737d4f5b1c5c  setup.py
