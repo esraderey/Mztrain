@@ -1,7 +1,7 @@
 # MZTrain MANIFEST.sha256
 # (c) 2025-2026 MSC Star Team. Distribuido bajo licencia MIT.
-# generated_at_utc = 2026-08-14T07:30:26Z
-# merkle_root_sha256 = add2a4de5c39484e2463b4e018830a41a9d24aaebf9406571b3f4d8af620f1b3
+# generated_at_utc = 2026-08-14T07:44:55Z
+# merkle_root_sha256 = 7da518360e8cc997e052dcecb2d5ebfb47412ad1ba85b8ffbc8379ebfba06c54
 # file_count = 119
 #
 # Verificacion: python scripts/seal.py verify
@@ -22,7 +22,7 @@ e59120cb0709b208d5e51159941215a34e678dc400fac8c74c9b786666218cc8  .github/workfl
 944d09d44a8106719567caca0cf5288771f135498068edde376531d6508dbbbd  MANIFEST.in
 9bccd79331721a38d4ca7cc20802482795e590322865539740fd83e219e1b632  NOTICE.md
 f211195556973ae50db7d90dee218b225192f2a9b80cf7b3bdaeb5e0590ab17d  PRIOR_ART.md
-79730481103348b57b23d224334534b288bb213b47908d4ef70e76e42d37e60b  README.md
+caff97cf353570465a31996c5ba28b561fb5f82deda6a881895f8d3b4f9447d2  README.md
 0d605e5b3e7c0d0fdc42815ee922bdecd203a91421b5542a5b1cfecb3cab8c03  SECURITY.md
 f5ad5991eecb7aa599582e46d3bff99de219e65e36cfc6e1dd800c48357af4f4  TRADEMARK.md
 fa09b94812636ea26da7bbc2eac7bf565d3b27e541504ef0a86dcd7f8ee5f1c0  analysis_full.py

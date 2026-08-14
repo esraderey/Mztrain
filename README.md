@@ -51,9 +51,16 @@ conservando el aviso de copyright y el texto de la licencia.
 | [`SECURITY.md`](SECURITY.md) | Política de seguridad y divulgación responsable. |
 | [`SEAL.json`](SEAL.json) + [`MANIFEST.sha256`](MANIFEST.sha256) | Sello de integridad (SHA-256 + SHA-512 + Merkle + firma Ed25519). |
 
+**El objeto canónico de verificación es el repositorio git** (o cualquier clon — los bytes
+viajan exactos gracias a `.gitattributes`):
+
 ```bash
-python scripts/seal.py verify   # verificación de integridad y firma
+git clone https://github.com/esraderey/Mztrain.git && cd Mztrain && python scripts/seal.py verify
 ```
+
+Debe reportar `OK` con firma Ed25519 válida. **Nota honesta:** el sdist de PyPI empaqueta un
+*subconjunto* de instalación (sin `.github/`, `bench/`, JSONs crudos de evidencia…); `verify`
+dentro del sdist reportará faltantes — no es manipulación; verifica contra el repo.
 
 ## Principio fundamental
 
@@ -196,8 +203,8 @@ pip install mztrain            # desde PyPI
 ```
 
 ```bash
-git clone <repositorio-oficial>
-cd mztrain
+git clone https://github.com/esraderey/Mztrain.git
+cd Mztrain
 python scripts/seal.py verify  # verifica integridad criptografica
 pip install -e .
 ```
@@ -297,7 +304,7 @@ tras refactorización. Fechas y detalle en el documento.
 ## Desarrollo
 
 ```bash
-pytest tests/ -v --no-cov          # 307 tests
+pytest tests/ -v --no-cov          # 347 tests
 ruff check src/mztrain/
 python scripts/seal.py verify
 ```

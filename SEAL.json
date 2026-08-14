@@ -23,7 +23,7 @@
     "copyright": "(c) 2025-2026 MSC Star Team.",
     "license": "MIT (ver LICENSE)"
   },
-  "generated_at_utc": "2026-08-14T07:30:26Z",
+  "generated_at_utc": "2026-08-14T07:44:55Z",
   "tool": {
     "name": "scripts/seal.py",
     "python": "3.13.2",
@@ -35,10 +35,10 @@
     "Merkle (SHA-256)"
   ],
   "file_count": 119,
-  "total_bytes": 1525942,
-  "merkle_root_sha256": "add2a4de5c39484e2463b4e018830a41a9d24aaebf9406571b3f4d8af620f1b3",
-  "files_canonical_sha256": "70f8fc7459833c0d5bb4f2d7390f1e27ed784ade33d5012ab983e07b984d18cc",
-  "files_canonical_sha512": "73e343829192c40fa38c8e8dfade3a56bbb20cb89f72966a395449f12c1ffba49ad084f70c76b606cc5d221e89477c61eba823c6713cdc19f76ff0a1d671544a",
+  "total_bytes": 1526409,
+  "merkle_root_sha256": "7da518360e8cc997e052dcecb2d5ebfb47412ad1ba85b8ffbc8379ebfba06c54",
+  "files_canonical_sha256": "4d057ee7e1d6f4e9360e23825482a27f358b28e1f8831196d88cb2b09d4f6bab",
+  "files_canonical_sha512": "39d991be4c97f74cfc9208085a599af67a593e7a96a8b246d679f68d308d5d5606823130bcca241ec2df86032d7c7771b2d86b15614d03cc453458b887a68617",
   "files": [
     {
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
@@ -132,9 +132,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "79730481103348b57b23d224334534b288bb213b47908d4ef70e76e42d37e60b",
-      "sha512": "787eb46f76e51a5b69114d45a46016d103b90d353a48b1b466f60b239177b774685af8cf71ed0082a8e0304fe5577325d81d3ffdfb1a9018ae57e9bd22eb9899",
-      "size": 16723
+      "sha256": "caff97cf353570465a31996c5ba28b561fb5f82deda6a881895f8d3b4f9447d2",
+      "sha512": "f2b93b929c6953ca7d42141e6d3a38fa515017cf7809a42b202c0f3af53650f4a0fe2d708cb7496366a25fee5eb3332e5c11e08ef68694fddae32a04ba045d59",
+      "size": 17190
     },
     {
       "path": "SECURITY.md",
@@ -759,5 +759,5 @@
   "notice": "Cualquier modificacion posterior a la fecha 'generated_at_utc' sera detectable por divergencia entre el manifesto y los hashes recalculados. Este sello no sustituye a un timestamp RFC 3161 ni a un anclaje en blockchain; se recomienda combinar ambos.",
   "signature_algorithm": "Ed25519",
   "signature_public_key": "1c1765ef1730ea1173e33cebd6a909c86ae8de5dba326e60fb6e6ee5d44a4eb9",
-  "signature": "79d6d522a3ce74cf8677c1d4af451684ea09e7a55129504ead5ea58ccef90b4af8a79f93fdd76acfc32259ad457c2a7913909580b930db16dfe8552ddadba405"
+  "signature": "cf3eecba316b93224ba2fb278c73391e4955a62c6498792b0189085946a4594ac42037500052f0fd50e216525a3ef0ffb0a10028716489fe3f639ec8610e7809"
 }
