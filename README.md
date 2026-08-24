@@ -134,8 +134,30 @@ varianza de LayerNorm.
 **Resultado T8 (preregistrado, [veredicto](docs/evidencia/T8-VEREDICTO.md)):** el morph
 alcanza la calidad del from-scratch en el **54% del reloj** (3/3 seeds, ±0.4 s) y, a tiempo
 igual, rinde **2.34-2.37 BPC vs 2.90** del from-scratch. Deriva de la cirugía sobre modelos
-entrenados: 0.24-1.4%. *Alcance: escala 11M-equiv, un schedule, fp32 — sin probar aún a
-escala mayor.*
+entrenados: 0.24-1.4%.
+
+**T9-T12 (2026-08-22) cierran las banderas que T8 dejó abiertas**, todas con preregistro y
+umbral de muerte previos a los datos:
+
+| Experimento | Pregunta | Resultado |
+|---|---|---|
+| [T9-A](docs/evidencia/T9-VEREDICTO.md) | ¿a escala mayor? | endpoint **38.8M** (5.1× T8) → ratio **0.476** (3/3). El claim **mejora** con la escala |
+| [T9-B](docs/evidencia/T9-VEREDICTO.md) | ¿cirugías encadenadas? | 192→288→384 da **0.496** frente a 0.574 del salto único: encadenar es **mejor** |
+| [T9-C](docs/evidencia/T9-VEREDICTO.md) | ¿en bf16? | ratio 0.689, **paridad de calidad** (ΔQ 0.0195), speedup 1.42×, 0 NaN |
+| [T10](docs/evidencia/T10-VEREDICTO.md) | ¿con la tasa de aprendizaje afinada? | sobrevive; y aparece que el factorizado desde cero **sin rampa de LR falla 4 de 6 veces** |
+| [T11](docs/evidencia/T11-VEREDICTO.md) | ¿qué protege: la fase densa o la rampa? | 2×2: **ambas bastan por separado**. Corrige a T10 y fija el número honesto en **0.542** |
+| [T12](docs/evidencia/T12-VEREDICTO.md) | ¿estaba la línea base mal equipada? | a 3e-4 la rampa **empeora** la referencia: el 0.574 de T9-B no necesitaba corrección |
+
+*Alcance honesto: char-WikiText-2, dos escalas (7.6M y 38.8M), tasas 3e-4 y 1.2e-3, fp32 salvo
+T9-C, 3-6 semillas por celda. El [RFC](docs/RFC-ELASTICSHAPE-1.md) recoge el fundamento
+matemático, los diez defectos que encontraron las auditorías ciegas y las amenazas a la validez.*
+
+**Dos correcciones que la propia serie se hizo, y que conviene leer antes de reutilizar los
+números:** (1) la varianza a semilla **fija** (~0.4 BPC) supera a la varianza entre semillas que
+el arco asumía (σ₁=0.068) — la tarea es bimodal; (2) las comparaciones de «BPC final» entre
+configuraciones que no han convergido miden quién va delante en un corte, no calidad alcanzable
+([T14](docs/evidencia/T14-VEREDICTO.md)). El banco incluye una guarda que lo impide
+(`docs/evidencia/banco-t9-t14/convergencia.py`).
 
 ```python
 from mztrain import GrowthEvent, LrWarmup, apply_event
@@ -282,7 +304,7 @@ torch.save(full_model.state_dict(), "model_final.pt")
 | `VRAM Governor` | presión EMA, histéresis, `oom_guarded` en el train loop | GPU-validado |
 | `ZActivationCheckpoint` | activaciones INT8/MNEME | Evicción simétrica verificada |
 | `scripts/seal.py` | sello sha256+sha512+Merkle + firma Ed25519 obligatoria con lista de confianza | Endurecido tras peritaje |
-| `shape_ops` + `elastic_shape` | ElasticShape v1: crecimiento de forma con cirugía exacta | Doble G4 ciego por módulo; claim T8 confirmado (ratio 0.54) |
+| `shape_ops` + `elastic_shape` | ElasticShape v1: crecimiento de forma con cirugía exacta | Doble G4 ciego por módulo; claim confirmado en T8 y re-confirmado a 5.1× la escala, encadenado y en bf16 (T9-T12) |
 
 > **Honestidad técnica sobre ElasticRank:** rinde donde existe redundancia explotable.
 > En pretraining desde cero los proxies no predicen el impacto real (Spearman ≈ 0.13) y

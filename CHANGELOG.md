@@ -5,6 +5,29 @@ Todos los cambios notables en MZTrain se documentan en este archivo.
 El formato esta basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Sin publicar] - 2026-08-22
+
+### Evidencia
+- **T9-T14: seis experimentos preregistrados sobre ElasticShape** (85 corridas). T9 cierra las
+  tres banderas que T8 dejo abiertas: escala (endpoint 38.8M, ratio 0.476), cirugias encadenadas
+  (0.496, mejor que el salto unico) y bf16 (0.689 con paridad de calidad). T10-T12 atacan el
+  claim por su lado mas debil (tasa de aprendizaje afinada) y lo dejan en **0.542**. T13 mide el
+  promediado de pesos. T14 descarta que el corpus fuera el factor limitante.
+- Preregistros, veredictos, datos crudos y **banco reproducible completo** en `docs/evidencia/`.
+- `docs/RFC-ELASTICSHAPE-1.md`: RFC tecnico con el fundamento matematico, los diez defectos que
+  encontraron las auditorias ciegas, los resultados de T8 a T14 y las amenazas a la validez.
+
+### Correcciones metodologicas
+- La varianza a semilla **fija** (~0.4 BPC) supera a la sigma_1=0.068 entre semillas que el arco
+  asumia: la tarea es bimodal. Documentado con la evidencia que ya estaba en T6.
+- No se deben comparar BPC finales de corridas sin converger. El banco incorpora la guarda
+  (`docs/evidencia/banco-t9-t14/convergencia.py`).
+- Metrica de evaluacion unificada en todo el arco (habia dos implementaciones divergentes);
+  ancla de no-regresion bit a bit y re-ejecucion de la unica celda afectada.
+
+### Notas
+- No cambia el codigo de `src/mztrain`: esta entrada es evidencia y documentacion.
+
 ## [1.3.2] - 2026-08-14
 
 ### Corregido
