@@ -23,7 +23,7 @@
     "copyright": "(c) 2025-2026 MSC Star Team.",
     "license": "MIT (ver LICENSE)"
   },
-  "generated_at_utc": "2026-08-24T15:39:28Z",
+  "generated_at_utc": "2026-08-24T15:49:02Z",
   "tool": {
     "name": "scripts/seal.py",
     "python": "3.13.2",
@@ -990,5 +990,8 @@
     }
   ],
   "verification_command": "python scripts/seal.py verify",
-  "notice": "Cualquier modificacion posterior a la fecha 'generated_at_utc' sera detectable por divergencia entre el manifesto y los hashes recalculados. Este sello no sustituye a un timestamp RFC 3161 ni a un anclaje en blockchain; se recomienda combinar ambos."
+  "notice": "Cualquier modificacion posterior a la fecha 'generated_at_utc' sera detectable por divergencia entre el manifesto y los hashes recalculados. Este sello no sustituye a un timestamp RFC 3161 ni a un anclaje en blockchain; se recomienda combinar ambos.",
+  "signature_algorithm": "Ed25519",
+  "signature_public_key": "1c1765ef1730ea1173e33cebd6a909c86ae8de5dba326e60fb6e6ee5d44a4eb9",
+  "signature": "b5a77ce85360444b64254a8657817718637a612eb3f85b12b3bc2a5536462ac410dc4d559d8e0ec8cec1ebf38f8a4f10be90c2dfe0e5282252a801d2ff6aee01"
 }
