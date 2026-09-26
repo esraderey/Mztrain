@@ -1,0 +1,165 @@
+D:\mztrain\bench\run.py:179: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat() + "Z",
+2026-09-26 11:50:03,586 - mztrain - INFO - [MZTrain] Modelo factorizado: 3 capas reemplazadas, 1 omitidas (< 4096 params)
+2026-09-26 11:50:03,588 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:50:03,588 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     3
+  Params totales:         41,402
+  Params (si full):       566,144
+  Ahorro en pesos:        92.9%
+  Rango actual:           16
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:50:04,091 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 20 epochs, rank 16 -> 64
+2026-09-26 11:50:06,579 - mztrain - INFO - [MZTrain] Epoch 0/20: train_loss=0.945069, val_loss=0.592479, rank=16, time=2.5s, mem=21MB
+2026-09-26 11:50:08,983 - mztrain - INFO - [MZTrain] Epoch 1/20: train_loss=0.380031, val_loss=0.406985, rank=16, time=2.4s, mem=21MB
+2026-09-26 11:50:11,473 - mztrain - INFO - [MZTrain] Epoch 2/20: train_loss=0.278308, val_loss=0.391328, rank=16, time=2.5s, mem=21MB
+2026-09-26 11:50:13,933 - mztrain - INFO - [MZTrain] Epoch 3/20: train_loss=0.225096, val_loss=0.378174, rank=16, time=2.5s, mem=21MB
+2026-09-26 11:50:13,941 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (512x784)
+2026-09-26 11:50:13,942 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (256x512)
+2026-09-26 11:50:13,942 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (128x256)
+2026-09-26 11:50:14,003 - mztrain - INFO - [MZTrain] Rango crecido a 32 en 3 capas, 14 estados migrados, warmup 50 steps
+2026-09-26 11:50:16,600 - mztrain - INFO - [MZTrain] Epoch 4/20: train_loss=0.178327, val_loss=0.345230, rank=32, time=2.7s, mem=22MB
+2026-09-26 11:50:19,039 - mztrain - INFO - [MZTrain] Epoch 5/20: train_loss=0.166087, val_loss=0.368533, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:50:21,488 - mztrain - INFO - [MZTrain] Epoch 6/20: train_loss=0.138139, val_loss=0.339259, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:50:24,032 - mztrain - INFO - [MZTrain] Epoch 7/20: train_loss=0.116925, val_loss=0.356765, rank=32, time=2.5s, mem=22MB
+2026-09-26 11:50:24,034 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x784)
+2026-09-26 11:50:24,034 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (256x512)
+2026-09-26 11:50:24,035 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (128x256)
+2026-09-26 11:50:24,040 - mztrain - INFO - [MZTrain] Rango crecido a 64 en 3 capas, 14 estados migrados, warmup 50 steps
+2026-09-26 11:50:26,497 - mztrain - INFO - [MZTrain] Epoch 8/20: train_loss=0.096214, val_loss=0.315753, rank=64, time=2.5s, mem=23MB
+2026-09-26 11:50:28,959 - mztrain - INFO - [MZTrain] Epoch 9/20: train_loss=0.095952, val_loss=0.361518, rank=64, time=2.5s, mem=23MB
+2026-09-26 11:50:31,408 - mztrain - INFO - [MZTrain] Epoch 10/20: train_loss=0.106422, val_loss=0.310619, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:50:33,893 - mztrain - INFO - [MZTrain] Epoch 11/20: train_loss=0.076482, val_loss=0.356861, rank=64, time=2.5s, mem=23MB
+2026-09-26 11:50:36,415 - mztrain - INFO - [MZTrain] Epoch 12/20: train_loss=0.078879, val_loss=0.391511, rank=64, time=2.5s, mem=23MB
+2026-09-26 11:50:38,852 - mztrain - INFO - [MZTrain] Epoch 13/20: train_loss=0.074706, val_loss=0.333613, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:50:41,304 - mztrain - INFO - [MZTrain] Epoch 14/20: train_loss=0.074630, val_loss=0.329670, rank=64, time=2.5s, mem=23MB
+2026-09-26 11:50:43,847 - mztrain - INFO - [MZTrain] Epoch 15/20: train_loss=0.062024, val_loss=0.383293, rank=64, time=2.5s, mem=23MB
+2026-09-26 11:50:46,350 - mztrain - INFO - [MZTrain] Epoch 16/20: train_loss=0.064395, val_loss=0.395150, rank=64, time=2.5s, mem=23MB
+2026-09-26 11:50:48,909 - mztrain - INFO - [MZTrain] Epoch 17/20: train_loss=0.059343, val_loss=0.388548, rank=64, time=2.6s, mem=23MB
+2026-09-26 11:50:51,310 - mztrain - INFO - [MZTrain] Epoch 18/20: train_loss=0.047553, val_loss=0.338906, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:50:53,715 - mztrain - INFO - [MZTrain] Epoch 19/20: train_loss=0.055841, val_loss=0.382747, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:50:53,715 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           49.6s (0.8min)
+  Mejor loss:             0.310619
+  Rango final:            64
+  Epochs completados:     20
+  Optimizer memory:       {'total_params': 14, 'compressed_params': 0, 'state_memory_mb': 1.2134552001953125, 'full_memory_mb': 1.2134552001953125, 'memory_saved_pct': 0.0, 'step_count': 948}
+  =================================================
+2026-09-26 11:50:55,013 - mztrain - INFO - [MZTrain] Modelo factorizado: 3 capas reemplazadas, 1 omitidas (< 4096 params)
+2026-09-26 11:50:55,015 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:50:55,015 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     3
+  Params totales:         41,402
+  Params (si full):       566,144
+  Ahorro en pesos:        92.9%
+  Rango actual:           16
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:50:55,040 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 20 epochs, rank 16 -> 64
+2026-09-26 11:50:57,355 - mztrain - INFO - [MZTrain] Epoch 0/20: train_loss=0.999125, val_loss=0.560169, rank=16, time=2.3s, mem=32MB
+2026-09-26 11:50:59,731 - mztrain - INFO - [MZTrain] Epoch 1/20: train_loss=0.362389, val_loss=0.417075, rank=16, time=2.4s, mem=21MB
+2026-09-26 11:51:02,148 - mztrain - INFO - [MZTrain] Epoch 2/20: train_loss=0.266761, val_loss=0.330757, rank=16, time=2.4s, mem=21MB
+2026-09-26 11:51:04,553 - mztrain - INFO - [MZTrain] Epoch 3/20: train_loss=0.214056, val_loss=0.346136, rank=16, time=2.4s, mem=21MB
+2026-09-26 11:51:04,555 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (512x784)
+2026-09-26 11:51:04,555 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (256x512)
+2026-09-26 11:51:04,556 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (128x256)
+2026-09-26 11:51:04,559 - mztrain - INFO - [MZTrain] Rango crecido a 32 en 3 capas, 14 estados migrados, warmup 50 steps
+2026-09-26 11:51:06,947 - mztrain - INFO - [MZTrain] Epoch 4/20: train_loss=0.170136, val_loss=0.341474, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:51:09,331 - mztrain - INFO - [MZTrain] Epoch 5/20: train_loss=0.159482, val_loss=0.313935, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:51:11,725 - mztrain - INFO - [MZTrain] Epoch 6/20: train_loss=0.137190, val_loss=0.291698, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:51:14,109 - mztrain - INFO - [MZTrain] Epoch 7/20: train_loss=0.116089, val_loss=0.330779, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:51:14,110 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x784)
+2026-09-26 11:51:14,111 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (256x512)
+2026-09-26 11:51:14,111 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (128x256)
+2026-09-26 11:51:14,115 - mztrain - INFO - [MZTrain] Rango crecido a 64 en 3 capas, 14 estados migrados, warmup 50 steps
+2026-09-26 11:51:16,486 - mztrain - INFO - [MZTrain] Epoch 8/20: train_loss=0.090688, val_loss=0.322517, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:18,872 - mztrain - INFO - [MZTrain] Epoch 9/20: train_loss=0.097214, val_loss=0.291537, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:21,260 - mztrain - INFO - [MZTrain] Epoch 10/20: train_loss=0.089250, val_loss=0.296038, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:23,644 - mztrain - INFO - [MZTrain] Epoch 11/20: train_loss=0.082656, val_loss=0.270879, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:26,035 - mztrain - INFO - [MZTrain] Epoch 12/20: train_loss=0.080234, val_loss=0.332769, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:28,434 - mztrain - INFO - [MZTrain] Epoch 13/20: train_loss=0.066134, val_loss=0.312394, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:30,816 - mztrain - INFO - [MZTrain] Epoch 14/20: train_loss=0.072479, val_loss=0.288480, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:33,199 - mztrain - INFO - [MZTrain] Epoch 15/20: train_loss=0.063445, val_loss=0.350929, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:35,594 - mztrain - INFO - [MZTrain] Epoch 16/20: train_loss=0.058553, val_loss=0.431191, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:37,974 - mztrain - INFO - [MZTrain] Epoch 17/20: train_loss=0.056996, val_loss=0.386059, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:40,347 - mztrain - INFO - [MZTrain] Epoch 18/20: train_loss=0.056828, val_loss=0.317554, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:42,735 - mztrain - INFO - [MZTrain] Epoch 19/20: train_loss=0.050397, val_loss=0.352835, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:51:42,735 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           47.7s (0.8min)
+  Mejor loss:             0.270879
+  Rango final:            64
+  Epochs completados:     20
+  Optimizer memory:       {'total_params': 14, 'compressed_params': 0, 'state_memory_mb': 1.2134552001953125, 'full_memory_mb': 1.2134552001953125, 'memory_saved_pct': 0.0, 'step_count': 948}
+  =================================================
+2026-09-26 11:51:43,267 - mztrain - INFO - [MZTrain] Modelo factorizado: 3 capas reemplazadas, 1 omitidas (< 4096 params)
+2026-09-26 11:51:43,269 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:51:43,269 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     3
+  Params totales:         41,402
+  Params (si full):       566,144
+  Ahorro en pesos:        92.9%
+  Rango actual:           16
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:51:43,302 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 20 epochs, rank 16 -> 64
+2026-09-26 11:51:45,678 - mztrain - INFO - [MZTrain] Epoch 0/20: train_loss=0.983752, val_loss=0.577599, rank=16, time=2.4s, mem=32MB
+2026-09-26 11:51:48,048 - mztrain - INFO - [MZTrain] Epoch 1/20: train_loss=0.369400, val_loss=0.433018, rank=16, time=2.4s, mem=21MB
+2026-09-26 11:51:50,448 - mztrain - INFO - [MZTrain] Epoch 2/20: train_loss=0.257602, val_loss=0.353602, rank=16, time=2.4s, mem=21MB
+2026-09-26 11:51:52,849 - mztrain - INFO - [MZTrain] Epoch 3/20: train_loss=0.202950, val_loss=0.326983, rank=16, time=2.4s, mem=21MB
+2026-09-26 11:51:52,850 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (512x784)
+2026-09-26 11:51:52,851 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (256x512)
+2026-09-26 11:51:52,851 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (128x256)
+2026-09-26 11:51:52,855 - mztrain - INFO - [MZTrain] Rango crecido a 32 en 3 capas, 14 estados migrados, warmup 50 steps
+2026-09-26 11:51:55,240 - mztrain - INFO - [MZTrain] Epoch 4/20: train_loss=0.153281, val_loss=0.309401, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:51:57,641 - mztrain - INFO - [MZTrain] Epoch 5/20: train_loss=0.150437, val_loss=0.297785, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:52:00,037 - mztrain - INFO - [MZTrain] Epoch 6/20: train_loss=0.130419, val_loss=0.370552, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:52:02,428 - mztrain - INFO - [MZTrain] Epoch 7/20: train_loss=0.118034, val_loss=0.285082, rank=32, time=2.4s, mem=22MB
+2026-09-26 11:52:02,429 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x784)
+2026-09-26 11:52:02,430 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (256x512)
+2026-09-26 11:52:02,430 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (128x256)
+2026-09-26 11:52:02,434 - mztrain - INFO - [MZTrain] Rango crecido a 64 en 3 capas, 14 estados migrados, warmup 50 steps
+2026-09-26 11:52:04,820 - mztrain - INFO - [MZTrain] Epoch 8/20: train_loss=0.090361, val_loss=0.283566, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:07,215 - mztrain - INFO - [MZTrain] Epoch 9/20: train_loss=0.098739, val_loss=0.301366, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:09,602 - mztrain - INFO - [MZTrain] Epoch 10/20: train_loss=0.092512, val_loss=0.311100, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:11,975 - mztrain - INFO - [MZTrain] Epoch 11/20: train_loss=0.081905, val_loss=0.311395, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:14,359 - mztrain - INFO - [MZTrain] Epoch 12/20: train_loss=0.082310, val_loss=0.364565, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:16,742 - mztrain - INFO - [MZTrain] Epoch 13/20: train_loss=0.074573, val_loss=0.367150, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:19,131 - mztrain - INFO - [MZTrain] Epoch 14/20: train_loss=0.072216, val_loss=0.339791, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:21,514 - mztrain - INFO - [MZTrain] Epoch 15/20: train_loss=0.071817, val_loss=0.283146, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:23,908 - mztrain - INFO - [MZTrain] Epoch 16/20: train_loss=0.064784, val_loss=0.361018, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:26,301 - mztrain - INFO - [MZTrain] Epoch 17/20: train_loss=0.060968, val_loss=0.400127, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:28,683 - mztrain - INFO - [MZTrain] Epoch 18/20: train_loss=0.060775, val_loss=0.374955, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:31,075 - mztrain - INFO - [MZTrain] Epoch 19/20: train_loss=0.054512, val_loss=0.425060, rank=64, time=2.4s, mem=23MB
+2026-09-26 11:52:31,075 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           47.8s (0.8min)
+  Mejor loss:             0.283146
+  Rango final:            64
+  Epochs completados:     20
+  Optimizer memory:       {'total_params': 14, 'compressed_params': 0, 'state_memory_mb': 1.2134552001953125, 'full_memory_mb': 1.2134552001953125, 'memory_saved_pct': 0.0, 'step_count': 948}
+  =================================================
+[bench] label=post_peritaje_20260926 device=cuda seeds=[42, 123, 7] epochs=20
+
+[bench] === seed=42 ===
+[bench] seed=42 done: final_val_acc=0.9205 final_val_loss=0.3827 rank_min=16 rank_max=64 rank_grew=True wall_time=49.6s
+
+[bench] === seed=123 ===
+[bench] seed=123 done: final_val_acc=0.9310 final_val_loss=0.3528 rank_min=16 rank_max=64 rank_grew=True wall_time=47.7s
+
+[bench] === seed=7 ===
+[bench] seed=7 done: final_val_acc=0.9165 final_val_loss=0.4251 rank_min=16 rank_max=64 rank_grew=True wall_time=47.8s
+
+[bench] === INT8 sanity ===
+[bench] galore: rel_err=0.0075 unique_values=407 max_abs_err=0.0001
+[bench] adaptive: rel_err=0.0075 unique_values=407 max_abs_err=0.0001
+
+[bench] saved -> D:\mztrain\bench\results\post_peritaje_20260926.json

@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-09-26T17:54:39.653457Z",
-  "device": "cuda",
+  "timestamp": "2026-05-16T02:05:13.869481Z",
+  "device": "cpu",
   "torch_version": "2.11.0+cu128",
   "model": {
     "arch": "ZCodeBERT",
@@ -15,7 +15,7 @@
     "label": "baseline",
     "seed": 42,
     "epochs": 12,
-    "wall_time_s": 13.6,
+    "wall_time_s": 26.0,
     "init_trainable_params": 844256,
     "final_trainable_params": 844256,
     "init_factor_params": 570384,
@@ -24,8 +24,8 @@
     "factor_param_reduction_pct": 0.0,
     "adam_state_mb_proxy": 6.4412,
     "opt_state_mb_compressed": 6.3461,
-    "val_mlm_loss": 3.71217,
-    "val_mlm_accuracy": 0.22386,
+    "val_mlm_loss": 3.70444,
+    "val_mlm_accuracy": 0.22222,
     "elastic_slept": null,
     "elastic_pruned": null,
     "elastic_max_coherence": null,
@@ -49,7 +49,7 @@
     "label": "v1",
     "seed": 42,
     "epochs": 12,
-    "wall_time_s": 14.6,
+    "wall_time_s": 26.1,
     "init_trainable_params": 844256,
     "final_trainable_params": 844256,
     "init_factor_params": 570384,
@@ -58,8 +58,8 @@
     "factor_param_reduction_pct": 0.0,
     "adam_state_mb_proxy": 6.4412,
     "opt_state_mb_compressed": 6.3461,
-    "val_mlm_loss": 3.73631,
-    "val_mlm_accuracy": 0.2082,
+    "val_mlm_loss": 3.73072,
+    "val_mlm_accuracy": 0.20164,
     "elastic_slept": 0,
     "elastic_pruned": 0,
     "elastic_max_coherence": 0.0,
@@ -82,16 +82,16 @@
         "layer": "bert.encoder.layers.0.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4665,
-          0.6593,
-          0.8772,
+          0.4707,
+          0.6511,
+          0.8376,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6797,
-          1.0005,
-          1.3176,
-          1.5846
+          0.6901,
+          1.0019,
+          1.3509,
+          1.6049
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -102,8 +102,8 @@
         "coh_old[min/p50/p90/max]": [
           0.0,
           0.0,
-          0.0,
-          0.0
+          0.0001,
+          0.0004
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -113,16 +113,16 @@
         "layer": "bert.encoder.layers.0.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5477,
-          0.6996,
-          0.8966,
-          1.0
+          0.5335,
+          0.7039,
+          0.8869,
+          0.9992
         ],
         "update[min/p50/p90/max]": [
-          0.749,
-          0.9962,
-          1.2829,
-          1.5896
+          0.7441,
+          1.0203,
+          1.3622,
+          1.4919
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -134,7 +134,7 @@
           0.0,
           0.0,
           0.0,
-          0.0
+          0.0003
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -144,16 +144,16 @@
         "layer": "bert.encoder.layers.0.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5333,
-          0.7108,
-          0.9447,
+          0.5266,
+          0.7097,
+          0.9463,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5911,
-          0.9807,
-          1.4549,
-          1.7669
+          0.6419,
+          0.9911,
+          1.508,
+          1.8141
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -175,16 +175,16 @@
         "layer": "bert.encoder.layers.0.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5451,
-          0.741,
-          0.9393,
+          0.5366,
+          0.7313,
+          0.9091,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6528,
-          1.0063,
-          1.3937,
-          1.7518
+          0.6882,
+          0.9991,
+          1.4208,
+          1.8654
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -206,16 +206,16 @@
         "layer": "bert.encoder.layers.0.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.6782,
-          0.7868,
-          0.8995,
+          0.6779,
+          0.788,
+          0.9042,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7805,
-          0.9874,
-          1.1689,
-          1.2486
+          0.7723,
+          0.9948,
+          1.18,
+          1.3362
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -237,16 +237,16 @@
         "layer": "bert.encoder.layers.0.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7018,
-          0.8219,
-          0.9535,
+          0.7055,
+          0.8377,
+          0.9633,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.8234,
-          0.9899,
-          1.2076,
-          1.4047
+          0.7903,
+          0.9855,
+          1.19,
+          1.2972
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -268,16 +268,16 @@
         "layer": "bert.encoder.layers.1.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5275,
-          0.7142,
-          0.9085,
-          1.0
+          0.5025,
+          0.704,
+          0.9215,
+          0.9997
         ],
         "update[min/p50/p90/max]": [
-          0.65,
-          0.9641,
-          1.3092,
-          1.4424
+          0.6445,
+          1.0187,
+          1.303,
+          1.4551
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -288,8 +288,8 @@
         "coh_old[min/p50/p90/max]": [
           0.0,
           0.0,
-          0.0,
-          0.0
+          0.0001,
+          0.0004
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -299,16 +299,16 @@
         "layer": "bert.encoder.layers.1.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4855,
-          0.6814,
-          0.8981,
+          0.4819,
+          0.6759,
+          0.8876,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.628,
-          1.0259,
-          1.2564,
-          1.5229
+          0.6625,
+          0.9835,
+          1.2436,
+          1.4512
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -320,7 +320,7 @@
           0.0,
           0.0,
           0.0,
-          0.0
+          0.0002
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -330,16 +330,16 @@
         "layer": "bert.encoder.layers.1.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5105,
-          0.6849,
-          0.9153,
-          1.0
+          0.5171,
+          0.6927,
+          0.9131,
+          0.9999
         ],
         "update[min/p50/p90/max]": [
-          0.5386,
-          0.9974,
-          1.4495,
-          1.8777
+          0.5329,
+          1.0141,
+          1.3311,
+          1.7473
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -361,16 +361,16 @@
         "layer": "bert.encoder.layers.1.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.497,
-          0.676,
-          0.8618,
+          0.5007,
+          0.6844,
+          0.8654,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5831,
-          1.02,
-          1.3829,
-          2.0216
+          0.6274,
+          1.0232,
+          1.3716,
+          1.6125
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -392,16 +392,16 @@
         "layer": "bert.encoder.layers.1.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7346,
-          0.8311,
-          0.9555,
+          0.7297,
+          0.827,
+          0.956,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7675,
-          0.9946,
-          1.1941,
-          1.2901
+          0.7601,
+          0.9948,
+          1.274,
+          1.4008
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -423,16 +423,16 @@
         "layer": "bert.encoder.layers.1.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.6794,
-          0.8061,
-          0.9244,
+          0.7079,
+          0.8138,
+          0.9404,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7853,
-          1.018,
-          1.2531,
-          1.4015
+          0.7559,
+          1.0107,
+          1.2372,
+          1.3089
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -454,16 +454,16 @@
         "layer": "bert.encoder.layers.2.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4898,
-          0.6846,
-          0.902,
+          0.4997,
+          0.6906,
+          0.9149,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6968,
-          0.9898,
-          1.3552,
-          1.7961
+          0.6364,
+          0.9777,
+          1.327,
+          1.5586
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -485,16 +485,16 @@
         "layer": "bert.encoder.layers.2.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5416,
-          0.6955,
-          0.9137,
-          0.9995
+          0.5189,
+          0.6788,
+          0.8736,
+          1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7133,
-          0.9993,
-          1.3365,
-          1.5285
+          0.6869,
+          1.0126,
+          1.3612,
+          1.5494
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -516,16 +516,16 @@
         "layer": "bert.encoder.layers.2.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.52,
-          0.7203,
-          0.9488,
+          0.5177,
+          0.7141,
+          0.9343,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5588,
-          0.9876,
-          1.417,
-          1.6955
+          0.6265,
+          1.0045,
+          1.4691,
+          1.849
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -547,16 +547,16 @@
         "layer": "bert.encoder.layers.2.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4922,
-          0.6732,
-          0.8886,
+          0.4913,
+          0.6764,
+          0.8868,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6557,
-          1.0521,
-          1.3043,
-          1.7164
+          0.6672,
+          1.0043,
+          1.3325,
+          1.7111
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -578,16 +578,16 @@
         "layer": "bert.encoder.layers.2.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.684,
-          0.8187,
-          0.9271,
-          1.0
+          0.6783,
+          0.822,
+          0.926,
+          0.9999
         ],
         "update[min/p50/p90/max]": [
-          0.6732,
-          0.9902,
-          1.1962,
-          1.3802
+          0.7404,
+          0.992,
+          1.1992,
+          1.3012
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -609,16 +609,16 @@
         "layer": "bert.encoder.layers.2.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7052,
-          0.8233,
-          0.9479,
-          0.9992
+          0.7144,
+          0.8312,
+          0.9552,
+          0.9998
         ],
         "update[min/p50/p90/max]": [
-          0.7693,
-          1.0076,
-          1.1858,
-          1.5827
+          0.7563,
+          0.9797,
+          1.2266,
+          1.3415
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -640,16 +640,16 @@
         "layer": "bert.encoder.layers.3.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4887,
-          0.7016,
-          0.8863,
-          0.9999
+          0.5039,
+          0.7218,
+          0.9325,
+          0.9998
         ],
         "update[min/p50/p90/max]": [
-          0.609,
-          1.0285,
-          1.3228,
-          1.4242
+          0.5958,
+          1.0102,
+          1.3666,
+          1.5523
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -671,16 +671,16 @@
         "layer": "bert.encoder.layers.3.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4982,
-          0.6985,
-          0.8712,
+          0.5244,
+          0.7288,
+          0.8986,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5881,
-          1.0231,
-          1.2871,
-          1.537
+          0.556,
+          1.0012,
+          1.2989,
+          1.4634
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -702,16 +702,16 @@
         "layer": "bert.encoder.layers.3.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5285,
-          0.7273,
-          0.9165,
-          0.9999
+          0.5338,
+          0.728,
+          0.9241,
+          0.9992
         ],
         "update[min/p50/p90/max]": [
-          0.5402,
-          1.0447,
-          1.276,
-          1.7058
+          0.5959,
+          1.0182,
+          1.4066,
+          1.5965
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -733,16 +733,16 @@
         "layer": "bert.encoder.layers.3.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5117,
-          0.7094,
+          0.5157,
+          0.7044,
           0.909,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6209,
-          0.9783,
-          1.4669,
-          1.7502
+          0.6623,
+          1.057,
+          1.4068,
+          1.9359
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -764,16 +764,16 @@
         "layer": "bert.encoder.layers.3.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7054,
-          0.8324,
-          0.9522,
+          0.7017,
+          0.8291,
+          0.9258,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6526,
-          1.013,
-          1.2246,
-          1.5355
+          0.6933,
+          1.0132,
+          1.2089,
+          1.4294
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -795,16 +795,16 @@
         "layer": "bert.encoder.layers.3.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.6862,
-          0.8257,
-          0.9612,
-          1.0
+          0.7057,
+          0.8417,
+          0.9501,
+          0.9998
         ],
         "update[min/p50/p90/max]": [
-          0.7345,
-          1.0011,
-          1.2071,
-          1.373
+          0.7547,
+          0.9806,
+          1.1647,
+          1.2549
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -857,16 +857,16 @@
         "layer": "mlm_dense",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.541,
-          0.7365,
-          0.927,
+          0.5428,
+          0.7352,
+          0.9211,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.644,
-          1.0177,
-          1.341,
-          1.4754
+          0.6521,
+          0.9895,
+          1.3452,
+          1.6794
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -888,16 +888,16 @@
         "layer": "mlm_decoder",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5189,
-          0.7978,
-          0.8893,
+          0.4918,
+          0.7708,
+          0.8663,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.665,
-          1.0099,
-          1.5028,
-          2.4118
+          0.6687,
+          0.9898,
+          1.507,
+          1.8052
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -906,10 +906,10 @@
           0.0
         ],
         "coh_old[min/p50/p90/max]": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
+          0.0009,
+          0.0435,
+          0.0546,
+          0.0763
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -921,7 +921,7 @@
     "label": "v2",
     "seed": 42,
     "epochs": 12,
-    "wall_time_s": 15.5,
+    "wall_time_s": 26.6,
     "init_trainable_params": 844256,
     "final_trainable_params": 844256,
     "init_factor_params": 570384,
@@ -930,11 +930,11 @@
     "factor_param_reduction_pct": 0.0,
     "adam_state_mb_proxy": 6.4412,
     "opt_state_mb_compressed": 6.3461,
-    "val_mlm_loss": 3.73631,
-    "val_mlm_accuracy": 0.2082,
+    "val_mlm_loss": 3.73072,
+    "val_mlm_accuracy": 0.20164,
     "elastic_slept": 0,
     "elastic_pruned": 0,
-    "elastic_max_coherence": 0.0742,
+    "elastic_max_coherence": 0.0731,
     "trainable_trajectory": [
       844256,
       844256,
@@ -954,28 +954,28 @@
         "layer": "bert.encoder.layers.0.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4665,
-          0.6593,
-          0.8772,
+          0.4707,
+          0.6511,
+          0.8376,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6797,
-          1.0005,
-          1.3176,
-          1.5846
+          0.6901,
+          1.0019,
+          1.3509,
+          1.6049
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
           0.0,
-          0.0001,
-          0.0003
+          0.0002,
+          0.0004
         ],
         "coh_old[min/p50/p90/max]": [
           0.0,
           0.0,
-          0.0,
-          0.0
+          0.0001,
+          0.0004
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -985,28 +985,28 @@
         "layer": "bert.encoder.layers.0.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5477,
-          0.6996,
-          0.8966,
-          1.0
+          0.5335,
+          0.7039,
+          0.8869,
+          0.9992
         ],
         "update[min/p50/p90/max]": [
-          0.749,
-          0.9962,
-          1.2829,
-          1.5896
+          0.7441,
+          1.0203,
+          1.3622,
+          1.4919
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
           0.0,
           0.0001,
-          0.0001
+          0.0004
         ],
         "coh_old[min/p50/p90/max]": [
           0.0,
           0.0,
           0.0,
-          0.0
+          0.0003
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -1016,16 +1016,16 @@
         "layer": "bert.encoder.layers.0.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5333,
-          0.7108,
-          0.9447,
+          0.5266,
+          0.7097,
+          0.9463,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5911,
-          0.9807,
-          1.4549,
-          1.7669
+          0.6419,
+          0.9911,
+          1.508,
+          1.8141
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1047,16 +1047,16 @@
         "layer": "bert.encoder.layers.0.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5451,
-          0.741,
-          0.9393,
+          0.5366,
+          0.7313,
+          0.9091,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6528,
-          1.0063,
-          1.3937,
-          1.7518
+          0.6882,
+          0.9991,
+          1.4208,
+          1.8654
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1078,16 +1078,16 @@
         "layer": "bert.encoder.layers.0.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.6782,
-          0.7868,
-          0.8995,
+          0.6779,
+          0.788,
+          0.9042,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7805,
-          0.9874,
-          1.1689,
-          1.2486
+          0.7723,
+          0.9948,
+          1.18,
+          1.3362
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1109,16 +1109,16 @@
         "layer": "bert.encoder.layers.0.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7018,
-          0.8219,
-          0.9535,
+          0.7055,
+          0.8377,
+          0.9633,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.8234,
-          0.9899,
-          1.2076,
-          1.4047
+          0.7903,
+          0.9855,
+          1.19,
+          1.2972
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1140,28 +1140,28 @@
         "layer": "bert.encoder.layers.1.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5275,
-          0.7142,
-          0.9085,
-          1.0
+          0.5025,
+          0.704,
+          0.9215,
+          0.9997
         ],
         "update[min/p50/p90/max]": [
-          0.65,
-          0.9641,
-          1.3092,
-          1.4424
+          0.6445,
+          1.0187,
+          1.303,
+          1.4551
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
           0.0,
-          0.0001,
-          0.0003
+          0.0002,
+          0.0005
         ],
         "coh_old[min/p50/p90/max]": [
           0.0,
           0.0,
-          0.0,
-          0.0
+          0.0001,
+          0.0004
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -1171,16 +1171,16 @@
         "layer": "bert.encoder.layers.1.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4855,
-          0.6814,
-          0.8981,
+          0.4819,
+          0.6759,
+          0.8876,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.628,
-          1.0259,
-          1.2564,
-          1.5229
+          0.6625,
+          0.9835,
+          1.2436,
+          1.4512
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1192,7 +1192,7 @@
           0.0,
           0.0,
           0.0,
-          0.0
+          0.0002
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,
@@ -1202,16 +1202,16 @@
         "layer": "bert.encoder.layers.1.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5105,
-          0.6849,
-          0.9153,
-          1.0
+          0.5171,
+          0.6927,
+          0.9131,
+          0.9999
         ],
         "update[min/p50/p90/max]": [
-          0.5386,
-          0.9974,
-          1.4495,
-          1.8777
+          0.5329,
+          1.0141,
+          1.3311,
+          1.7473
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1233,16 +1233,16 @@
         "layer": "bert.encoder.layers.1.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.497,
-          0.676,
-          0.8618,
+          0.5007,
+          0.6844,
+          0.8654,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5831,
-          1.02,
-          1.3829,
-          2.0216
+          0.6274,
+          1.0232,
+          1.3716,
+          1.6125
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1264,16 +1264,16 @@
         "layer": "bert.encoder.layers.1.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7346,
-          0.8311,
-          0.9555,
+          0.7297,
+          0.827,
+          0.956,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7675,
-          0.9946,
-          1.1941,
-          1.2901
+          0.7601,
+          0.9948,
+          1.274,
+          1.4008
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1295,16 +1295,16 @@
         "layer": "bert.encoder.layers.1.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.6794,
-          0.8061,
-          0.9244,
+          0.7079,
+          0.8138,
+          0.9404,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7853,
-          1.018,
-          1.2531,
-          1.4015
+          0.7559,
+          1.0107,
+          1.2372,
+          1.3089
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1326,21 +1326,21 @@
         "layer": "bert.encoder.layers.2.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4898,
-          0.6846,
-          0.902,
+          0.4997,
+          0.6906,
+          0.9149,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6968,
-          0.9898,
-          1.3552,
-          1.7961
+          0.6364,
+          0.9777,
+          1.327,
+          1.5586
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
           0.0,
-          0.0001,
+          0.0,
           0.0001
         ],
         "coh_old[min/p50/p90/max]": [
@@ -1357,16 +1357,16 @@
         "layer": "bert.encoder.layers.2.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5416,
-          0.6955,
-          0.9137,
-          0.9995
+          0.5189,
+          0.6788,
+          0.8736,
+          1.0
         ],
         "update[min/p50/p90/max]": [
-          0.7133,
-          0.9993,
-          1.3365,
-          1.5285
+          0.6869,
+          1.0126,
+          1.3612,
+          1.5494
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1388,16 +1388,16 @@
         "layer": "bert.encoder.layers.2.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.52,
-          0.7203,
-          0.9488,
+          0.5177,
+          0.7141,
+          0.9343,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5588,
-          0.9876,
-          1.417,
-          1.6955
+          0.6265,
+          1.0045,
+          1.4691,
+          1.849
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1419,16 +1419,16 @@
         "layer": "bert.encoder.layers.2.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4922,
-          0.6732,
-          0.8886,
+          0.4913,
+          0.6764,
+          0.8868,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6557,
-          1.0521,
-          1.3043,
-          1.7164
+          0.6672,
+          1.0043,
+          1.3325,
+          1.7111
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1450,16 +1450,16 @@
         "layer": "bert.encoder.layers.2.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.684,
-          0.8187,
-          0.9271,
-          1.0
+          0.6783,
+          0.822,
+          0.926,
+          0.9999
         ],
         "update[min/p50/p90/max]": [
-          0.6732,
-          0.9902,
-          1.1962,
-          1.3802
+          0.7404,
+          0.992,
+          1.1992,
+          1.3012
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1481,16 +1481,16 @@
         "layer": "bert.encoder.layers.2.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7052,
-          0.8233,
-          0.9479,
-          0.9992
+          0.7144,
+          0.8312,
+          0.9552,
+          0.9998
         ],
         "update[min/p50/p90/max]": [
-          0.7693,
-          1.0076,
-          1.1858,
-          1.5827
+          0.7563,
+          0.9797,
+          1.2266,
+          1.3415
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1512,16 +1512,16 @@
         "layer": "bert.encoder.layers.3.attention.q_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4887,
-          0.7016,
-          0.8863,
-          0.9999
+          0.5039,
+          0.7218,
+          0.9325,
+          0.9998
         ],
         "update[min/p50/p90/max]": [
-          0.609,
-          1.0285,
-          1.3228,
-          1.4242
+          0.5958,
+          1.0102,
+          1.3666,
+          1.5523
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1543,16 +1543,16 @@
         "layer": "bert.encoder.layers.3.attention.k_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.4982,
-          0.6985,
-          0.8712,
+          0.5244,
+          0.7288,
+          0.8986,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.5881,
-          1.0231,
-          1.2871,
-          1.537
+          0.556,
+          1.0012,
+          1.2989,
+          1.4634
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1574,16 +1574,16 @@
         "layer": "bert.encoder.layers.3.attention.v_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5285,
-          0.7273,
-          0.9165,
-          0.9999
+          0.5338,
+          0.728,
+          0.9241,
+          0.9992
         ],
         "update[min/p50/p90/max]": [
-          0.5402,
-          1.0447,
-          1.276,
-          1.7058
+          0.5959,
+          1.0182,
+          1.4066,
+          1.5965
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1605,16 +1605,16 @@
         "layer": "bert.encoder.layers.3.attention.out_proj",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5117,
-          0.7094,
+          0.5157,
+          0.7044,
           0.909,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6209,
-          0.9783,
-          1.4669,
-          1.7502
+          0.6623,
+          1.057,
+          1.4068,
+          1.9359
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1636,16 +1636,16 @@
         "layer": "bert.encoder.layers.3.mlp.0",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.7054,
-          0.8324,
-          0.9522,
+          0.7017,
+          0.8291,
+          0.9258,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.6526,
-          1.013,
-          1.2246,
-          1.5355
+          0.6933,
+          1.0132,
+          1.2089,
+          1.4294
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1667,16 +1667,16 @@
         "layer": "bert.encoder.layers.3.mlp.3",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.6862,
-          0.8257,
-          0.9612,
-          1.0
+          0.7057,
+          0.8417,
+          0.9501,
+          0.9998
         ],
         "update[min/p50/p90/max]": [
-          0.7345,
-          1.0011,
-          1.2071,
-          1.373
+          0.7547,
+          0.9806,
+          1.1647,
+          1.2549
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1729,16 +1729,16 @@
         "layer": "mlm_dense",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.541,
-          0.7365,
-          0.927,
+          0.5428,
+          0.7352,
+          0.9211,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.644,
-          1.0177,
-          1.341,
-          1.4754
+          0.6521,
+          0.9895,
+          1.3452,
+          1.6794
         ],
         "coh_new[min/p50/p90/max]": [
           0.0,
@@ -1760,28 +1760,28 @@
         "layer": "mlm_decoder",
         "rank": 48,
         "spectral[min/p50/p90/max]": [
-          0.5189,
-          0.7978,
-          0.8893,
+          0.4918,
+          0.7708,
+          0.8663,
           1.0
         ],
         "update[min/p50/p90/max]": [
-          0.665,
-          1.0099,
-          1.5028,
-          2.4118
+          0.6687,
+          0.9898,
+          1.507,
+          1.8052
         ],
         "coh_new[min/p50/p90/max]": [
-          0.0018,
-          0.041,
-          0.0542,
-          0.0742
+          0.0009,
+          0.0417,
+          0.0518,
+          0.0731
         ],
         "coh_old[min/p50/p90/max]": [
-          0.0,
-          0.0,
-          0.0,
-          0.0
+          0.0009,
+          0.0435,
+          0.0546,
+          0.0763
         ],
         "n_coh_new>0.9": 0,
         "n_coh_old>0.9": 0,

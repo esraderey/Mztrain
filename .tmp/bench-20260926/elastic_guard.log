@@ -1,0 +1,440 @@
+2026-09-26 11:53:12,764 - mztrain - INFO - [MZTrain] Modelo factorizado: 1 capas reemplazadas, 0 omitidas (< 4096 params)
+2026-09-26 11:53:14,052 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:53:14,052 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     1
+  Params totales:         17,104
+  Params (si full):       30,880
+  Ahorro en pesos:        44.6%
+  Rango actual:           48
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:53:14,052 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 70 epochs, rank 48 -> 48
+2026-09-26 11:53:14,401 - mztrain - INFO - [MZTrain] Epoch 0/70: train_loss=2.811033, val_loss=1.536403, rank=48, time=0.3s, mem=17MB
+2026-09-26 11:53:14,522 - mztrain - INFO - [MZTrain] Epoch 1/70: train_loss=1.269746, val_loss=1.087533, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:14,590 - mztrain - INFO - [MZTrain] ElasticRank epoch 2: {'layers_changed': 1, 'slept': 32, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:14,722 - mztrain - INFO - [MZTrain] Epoch 2/70: train_loss=0.433777, val_loss=0.353888, rank=48, time=0.2s, mem=17MB
+2026-09-26 11:53:14,844 - mztrain - INFO - [MZTrain] Epoch 3/70: train_loss=0.584301, val_loss=0.770542, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:14,966 - mztrain - INFO - [MZTrain] Epoch 4/70: train_loss=0.843480, val_loss=0.888714, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,085 - mztrain - INFO - [MZTrain] Epoch 5/70: train_loss=0.846090, val_loss=0.814241, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,209 - mztrain - INFO - [MZTrain] Epoch 6/70: train_loss=0.776232, val_loss=0.716914, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,330 - mztrain - INFO - [MZTrain] Epoch 7/70: train_loss=0.715331, val_loss=0.700349, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,450 - mztrain - INFO - [MZTrain] Epoch 8/70: train_loss=0.696532, val_loss=0.724820, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,573 - mztrain - INFO - [MZTrain] Epoch 9/70: train_loss=0.690563, val_loss=0.749668, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,573 - mztrain - INFO - [MZTrain] ElasticRank epoch 10: podados 32 sleepers (sin cambio estructural)
+2026-09-26 11:53:15,694 - mztrain - INFO - [MZTrain] Epoch 10/70: train_loss=0.685100, val_loss=0.615939, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,816 - mztrain - INFO - [MZTrain] Epoch 11/70: train_loss=0.624936, val_loss=0.660976, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:15,936 - mztrain - INFO - [MZTrain] Epoch 12/70: train_loss=0.642317, val_loss=0.623449, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,055 - mztrain - INFO - [MZTrain] Epoch 13/70: train_loss=0.597864, val_loss=0.582940, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,183 - mztrain - INFO - [MZTrain] Epoch 14/70: train_loss=0.604560, val_loss=0.578683, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,303 - mztrain - INFO - [MZTrain] Epoch 15/70: train_loss=0.592861, val_loss=0.538820, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,427 - mztrain - INFO - [MZTrain] Epoch 16/70: train_loss=0.550044, val_loss=0.556458, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,547 - mztrain - INFO - [MZTrain] Epoch 17/70: train_loss=0.557388, val_loss=0.663881, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,668 - mztrain - INFO - [MZTrain] Epoch 18/70: train_loss=0.540488, val_loss=0.509489, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,793 - mztrain - INFO - [MZTrain] Epoch 19/70: train_loss=0.535727, val_loss=0.505504, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:16,924 - mztrain - INFO - [MZTrain] Epoch 20/70: train_loss=0.536552, val_loss=0.527016, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,048 - mztrain - INFO - [MZTrain] Epoch 21/70: train_loss=0.520129, val_loss=0.490706, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,169 - mztrain - INFO - [MZTrain] Epoch 22/70: train_loss=0.538398, val_loss=0.549048, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,289 - mztrain - INFO - [MZTrain] Epoch 23/70: train_loss=0.535081, val_loss=0.519104, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,412 - mztrain - INFO - [MZTrain] Epoch 24/70: train_loss=0.509610, val_loss=0.590087, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,532 - mztrain - INFO - [MZTrain] Epoch 25/70: train_loss=0.525759, val_loss=0.545823, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,662 - mztrain - INFO - [MZTrain] Epoch 26/70: train_loss=0.502487, val_loss=0.476742, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,781 - mztrain - INFO - [MZTrain] Epoch 27/70: train_loss=0.524774, val_loss=0.475935, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:17,900 - mztrain - INFO - [MZTrain] Epoch 28/70: train_loss=0.458840, val_loss=0.469020, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,022 - mztrain - INFO - [MZTrain] Epoch 29/70: train_loss=0.487053, val_loss=0.548641, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,142 - mztrain - INFO - [MZTrain] Epoch 30/70: train_loss=0.546396, val_loss=0.588683, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,263 - mztrain - INFO - [MZTrain] Epoch 31/70: train_loss=0.496946, val_loss=0.514529, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,384 - mztrain - INFO - [MZTrain] Epoch 32/70: train_loss=0.539971, val_loss=0.492665, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,504 - mztrain - INFO - [MZTrain] Epoch 33/70: train_loss=0.514750, val_loss=0.522622, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,628 - mztrain - INFO - [MZTrain] Epoch 34/70: train_loss=0.455832, val_loss=0.462654, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,748 - mztrain - INFO - [MZTrain] Epoch 35/70: train_loss=0.474496, val_loss=0.468613, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,871 - mztrain - INFO - [MZTrain] Epoch 36/70: train_loss=0.507125, val_loss=0.522756, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:18,995 - mztrain - INFO - [MZTrain] Epoch 37/70: train_loss=0.537647, val_loss=0.544530, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,125 - mztrain - INFO - [MZTrain] Epoch 38/70: train_loss=0.572356, val_loss=0.478470, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,249 - mztrain - INFO - [MZTrain] Epoch 39/70: train_loss=0.489753, val_loss=0.478354, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,369 - mztrain - INFO - [MZTrain] Epoch 40/70: train_loss=0.478345, val_loss=0.497269, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,491 - mztrain - INFO - [MZTrain] Epoch 41/70: train_loss=0.517336, val_loss=0.530806, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,613 - mztrain - INFO - [MZTrain] Epoch 42/70: train_loss=0.516109, val_loss=0.548374, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,732 - mztrain - INFO - [MZTrain] Epoch 43/70: train_loss=0.490434, val_loss=0.433290, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,855 - mztrain - INFO - [MZTrain] Epoch 44/70: train_loss=0.474980, val_loss=0.516264, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:19,975 - mztrain - INFO - [MZTrain] Epoch 45/70: train_loss=0.463797, val_loss=0.470916, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,098 - mztrain - INFO - [MZTrain] Epoch 46/70: train_loss=0.503013, val_loss=0.516743, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,220 - mztrain - INFO - [MZTrain] Epoch 47/70: train_loss=0.537003, val_loss=0.416153, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,341 - mztrain - INFO - [MZTrain] Epoch 48/70: train_loss=0.430317, val_loss=0.495692, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,465 - mztrain - INFO - [MZTrain] Epoch 49/70: train_loss=0.507446, val_loss=0.548102, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,585 - mztrain - INFO - [MZTrain] Epoch 50/70: train_loss=0.502508, val_loss=0.464443, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,708 - mztrain - INFO - [MZTrain] Epoch 51/70: train_loss=0.473733, val_loss=0.431697, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,828 - mztrain - INFO - [MZTrain] Epoch 52/70: train_loss=0.516457, val_loss=0.501397, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:20,949 - mztrain - INFO - [MZTrain] Epoch 53/70: train_loss=0.507002, val_loss=0.446762, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,072 - mztrain - INFO - [MZTrain] Epoch 54/70: train_loss=0.517525, val_loss=0.486353, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,197 - mztrain - INFO - [MZTrain] Epoch 55/70: train_loss=0.489397, val_loss=0.540073, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,329 - mztrain - INFO - [MZTrain] Epoch 56/70: train_loss=0.497860, val_loss=0.511603, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,453 - mztrain - INFO - [MZTrain] Epoch 57/70: train_loss=0.480179, val_loss=0.585067, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,574 - mztrain - INFO - [MZTrain] Epoch 58/70: train_loss=0.538279, val_loss=0.524136, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,699 - mztrain - INFO - [MZTrain] Epoch 59/70: train_loss=0.514021, val_loss=0.533206, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,819 - mztrain - INFO - [MZTrain] Epoch 60/70: train_loss=0.519328, val_loss=0.492545, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:21,943 - mztrain - INFO - [MZTrain] Epoch 61/70: train_loss=0.501392, val_loss=0.479200, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,063 - mztrain - INFO - [MZTrain] Epoch 62/70: train_loss=0.500547, val_loss=0.542564, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,183 - mztrain - INFO - [MZTrain] Epoch 63/70: train_loss=0.507600, val_loss=0.480198, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,308 - mztrain - INFO - [MZTrain] Epoch 64/70: train_loss=0.509364, val_loss=0.474611, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,434 - mztrain - INFO - [MZTrain] Epoch 65/70: train_loss=0.479138, val_loss=0.411052, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,556 - mztrain - INFO - [MZTrain] Epoch 66/70: train_loss=0.495680, val_loss=0.541513, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,678 - mztrain - INFO - [MZTrain] Epoch 67/70: train_loss=0.520430, val_loss=0.463155, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,800 - mztrain - INFO - [MZTrain] Epoch 68/70: train_loss=0.482704, val_loss=0.417384, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,923 - mztrain - INFO - [MZTrain] Epoch 69/70: train_loss=0.466562, val_loss=0.461434, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:22,923 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           8.9s (0.1min)
+  Mejor loss:             0.353888
+  Rango final:            48
+  Epochs completados:     70
+  Optimizer memory:       {'total_params': 4, 'compressed_params': 0, 'state_memory_mb': 0.0443115234375, 'full_memory_mb': 0.0443115234375, 'memory_saved_pct': 0.0, 'step_count': 2176}
+  =================================================
+2026-09-26 11:53:22,945 - mztrain - INFO - [MZTrain] Modelo factorizado: 1 capas reemplazadas, 0 omitidas (< 4096 params)
+2026-09-26 11:53:22,946 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:53:22,946 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     1
+  Params totales:         17,104
+  Params (si full):       30,880
+  Ahorro en pesos:        44.6%
+  Rango actual:           48
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:53:22,948 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 70 epochs, rank 48 -> 48
+2026-09-26 11:53:23,076 - mztrain - INFO - [MZTrain] Epoch 0/70: train_loss=2.906017, val_loss=1.550202, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:23,208 - mztrain - INFO - [MZTrain] Epoch 1/70: train_loss=1.241155, val_loss=1.087298, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:23,238 - mztrain - INFO - [MZTrain] ElasticRank compactacion CONFIRMADA epoch 2: rel_loss_delta=-1.04e-03 <= 1.00e-03
+2026-09-26 11:53:23,238 - mztrain - INFO - [MZTrain] ElasticRank epoch 2: {'layers_changed': 1, 'slept': 32, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:23,359 - mztrain - INFO - [MZTrain] Epoch 2/70: train_loss=0.437303, val_loss=0.370409, rank=48, time=0.2s, mem=17MB
+2026-09-26 11:53:23,492 - mztrain - INFO - [MZTrain] Epoch 3/70: train_loss=0.603780, val_loss=0.821595, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:23,619 - mztrain - INFO - [MZTrain] Epoch 4/70: train_loss=0.893620, val_loss=0.860609, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:23,740 - mztrain - INFO - [MZTrain] Epoch 5/70: train_loss=0.839910, val_loss=0.787680, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:23,862 - mztrain - INFO - [MZTrain] Epoch 6/70: train_loss=0.741764, val_loss=0.694838, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:23,983 - mztrain - INFO - [MZTrain] Epoch 7/70: train_loss=0.749218, val_loss=0.772730, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,106 - mztrain - INFO - [MZTrain] Epoch 8/70: train_loss=0.770136, val_loss=0.744036, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,229 - mztrain - INFO - [MZTrain] Epoch 9/70: train_loss=0.680549, val_loss=0.645723, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,230 - mztrain - INFO - [MZTrain] ElasticRank epoch 10: podados 32 sleepers (sin cambio estructural)
+2026-09-26 11:53:24,350 - mztrain - INFO - [MZTrain] Epoch 10/70: train_loss=0.661619, val_loss=0.628777, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,476 - mztrain - INFO - [MZTrain] Epoch 11/70: train_loss=0.638852, val_loss=0.689343, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,606 - mztrain - INFO - [MZTrain] Epoch 12/70: train_loss=0.647779, val_loss=0.645872, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,732 - mztrain - INFO - [MZTrain] Epoch 13/70: train_loss=0.601221, val_loss=0.513970, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,860 - mztrain - INFO - [MZTrain] Epoch 14/70: train_loss=0.537293, val_loss=0.543604, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:24,983 - mztrain - INFO - [MZTrain] Epoch 15/70: train_loss=0.615649, val_loss=0.544933, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:25,110 - mztrain - INFO - [MZTrain] Epoch 16/70: train_loss=0.569212, val_loss=0.526481, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:25,234 - mztrain - INFO - [MZTrain] Epoch 17/70: train_loss=0.531417, val_loss=0.588180, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:25,359 - mztrain - INFO - [MZTrain] Epoch 18/70: train_loss=0.542525, val_loss=0.480478, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:25,486 - mztrain - INFO - [MZTrain] Epoch 19/70: train_loss=0.515938, val_loss=0.531096, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:25,615 - mztrain - INFO - [MZTrain] Epoch 20/70: train_loss=0.541321, val_loss=0.476037, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:25,748 - mztrain - INFO - [MZTrain] Epoch 21/70: train_loss=0.512050, val_loss=0.518366, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:25,872 - mztrain - INFO - [MZTrain] Epoch 22/70: train_loss=0.517235, val_loss=0.519043, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,005 - mztrain - INFO - [MZTrain] Epoch 23/70: train_loss=0.509774, val_loss=0.605690, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,135 - mztrain - INFO - [MZTrain] Epoch 24/70: train_loss=0.535274, val_loss=0.485695, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,262 - mztrain - INFO - [MZTrain] Epoch 25/70: train_loss=0.477830, val_loss=0.555969, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,388 - mztrain - INFO - [MZTrain] Epoch 26/70: train_loss=0.518447, val_loss=0.535364, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,515 - mztrain - INFO - [MZTrain] Epoch 27/70: train_loss=0.551013, val_loss=0.526529, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,642 - mztrain - INFO - [MZTrain] Epoch 28/70: train_loss=0.528780, val_loss=0.516521, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,769 - mztrain - INFO - [MZTrain] Epoch 29/70: train_loss=0.536053, val_loss=0.537576, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:26,894 - mztrain - INFO - [MZTrain] Epoch 30/70: train_loss=0.553881, val_loss=0.557182, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,022 - mztrain - INFO - [MZTrain] Epoch 31/70: train_loss=0.529640, val_loss=0.496818, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,147 - mztrain - INFO - [MZTrain] Epoch 32/70: train_loss=0.482875, val_loss=0.476420, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,272 - mztrain - INFO - [MZTrain] Epoch 33/70: train_loss=0.516939, val_loss=0.507567, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,399 - mztrain - INFO - [MZTrain] Epoch 34/70: train_loss=0.520500, val_loss=0.459573, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,527 - mztrain - INFO - [MZTrain] Epoch 35/70: train_loss=0.491760, val_loss=0.468000, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,654 - mztrain - INFO - [MZTrain] Epoch 36/70: train_loss=0.523626, val_loss=0.526277, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,784 - mztrain - INFO - [MZTrain] Epoch 37/70: train_loss=0.526946, val_loss=0.483812, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:27,918 - mztrain - INFO - [MZTrain] Epoch 38/70: train_loss=0.487826, val_loss=0.450379, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,049 - mztrain - INFO - [MZTrain] Epoch 39/70: train_loss=0.465178, val_loss=0.487128, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,175 - mztrain - INFO - [MZTrain] Epoch 40/70: train_loss=0.475705, val_loss=0.504932, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,302 - mztrain - INFO - [MZTrain] Epoch 41/70: train_loss=0.501207, val_loss=0.552307, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,427 - mztrain - INFO - [MZTrain] Epoch 42/70: train_loss=0.503249, val_loss=0.470794, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,553 - mztrain - INFO - [MZTrain] Epoch 43/70: train_loss=0.454683, val_loss=0.530341, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,682 - mztrain - INFO - [MZTrain] Epoch 44/70: train_loss=0.522480, val_loss=0.504850, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,808 - mztrain - INFO - [MZTrain] Epoch 45/70: train_loss=0.463672, val_loss=0.448347, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:28,932 - mztrain - INFO - [MZTrain] Epoch 46/70: train_loss=0.488104, val_loss=0.476807, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,056 - mztrain - INFO - [MZTrain] Epoch 47/70: train_loss=0.509060, val_loss=0.490252, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,181 - mztrain - INFO - [MZTrain] Epoch 48/70: train_loss=0.455182, val_loss=0.527121, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,307 - mztrain - INFO - [MZTrain] Epoch 49/70: train_loss=0.518308, val_loss=0.570898, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,431 - mztrain - INFO - [MZTrain] Epoch 50/70: train_loss=0.505855, val_loss=0.439087, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,556 - mztrain - INFO - [MZTrain] Epoch 51/70: train_loss=0.515759, val_loss=0.517506, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,681 - mztrain - INFO - [MZTrain] Epoch 52/70: train_loss=0.510576, val_loss=0.467948, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,805 - mztrain - INFO - [MZTrain] Epoch 53/70: train_loss=0.497590, val_loss=0.511664, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:29,931 - mztrain - INFO - [MZTrain] Epoch 54/70: train_loss=0.507364, val_loss=0.469675, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,064 - mztrain - INFO - [MZTrain] Epoch 55/70: train_loss=0.458143, val_loss=0.439891, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,195 - mztrain - INFO - [MZTrain] Epoch 56/70: train_loss=0.488416, val_loss=0.548140, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,319 - mztrain - INFO - [MZTrain] Epoch 57/70: train_loss=0.503115, val_loss=0.507651, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,442 - mztrain - INFO - [MZTrain] Epoch 58/70: train_loss=0.501656, val_loss=0.498192, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,571 - mztrain - INFO - [MZTrain] Epoch 59/70: train_loss=0.521111, val_loss=0.480135, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,697 - mztrain - INFO - [MZTrain] Epoch 60/70: train_loss=0.484774, val_loss=0.482073, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,823 - mztrain - INFO - [MZTrain] Epoch 61/70: train_loss=0.464422, val_loss=0.532183, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:30,946 - mztrain - INFO - [MZTrain] Epoch 62/70: train_loss=0.470924, val_loss=0.406991, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,070 - mztrain - INFO - [MZTrain] Epoch 63/70: train_loss=0.459989, val_loss=0.523014, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,196 - mztrain - INFO - [MZTrain] Epoch 64/70: train_loss=0.503949, val_loss=0.455234, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,322 - mztrain - INFO - [MZTrain] Epoch 65/70: train_loss=0.463548, val_loss=0.507212, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,447 - mztrain - INFO - [MZTrain] Epoch 66/70: train_loss=0.492791, val_loss=0.420855, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,571 - mztrain - INFO - [MZTrain] Epoch 67/70: train_loss=0.492205, val_loss=0.472099, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,694 - mztrain - INFO - [MZTrain] Epoch 68/70: train_loss=0.506767, val_loss=0.574575, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,822 - mztrain - INFO - [MZTrain] Epoch 69/70: train_loss=0.485995, val_loss=0.417296, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:31,822 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           8.9s (0.1min)
+  Mejor loss:             0.370409
+  Rango final:            48
+  Epochs completados:     70
+  Optimizer memory:       {'total_params': 4, 'compressed_params': 0, 'state_memory_mb': 0.0443115234375, 'full_memory_mb': 0.0443115234375, 'memory_saved_pct': 0.0, 'step_count': 2176}
+  =================================================
+2026-09-26 11:53:31,839 - mztrain - INFO - [MZTrain] Modelo factorizado: 1 capas reemplazadas, 0 omitidas (< 4096 params)
+2026-09-26 11:53:31,840 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:53:31,840 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     1
+  Params totales:         17,104
+  Params (si full):       30,880
+  Ahorro en pesos:        44.6%
+  Rango actual:           48
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:53:31,840 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 70 epochs, rank 48 -> 48
+2026-09-26 11:53:31,985 - mztrain - INFO - [MZTrain] Epoch 0/70: train_loss=2.816715, val_loss=1.552682, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:32,020 - mztrain - INFO - [MZTrain] ElasticRank epoch 1: {'layers_changed': 1, 'slept': 32, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:32,144 - mztrain - INFO - [MZTrain] Epoch 1/70: train_loss=0.602496, val_loss=0.451143, rank=48, time=0.2s, mem=17MB
+2026-09-26 11:53:32,277 - mztrain - INFO - [MZTrain] Epoch 2/70: train_loss=0.670177, val_loss=0.825421, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:32,285 - mztrain - INFO - [MZTrain] ElasticRank epoch 3: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:32,412 - mztrain - INFO - [MZTrain] Epoch 3/70: train_loss=25.134121, val_loss=26.449117, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:32,535 - mztrain - INFO - [MZTrain] Epoch 4/70: train_loss=26.101282, val_loss=26.864157, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:32,663 - mztrain - INFO - [MZTrain] Epoch 5/70: train_loss=26.307127, val_loss=27.578868, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:32,786 - mztrain - INFO - [MZTrain] Epoch 6/70: train_loss=26.445991, val_loss=27.023880, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:32,914 - mztrain - INFO - [MZTrain] Epoch 7/70: train_loss=26.102569, val_loss=26.723220, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,038 - mztrain - INFO - [MZTrain] Epoch 8/70: train_loss=26.163899, val_loss=27.241499, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,038 - mztrain - INFO - [MZTrain] ElasticRank epoch 9: podados 32 sleepers (sin cambio estructural)
+2026-09-26 11:53:33,162 - mztrain - INFO - [MZTrain] Epoch 9/70: train_loss=26.319747, val_loss=27.158998, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,290 - mztrain - INFO - [MZTrain] Epoch 10/70: train_loss=26.241341, val_loss=27.462722, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,290 - mztrain - INFO - [MZTrain] ElasticRank epoch 11: podados 4 sleepers (sin cambio estructural)
+2026-09-26 11:53:33,415 - mztrain - INFO - [MZTrain] Epoch 11/70: train_loss=26.426783, val_loss=28.205198, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,542 - mztrain - INFO - [MZTrain] Epoch 12/70: train_loss=26.225491, val_loss=27.164901, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,667 - mztrain - INFO - [MZTrain] Epoch 13/70: train_loss=26.320535, val_loss=27.153240, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,793 - mztrain - INFO - [MZTrain] Epoch 14/70: train_loss=25.986324, val_loss=27.267372, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:33,921 - mztrain - INFO - [MZTrain] Epoch 15/70: train_loss=26.362741, val_loss=27.132705, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,045 - mztrain - INFO - [MZTrain] Epoch 16/70: train_loss=26.040914, val_loss=27.038671, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,181 - mztrain - INFO - [MZTrain] Epoch 17/70: train_loss=26.161570, val_loss=27.095643, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,306 - mztrain - INFO - [MZTrain] Epoch 18/70: train_loss=26.405062, val_loss=26.838746, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,434 - mztrain - INFO - [MZTrain] Epoch 19/70: train_loss=26.254210, val_loss=27.095428, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,570 - mztrain - INFO - [MZTrain] Epoch 20/70: train_loss=26.342108, val_loss=27.235039, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,696 - mztrain - INFO - [MZTrain] Epoch 21/70: train_loss=26.234983, val_loss=27.077089, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,822 - mztrain - INFO - [MZTrain] Epoch 22/70: train_loss=26.181231, val_loss=26.845891, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:34,951 - mztrain - INFO - [MZTrain] Epoch 23/70: train_loss=26.418609, val_loss=27.024968, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,094 - mztrain - INFO - [MZTrain] Epoch 24/70: train_loss=26.259023, val_loss=26.782906, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,220 - mztrain - INFO - [MZTrain] Epoch 25/70: train_loss=26.243176, val_loss=27.038780, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,345 - mztrain - INFO - [MZTrain] Epoch 26/70: train_loss=26.329235, val_loss=27.260507, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,472 - mztrain - INFO - [MZTrain] Epoch 27/70: train_loss=26.179381, val_loss=27.116892, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,598 - mztrain - INFO - [MZTrain] Epoch 28/70: train_loss=26.115631, val_loss=27.203577, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,722 - mztrain - INFO - [MZTrain] Epoch 29/70: train_loss=26.605138, val_loss=27.652182, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,847 - mztrain - INFO - [MZTrain] Epoch 30/70: train_loss=26.221683, val_loss=26.991610, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:35,971 - mztrain - INFO - [MZTrain] Epoch 31/70: train_loss=26.289302, val_loss=27.258248, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:36,099 - mztrain - INFO - [MZTrain] Epoch 32/70: train_loss=26.405752, val_loss=26.965129, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:36,224 - mztrain - INFO - [MZTrain] Epoch 33/70: train_loss=26.291977, val_loss=27.005652, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:36,353 - mztrain - INFO - [MZTrain] Epoch 34/70: train_loss=26.174694, val_loss=26.866197, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:36,478 - mztrain - INFO - [MZTrain] Epoch 35/70: train_loss=26.314627, val_loss=27.224567, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:36,615 - mztrain - INFO - [MZTrain] Epoch 36/70: train_loss=26.340463, val_loss=27.740377, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:36,754 - mztrain - INFO - [MZTrain] Epoch 37/70: train_loss=26.318624, val_loss=27.714195, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:36,879 - mztrain - INFO - [MZTrain] Epoch 38/70: train_loss=26.212945, val_loss=27.038549, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,004 - mztrain - INFO - [MZTrain] Epoch 39/70: train_loss=26.193826, val_loss=27.149196, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,133 - mztrain - INFO - [MZTrain] Epoch 40/70: train_loss=26.295398, val_loss=26.995187, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,259 - mztrain - INFO - [MZTrain] Epoch 41/70: train_loss=26.181413, val_loss=26.822281, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,384 - mztrain - INFO - [MZTrain] Epoch 42/70: train_loss=26.195219, val_loss=27.162488, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,508 - mztrain - INFO - [MZTrain] Epoch 43/70: train_loss=26.339610, val_loss=26.931019, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,634 - mztrain - INFO - [MZTrain] Epoch 44/70: train_loss=26.040339, val_loss=26.823546, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,761 - mztrain - INFO - [MZTrain] Epoch 45/70: train_loss=26.167996, val_loss=27.192391, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:37,884 - mztrain - INFO - [MZTrain] Epoch 46/70: train_loss=26.177528, val_loss=27.276968, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,009 - mztrain - INFO - [MZTrain] Epoch 47/70: train_loss=26.298698, val_loss=27.261796, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,133 - mztrain - INFO - [MZTrain] Epoch 48/70: train_loss=26.324855, val_loss=26.834901, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,257 - mztrain - INFO - [MZTrain] Epoch 49/70: train_loss=26.065928, val_loss=26.867378, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,385 - mztrain - INFO - [MZTrain] Epoch 50/70: train_loss=26.095779, val_loss=27.273203, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,508 - mztrain - INFO - [MZTrain] Epoch 51/70: train_loss=26.103381, val_loss=27.252222, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,636 - mztrain - INFO - [MZTrain] Epoch 52/70: train_loss=26.414456, val_loss=27.005406, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,761 - mztrain - INFO - [MZTrain] Epoch 53/70: train_loss=26.326600, val_loss=27.256417, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:38,896 - mztrain - INFO - [MZTrain] Epoch 54/70: train_loss=26.176522, val_loss=27.030850, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,026 - mztrain - INFO - [MZTrain] Epoch 55/70: train_loss=26.061736, val_loss=26.896522, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,150 - mztrain - INFO - [MZTrain] Epoch 56/70: train_loss=26.085626, val_loss=26.611802, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,279 - mztrain - INFO - [MZTrain] Epoch 57/70: train_loss=26.207854, val_loss=27.009156, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,402 - mztrain - INFO - [MZTrain] Epoch 58/70: train_loss=26.319068, val_loss=27.025982, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,526 - mztrain - INFO - [MZTrain] Epoch 59/70: train_loss=26.233006, val_loss=26.726831, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,653 - mztrain - INFO - [MZTrain] Epoch 60/70: train_loss=25.979480, val_loss=26.841919, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,778 - mztrain - INFO - [MZTrain] Epoch 61/70: train_loss=26.030671, val_loss=26.976705, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:39,904 - mztrain - INFO - [MZTrain] Epoch 62/70: train_loss=26.021651, val_loss=26.632720, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,028 - mztrain - INFO - [MZTrain] Epoch 63/70: train_loss=26.307513, val_loss=27.092909, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,152 - mztrain - INFO - [MZTrain] Epoch 64/70: train_loss=26.038630, val_loss=27.030310, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,280 - mztrain - INFO - [MZTrain] Epoch 65/70: train_loss=26.169778, val_loss=26.941760, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,404 - mztrain - INFO - [MZTrain] Epoch 66/70: train_loss=26.047221, val_loss=27.156209, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,529 - mztrain - INFO - [MZTrain] Epoch 67/70: train_loss=26.267560, val_loss=27.213632, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,655 - mztrain - INFO - [MZTrain] Epoch 68/70: train_loss=26.188723, val_loss=26.994435, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,780 - mztrain - INFO - [MZTrain] Epoch 69/70: train_loss=26.131536, val_loss=27.170938, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,780 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           8.9s (0.1min)
+  Mejor loss:             0.451143
+  Rango final:            48
+  Epochs completados:     70
+  Optimizer memory:       {'total_params': 4, 'compressed_params': 0, 'state_memory_mb': 0.033538818359375, 'full_memory_mb': 0.033538818359375, 'memory_saved_pct': 0.0, 'step_count': 2144}
+  =================================================
+2026-09-26 11:53:40,797 - mztrain - INFO - [MZTrain] Modelo factorizado: 1 capas reemplazadas, 0 omitidas (< 4096 params)
+2026-09-26 11:53:40,798 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:53:40,798 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     1
+  Params totales:         17,104
+  Params (si full):       30,880
+  Ahorro en pesos:        44.6%
+  Rango actual:           48
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:53:40,800 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 70 epochs, rank 48 -> 48
+2026-09-26 11:53:40,946 - mztrain - INFO - [MZTrain] Epoch 0/70: train_loss=2.911020, val_loss=1.563792, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:40,978 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 1: rel_loss_delta=4.74e-03 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 32, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:40,978 - mztrain - INFO - [MZTrain] ElasticRank epoch 1: {'layers_changed': 1, 'slept': 32, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:41,126 - mztrain - INFO - [MZTrain] Epoch 1/70: train_loss=1.251128, val_loss=1.102917, rank=48, time=0.2s, mem=17MB
+2026-09-26 11:53:41,262 - mztrain - INFO - [MZTrain] Epoch 2/70: train_loss=1.042942, val_loss=1.094948, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:41,401 - mztrain - INFO - [MZTrain] Epoch 3/70: train_loss=0.912861, val_loss=0.796990, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:41,534 - mztrain - INFO - [MZTrain] Epoch 4/70: train_loss=0.811167, val_loss=0.819408, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:41,565 - mztrain - INFO - [MZTrain] ElasticRank compactacion CONFIRMADA epoch 5: rel_loss_delta=-3.40e-03 <= 1.00e-03
+2026-09-26 11:53:41,566 - mztrain - INFO - [MZTrain] ElasticRank epoch 5: {'layers_changed': 1, 'slept': 32, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:41,690 - mztrain - INFO - [MZTrain] Epoch 5/70: train_loss=0.338239, val_loss=0.327715, rank=48, time=0.2s, mem=17MB
+2026-09-26 11:53:41,815 - mztrain - INFO - [MZTrain] Epoch 6/70: train_loss=0.526969, val_loss=0.764478, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:41,945 - mztrain - INFO - [MZTrain] Epoch 7/70: train_loss=0.776284, val_loss=0.753734, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,067 - mztrain - INFO - [MZTrain] Epoch 8/70: train_loss=0.745462, val_loss=0.719436, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,193 - mztrain - INFO - [MZTrain] Epoch 9/70: train_loss=0.697241, val_loss=0.701119, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,317 - mztrain - INFO - [MZTrain] Epoch 10/70: train_loss=0.675904, val_loss=0.691135, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,451 - mztrain - INFO - [MZTrain] Epoch 11/70: train_loss=0.978108, val_loss=1.849773, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,460 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 12: rel_loss_delta=1.20e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:42,460 - mztrain - INFO - [MZTrain] ElasticRank epoch 12: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:42,595 - mztrain - INFO - [MZTrain] Epoch 12/70: train_loss=1.897475, val_loss=2.001522, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,595 - mztrain - INFO - [MZTrain] ElasticRank epoch 13: podados 32 sleepers (sin cambio estructural)
+2026-09-26 11:53:42,729 - mztrain - INFO - [MZTrain] Epoch 13/70: train_loss=1.960568, val_loss=1.957548, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,865 - mztrain - INFO - [MZTrain] Epoch 14/70: train_loss=1.870018, val_loss=1.851310, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:42,999 - mztrain - INFO - [MZTrain] Epoch 15/70: train_loss=1.866084, val_loss=1.929228, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:43,008 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 16: rel_loss_delta=1.25e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:43,008 - mztrain - INFO - [MZTrain] ElasticRank epoch 16: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:43,140 - mztrain - INFO - [MZTrain] Epoch 16/70: train_loss=1.900638, val_loss=1.893806, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:43,287 - mztrain - INFO - [MZTrain] Epoch 17/70: train_loss=1.947116, val_loss=2.048471, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:43,429 - mztrain - INFO - [MZTrain] Epoch 18/70: train_loss=2.053713, val_loss=2.075533, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:43,567 - mztrain - INFO - [MZTrain] Epoch 19/70: train_loss=2.105637, val_loss=2.127681, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:43,577 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 20: rel_loss_delta=1.13e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:43,577 - mztrain - INFO - [MZTrain] ElasticRank epoch 20: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:43,711 - mztrain - INFO - [MZTrain] Epoch 20/70: train_loss=2.151005, val_loss=2.244269, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:43,846 - mztrain - INFO - [MZTrain] Epoch 21/70: train_loss=2.254891, val_loss=2.195726, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:43,983 - mztrain - INFO - [MZTrain] Epoch 22/70: train_loss=2.263959, val_loss=2.393655, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:44,117 - mztrain - INFO - [MZTrain] Epoch 23/70: train_loss=2.339354, val_loss=2.227916, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:44,126 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 24: rel_loss_delta=1.09e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:44,126 - mztrain - INFO - [MZTrain] ElasticRank epoch 24: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:44,259 - mztrain - INFO - [MZTrain] Epoch 24/70: train_loss=2.288604, val_loss=2.263723, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:44,394 - mztrain - INFO - [MZTrain] Epoch 25/70: train_loss=2.284427, val_loss=2.258806, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:44,533 - mztrain - INFO - [MZTrain] Epoch 26/70: train_loss=2.288190, val_loss=2.224861, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:44,669 - mztrain - INFO - [MZTrain] Epoch 27/70: train_loss=2.309548, val_loss=2.276093, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:44,678 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 28: rel_loss_delta=1.02e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:44,678 - mztrain - INFO - [MZTrain] ElasticRank epoch 28: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:44,812 - mztrain - INFO - [MZTrain] Epoch 28/70: train_loss=2.287073, val_loss=2.381764, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:44,945 - mztrain - INFO - [MZTrain] Epoch 29/70: train_loss=2.352331, val_loss=2.319486, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:45,082 - mztrain - INFO - [MZTrain] Epoch 30/70: train_loss=2.302908, val_loss=2.300518, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:45,214 - mztrain - INFO - [MZTrain] Epoch 31/70: train_loss=2.330148, val_loss=2.270728, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:45,224 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 32: rel_loss_delta=1.04e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:45,224 - mztrain - INFO - [MZTrain] ElasticRank epoch 32: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:45,357 - mztrain - INFO - [MZTrain] Epoch 32/70: train_loss=2.330663, val_loss=2.332578, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:45,499 - mztrain - INFO - [MZTrain] Epoch 33/70: train_loss=2.343921, val_loss=2.337702, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:45,643 - mztrain - INFO - [MZTrain] Epoch 34/70: train_loss=2.362120, val_loss=2.349216, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:45,776 - mztrain - INFO - [MZTrain] Epoch 35/70: train_loss=2.326528, val_loss=2.384677, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:45,786 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 36: rel_loss_delta=9.95e+00 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:45,786 - mztrain - INFO - [MZTrain] ElasticRank epoch 36: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:45,917 - mztrain - INFO - [MZTrain] Epoch 36/70: train_loss=2.380885, val_loss=2.447874, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,050 - mztrain - INFO - [MZTrain] Epoch 37/70: train_loss=2.390887, val_loss=2.350543, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,187 - mztrain - INFO - [MZTrain] Epoch 38/70: train_loss=2.362524, val_loss=2.389351, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,321 - mztrain - INFO - [MZTrain] Epoch 39/70: train_loss=2.383978, val_loss=2.357877, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,330 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 40: rel_loss_delta=9.59e+00 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:46,331 - mztrain - INFO - [MZTrain] ElasticRank epoch 40: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:46,464 - mztrain - INFO - [MZTrain] Epoch 40/70: train_loss=2.405877, val_loss=2.448862, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,600 - mztrain - INFO - [MZTrain] Epoch 41/70: train_loss=2.489899, val_loss=2.393371, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,736 - mztrain - INFO - [MZTrain] Epoch 42/70: train_loss=2.417908, val_loss=2.418632, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,869 - mztrain - INFO - [MZTrain] Epoch 43/70: train_loss=2.438426, val_loss=2.505357, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:46,879 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 44: rel_loss_delta=9.59e+00 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:46,879 - mztrain - INFO - [MZTrain] ElasticRank epoch 44: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:47,010 - mztrain - INFO - [MZTrain] Epoch 44/70: train_loss=2.486822, val_loss=2.480720, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,146 - mztrain - INFO - [MZTrain] Epoch 45/70: train_loss=2.429379, val_loss=2.437545, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,282 - mztrain - INFO - [MZTrain] Epoch 46/70: train_loss=2.449488, val_loss=2.473039, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,419 - mztrain - INFO - [MZTrain] Epoch 47/70: train_loss=2.470643, val_loss=2.552864, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,428 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 48: rel_loss_delta=1.02e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:47,428 - mztrain - INFO - [MZTrain] ElasticRank epoch 48: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:47,561 - mztrain - INFO - [MZTrain] Epoch 48/70: train_loss=2.437659, val_loss=2.323886, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,706 - mztrain - INFO - [MZTrain] Epoch 49/70: train_loss=2.422030, val_loss=2.397358, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,846 - mztrain - INFO - [MZTrain] Epoch 50/70: train_loss=2.441503, val_loss=2.430098, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,978 - mztrain - INFO - [MZTrain] Epoch 51/70: train_loss=2.417014, val_loss=2.391581, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:47,988 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 52: rel_loss_delta=1.01e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:47,988 - mztrain - INFO - [MZTrain] ElasticRank epoch 52: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:48,121 - mztrain - INFO - [MZTrain] Epoch 52/70: train_loss=2.383509, val_loss=2.387362, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:48,257 - mztrain - INFO - [MZTrain] Epoch 53/70: train_loss=2.401399, val_loss=2.449357, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:48,394 - mztrain - INFO - [MZTrain] Epoch 54/70: train_loss=2.450430, val_loss=2.323992, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:48,527 - mztrain - INFO - [MZTrain] Epoch 55/70: train_loss=2.466679, val_loss=2.489644, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:48,537 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 56: rel_loss_delta=9.82e+00 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:48,537 - mztrain - INFO - [MZTrain] ElasticRank epoch 56: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:48,671 - mztrain - INFO - [MZTrain] Epoch 56/70: train_loss=2.441935, val_loss=2.369293, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:48,805 - mztrain - INFO - [MZTrain] Epoch 57/70: train_loss=2.432147, val_loss=2.385621, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:48,943 - mztrain - INFO - [MZTrain] Epoch 58/70: train_loss=2.399066, val_loss=2.356851, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:49,075 - mztrain - INFO - [MZTrain] Epoch 59/70: train_loss=2.401097, val_loss=2.380224, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:49,085 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 60: rel_loss_delta=1.00e+01 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:49,085 - mztrain - INFO - [MZTrain] ElasticRank epoch 60: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:49,217 - mztrain - INFO - [MZTrain] Epoch 60/70: train_loss=2.387612, val_loss=2.425282, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:49,353 - mztrain - INFO - [MZTrain] Epoch 61/70: train_loss=2.404283, val_loss=2.410084, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:49,490 - mztrain - INFO - [MZTrain] Epoch 62/70: train_loss=2.403254, val_loss=2.408224, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:49,624 - mztrain - INFO - [MZTrain] Epoch 63/70: train_loss=2.379616, val_loss=2.467315, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:49,634 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 64: rel_loss_delta=9.84e+00 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:49,634 - mztrain - INFO - [MZTrain] ElasticRank epoch 64: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:49,766 - mztrain - INFO - [MZTrain] Epoch 64/70: train_loss=2.448107, val_loss=2.622840, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:49,911 - mztrain - INFO - [MZTrain] Epoch 65/70: train_loss=2.437639, val_loss=2.408452, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:50,054 - mztrain - INFO - [MZTrain] Epoch 66/70: train_loss=2.392170, val_loss=2.320730, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:50,187 - mztrain - INFO - [MZTrain] Epoch 67/70: train_loss=2.350668, val_loss=2.431870, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:50,196 - mztrain - INFO - [MZTrain] ElasticRank ROLLBACK epoch 68: rel_loss_delta=9.68e+00 > 1.00e-03 -> revertido ({'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}); cooldown 3 epochs
+2026-09-26 11:53:50,197 - mztrain - INFO - [MZTrain] ElasticRank epoch 68: {'layers_changed': 1, 'slept': 4, 'revived': 0, 'grown': 0, 'pruned': 0}
+2026-09-26 11:53:50,331 - mztrain - INFO - [MZTrain] Epoch 68/70: train_loss=2.348573, val_loss=2.384101, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:50,464 - mztrain - INFO - [MZTrain] Epoch 69/70: train_loss=2.341287, val_loss=2.497374, rank=48, time=0.1s, mem=17MB
+2026-09-26 11:53:50,464 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           9.7s (0.2min)
+  Mejor loss:             0.327715
+  Rango final:            48
+  Epochs completados:     70
+  Optimizer memory:       {'total_params': 4, 'compressed_params': 0, 'state_memory_mb': 0.0443115234375, 'full_memory_mb': 0.0443115234375, 'memory_saved_pct': 0.0, 'step_count': 64}
+  =================================================
+D:\mztrain\bench\elastic_bench_guard.py:206: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat() + "Z",
+[guard-bench] device=cuda seed=42 epochs=70
+[guard-bench] target rank-16, modelo rank-48 fijo; capa factorizada unica
+
+  safe/OFF     done (8.9s) fp-red=66.7% R2=0.99762 slept=32 rollbacks=0
+  safe/ON      done (8.9s) fp-red=66.7% R2=0.99785 slept=32 rollbacks=0
+  risky/OFF    done (8.9s) fp-red=75.0% R2=0.85988 slept=36 rollbacks=0
+  risky/ON     done (9.7s) fp-red=66.7% R2=0.98712 slept=32 rollbacks=16
+
+============================================================
+
+  == A) SAFE (compactacion legitima) ==
+  metric                    guard OFF       guard ON        
+  --------------------------------------------------------
+  Reduccion params %        66.7            66.7            
+  Val R2 (1=perfecto)       0.99762         0.99785         
+  Val MSE                   0.461434        0.417296        
+  slept / rollbacks         32 / 0          32 / 0          
+  -> el guard NO debe sabotear: misma reduccion, R2 intacto, rollbacks~0
+
+  == B) RISKY (config sobre-agresiva) ==
+  metric                    guard OFF       guard ON        
+  --------------------------------------------------------
+  Reduccion params %        75.0            66.7            
+  Val R2 (1=perfecto)       0.85988         0.98712         
+  Val MSE                   27.170938       2.497374        
+  slept / rollbacks         36 / 0          32 / 16         
+  -> guard OFF destroza R2 por memoria; guard ON revierte -> R2 preservado (memoria casi sin tocar)
+============================================================
+
+[guard-bench] saved -> D:\mztrain\bench\results\elastic_bench_guard.json

@@ -1,0 +1,142 @@
+{"event": "data_ready", "corpus": "wikitext-2-raw-v1 (local Arrow cache)", "arrow_sha256": {"train": "57947bc7b58df4b19662c0609cc30651bc84328dab5fd588860b752072911789", "validation": "8e136ab7130c5fca602eb406ce2557967a974d901b53c4f2992f87b873e0fe5b"}, "train_tokens": 10884797, "validation_tokens": 1142150, "calibration_tokens": 8193, "vocab": 1014, "validation_unknown_chars": 158, "python": "3.13.2", "torch": "2.11.0+cu128", "gpu": "NVIDIA GeForce RTX 4060", "precision": "fp32 TF32 off"}
+{"warmup_only": true, "width": 96, "ten_steps_s": 0.28217880000011064}
+{"warmup_only": true, "width": 192, "ten_steps_s": 0.19593949999944016}
+{"kind": "R", "seed": 17, "step": 0, "stage": "initial", "width": 192, "wall_s": 1.2694303999996919, "train_s": 0.0, "bpc": 179.25785354536822}
+{"kind": "R", "seed": 17, "step": 250, "stage": "trained", "width": 192, "wall_s": 6.288842300000397, "train_s": 3.956676900000275, "bpc": 4.223016195455301}
+{"kind": "R", "seed": 17, "step": 500, "stage": "trained", "width": 192, "wall_s": 10.97078539999984, "train_s": 7.543948900000032, "bpc": 3.846951641419605}
+{"kind": "R", "seed": 17, "step": 750, "stage": "trained", "width": 192, "wall_s": 16.153228899999704, "train_s": 11.576625400000012, "bpc": 3.7590173714294206}
+{"kind": "R", "seed": 17, "step": 1000, "stage": "trained", "width": 192, "wall_s": 22.237440500000048, "train_s": 16.023170700000264, "bpc": 3.694568899684347}
+{"kind": "R", "seed": 17, "step": 1250, "stage": "trained", "width": 192, "wall_s": 28.849758500000462, "train_s": 21.138888399999814, "bpc": 3.643367445347043}
+{"kind": "R", "seed": 17, "step": 1500, "stage": "trained", "width": 192, "wall_s": 34.131701899999825, "train_s": 25.122150299999703, "bpc": 3.624208587523003}
+{"kind": "R", "seed": 17, "step": 1750, "stage": "trained", "width": 192, "wall_s": 39.33163870000044, "train_s": 28.96393369999987, "bpc": 3.599366669591082}
+{"kind": "R", "seed": 17, "step": 2000, "stage": "trained", "width": 192, "wall_s": 44.89582419999988, "train_s": 33.17265629999929, "bpc": 3.5498443824621617}
+{"kind": "R", "seed": 17, "step": 2250, "stage": "trained", "width": 192, "wall_s": 50.48258580000038, "train_s": 37.420126599999094, "bpc": 3.496793418100674}
+{"kind": "R", "seed": 17, "step": 2500, "stage": "trained", "width": 192, "wall_s": 55.78654230000029, "train_s": 41.39650589999928, "bpc": 3.424432178405993}
+{"kind": "R", "seed": 17, "step": 2750, "stage": "trained", "width": 192, "wall_s": 61.34060920000047, "train_s": 45.57904309999867, "bpc": 3.3358869575878316}
+{"kind": "R", "seed": 17, "step": 3000, "stage": "trained", "width": 192, "wall_s": 66.9339087999997, "train_s": 49.86484979999932, "bpc": 3.272311916613908}
+{"kind": "R", "seed": 17, "step": 3250, "stage": "trained", "width": 192, "wall_s": 71.82655979999981, "train_s": 53.740993599999456, "bpc": 3.2020815319636973}
+{"kind": "R", "seed": 17, "step": 3500, "stage": "trained", "width": 192, "wall_s": 76.5726254000001, "train_s": 57.28517069999907, "bpc": 3.178863250351984}
+{"kind": "R", "seed": 17, "step": 3750, "stage": "trained", "width": 192, "wall_s": 81.23367899999994, "train_s": 60.87712359999841, "bpc": 3.127542141230525}
+{"kind": "R", "seed": 17, "step": 4000, "stage": "trained", "width": 192, "wall_s": 86.03386469999987, "train_s": 64.60810159999801, "bpc": 3.064609990150075}
+{"event": "run_done", "kind": "R", "seed": 17, "wall_s": 86.0384565000004, "final_bpc": 3.064609990150075}
+{"kind": "M", "seed": 17, "step": 0, "stage": "initial", "width": 96, "wall_s": 0.6406489000000875, "train_s": 0.0, "bpc": 90.91025113377756}
+{"kind": "M", "seed": 17, "step": 250, "stage": "trained", "width": 96, "wall_s": 3.280527599999914, "train_s": 2.0299043999993955, "bpc": 4.619288401939792}
+{"kind": "M", "seed": 17, "step": 500, "stage": "trained", "width": 96, "wall_s": 6.067772999999761, "train_s": 4.134728199999699, "bpc": 3.9887484416729175}
+{"kind": "M", "seed": 17, "step": 750, "stage": "trained", "width": 96, "wall_s": 8.974940600000082, "train_s": 6.100688300000002, "bpc": 3.8286768110902654}
+{"kind": "M", "seed": 17, "step": 1000, "stage": "trained", "width": 96, "wall_s": 11.520183100000395, "train_s": 8.051199099999394, "bpc": 3.757062307141976}
+{"kind": "M", "seed": 17, "step": 1250, "stage": "trained", "width": 96, "wall_s": 14.091194699999505, "train_s": 10.022465599999123, "bpc": 3.709973324891662}
+{"kind": "M", "seed": 17, "step": 1500, "stage": "trained", "width": 96, "wall_s": 16.6498416000004, "train_s": 11.978672799999003, "bpc": 3.669931009922873}
+{"kind": "M", "seed": 17, "step": 1750, "stage": "trained", "width": 96, "wall_s": 19.238802400000168, "train_s": 13.967070099998637, "bpc": 3.6326818274186468}
+{"kind": "M", "seed": 17, "step": 2000, "stage": "trained", "width": 96, "wall_s": 21.826524500000232, "train_s": 15.956316299998434, "bpc": 3.6095805555911387}
+{"event": "growth", "seed": 17, "surgery_s": 0.3543159000000742, "step": 2000, "optimizer": ["reset de momentos (conversion densa->factorizada, 16 capas)", "migrado (ledger aplicado, grupos y opciones conservados)", "estado q re-escalado (1/c, 1/c^2; incluye AMSGrad)"], "accepted": true, "rolled_back": false, "guarded": true, "logits_drift_rel": 0.014066966541418126, "kl_div": 0.003797658710388119, "loss_before": 2.7439257057403785, "loss_after": 2.749697495003053, "loss_delta": 0.00577178926267452}
+{"kind": "M", "seed": 17, "step": 2000, "stage": "after_surgery", "width": 192, "wall_s": 23.531664799999817, "train_s": 15.956316299998434, "bpc": 3.6192934716860496}
+{"kind": "M", "seed": 17, "step": 2250, "stage": "trained", "width": 192, "wall_s": 28.553436000000147, "train_s": 19.836727699998846, "bpc": 3.5728015305792376}
+{"kind": "M", "seed": 17, "step": 2500, "stage": "trained", "width": 192, "wall_s": 33.19799979999971, "train_s": 23.418469399998685, "bpc": 3.5402389165907024}
+{"kind": "M", "seed": 17, "step": 2750, "stage": "trained", "width": 192, "wall_s": 37.87912109999979, "train_s": 27.001332199998615, "bpc": 3.4151107595966397}
+{"kind": "M", "seed": 17, "step": 3000, "stage": "trained", "width": 192, "wall_s": 42.61458990000028, "train_s": 30.67728629999874, "bpc": 3.2726649370350143}
+{"kind": "M", "seed": 17, "step": 3250, "stage": "trained", "width": 192, "wall_s": 47.24334209999961, "train_s": 34.23815049999848, "bpc": 3.15834595148981}
+{"kind": "M", "seed": 17, "step": 3500, "stage": "trained", "width": 192, "wall_s": 51.91656400000011, "train_s": 37.82979599999817, "bpc": 3.0712432814775537}
+{"kind": "M", "seed": 17, "step": 3750, "stage": "trained", "width": 192, "wall_s": 56.823647600000186, "train_s": 41.668337999998585, "bpc": 3.0055873563948388}
+{"kind": "M", "seed": 17, "step": 4000, "stage": "trained", "width": 192, "wall_s": 61.809404700000414, "train_s": 45.58499149999807, "bpc": 2.9511881165418683}
+{"kind": "M", "seed": 17, "step": 4250, "stage": "trained", "width": 192, "wall_s": 66.58578849999958, "train_s": 49.248010799998156, "bpc": 2.8842631736242375}
+{"kind": "M", "seed": 17, "step": 4500, "stage": "trained", "width": 192, "wall_s": 71.31355100000019, "train_s": 52.88685379999879, "bpc": 2.845516055123379}
+{"kind": "M", "seed": 17, "step": 4750, "stage": "trained", "width": 192, "wall_s": 76.03852999999981, "train_s": 56.53995019999911, "bpc": 2.7964689192269208}
+{"kind": "M", "seed": 17, "step": 5000, "stage": "trained", "width": 192, "wall_s": 80.83633199999986, "train_s": 60.21383069999956, "bpc": 2.752547763857903}
+{"kind": "M", "seed": 17, "step": 5250, "stage": "trained", "width": 192, "wall_s": 85.66322149999996, "train_s": 63.86873000000014, "bpc": 2.7154804794990253}
+{"kind": "M", "seed": 17, "step": 5500, "stage": "trained", "width": 192, "wall_s": 91.00052539999979, "train_s": 67.88427310000043, "bpc": 2.668010694786278}
+{"kind": "M", "seed": 17, "step": 5750, "stage": "trained", "width": 192, "wall_s": 96.12275339999997, "train_s": 71.91746779999994, "bpc": 2.645906821758718}
+{"kind": "M", "seed": 17, "step": 6000, "stage": "trained", "width": 192, "wall_s": 101.03812800000014, "train_s": 75.7697890999998, "bpc": 2.6065624877515803}
+{"event": "run_done", "kind": "M", "seed": 17, "wall_s": 101.04310869999972, "final_bpc": 2.6065624877515803}
+{"kind": "M", "seed": 29, "step": 0, "stage": "initial", "width": 96, "wall_s": 0.58666009999979, "train_s": 0.0, "bpc": 92.31425219549284}
+{"kind": "M", "seed": 29, "step": 250, "stage": "trained", "width": 96, "wall_s": 3.0878387000002476, "train_s": 1.9171048000007431, "bpc": 4.69355096506864}
+{"kind": "M", "seed": 29, "step": 500, "stage": "trained", "width": 96, "wall_s": 5.559850900000129, "train_s": 3.8014313000003312, "bpc": 4.030386959110561}
+{"kind": "M", "seed": 29, "step": 750, "stage": "trained", "width": 96, "wall_s": 8.092550600000322, "train_s": 5.7270807000004424, "bpc": 3.8461140250742787}
+{"kind": "M", "seed": 29, "step": 1000, "stage": "trained", "width": 96, "wall_s": 10.58643630000006, "train_s": 7.63339090000045, "bpc": 3.760789927905149}
+{"kind": "M", "seed": 29, "step": 1250, "stage": "trained", "width": 96, "wall_s": 13.098434700000325, "train_s": 9.550156200000856, "bpc": 3.708521278314052}
+{"kind": "M", "seed": 29, "step": 1500, "stage": "trained", "width": 96, "wall_s": 15.571403699999792, "train_s": 11.441989600000852, "bpc": 3.6552797449118866}
+{"kind": "M", "seed": 29, "step": 1750, "stage": "trained", "width": 96, "wall_s": 18.062201200000345, "train_s": 13.324171100000967, "bpc": 3.6247503637556}
+{"kind": "M", "seed": 29, "step": 2000, "stage": "trained", "width": 96, "wall_s": 20.55738289999954, "train_s": 15.22997960000066, "bpc": 3.6094111509444557}
+{"event": "growth", "seed": 29, "surgery_s": 0.1485396000007313, "step": 2000, "optimizer": ["reset de momentos (conversion densa->factorizada, 16 capas)", "migrado (ledger aplicado, grupos y opciones conservados)", "estado q re-escalado (1/c, 1/c^2; incluye AMSGrad)"], "accepted": true, "rolled_back": false, "guarded": true, "logits_drift_rel": 0.008341078096419567, "kl_div": 0.0015506109245310687, "loss_before": 2.7523354473283854, "loss_after": 2.754740382131586, "loss_delta": 0.002404934803200476}
+{"kind": "M", "seed": 29, "step": 2000, "stage": "after_surgery", "width": 192, "wall_s": 21.745997199999692, "train_s": 15.22997960000066, "bpc": 3.609933938807314}
+{"kind": "M", "seed": 29, "step": 2250, "stage": "trained", "width": 192, "wall_s": 26.210949600000276, "train_s": 18.675404100001288, "bpc": 3.587612567175694}
+{"kind": "M", "seed": 29, "step": 2500, "stage": "trained", "width": 192, "wall_s": 30.791152699999657, "train_s": 22.124926700001197, "bpc": 3.5356585280362522}
+{"kind": "M", "seed": 29, "step": 2750, "stage": "trained", "width": 192, "wall_s": 35.24538500000017, "train_s": 25.594845100001294, "bpc": 3.455500760211941}
+{"kind": "M", "seed": 29, "step": 3000, "stage": "trained", "width": 192, "wall_s": 40.627627400000165, "train_s": 29.044253100001697, "bpc": 3.296579196950431}
+{"kind": "M", "seed": 29, "step": 3250, "stage": "trained", "width": 192, "wall_s": 45.113429500000166, "train_s": 32.48361350000232, "bpc": 3.1706389853997132}
+{"kind": "M", "seed": 29, "step": 3500, "stage": "trained", "width": 192, "wall_s": 49.533158600000206, "train_s": 35.88483960000303, "bpc": 3.071837786144168}
+{"kind": "M", "seed": 29, "step": 3750, "stage": "trained", "width": 192, "wall_s": 54.0190891000002, "train_s": 39.281886500002656, "bpc": 2.9975493653381307}
+{"kind": "M", "seed": 29, "step": 4000, "stage": "trained", "width": 192, "wall_s": 58.496919199999866, "train_s": 42.72563950000222, "bpc": 2.9298810528399617}
+{"kind": "M", "seed": 29, "step": 4250, "stage": "trained", "width": 192, "wall_s": 62.898267900000064, "train_s": 46.1445928000021, "bpc": 2.8746088977150492}
+{"kind": "M", "seed": 29, "step": 4500, "stage": "trained", "width": 192, "wall_s": 67.38841429999957, "train_s": 49.60880900000211, "bpc": 2.819673938926237}
+{"kind": "M", "seed": 29, "step": 4750, "stage": "trained", "width": 192, "wall_s": 71.88626589999967, "train_s": 53.066230800001904, "bpc": 2.783429868312933}
+{"kind": "M", "seed": 29, "step": 5000, "stage": "trained", "width": 192, "wall_s": 76.34184689999984, "train_s": 56.46745180000198, "bpc": 2.7382677910900397}
+{"kind": "M", "seed": 29, "step": 5250, "stage": "trained", "width": 192, "wall_s": 81.23340170000029, "train_s": 60.24144110000179, "bpc": 2.691076652914172}
+{"kind": "M", "seed": 29, "step": 5500, "stage": "trained", "width": 192, "wall_s": 86.17695420000018, "train_s": 64.0824642000016, "bpc": 2.662828133241588}
+{"kind": "M", "seed": 29, "step": 5750, "stage": "trained", "width": 192, "wall_s": 90.90357279999989, "train_s": 67.75690280000163, "bpc": 2.637235328561236}
+{"kind": "M", "seed": 29, "step": 6000, "stage": "trained", "width": 192, "wall_s": 95.55701990000034, "train_s": 71.41844250000122, "bpc": 2.612354107626446}
+{"event": "run_done", "kind": "M", "seed": 29, "wall_s": 95.56266440000036, "final_bpc": 2.612354107626446}
+{"kind": "R", "seed": 29, "step": 0, "stage": "initial", "width": 192, "wall_s": 1.2349854000003688, "train_s": 0.0, "bpc": 177.0739218695222}
+{"kind": "R", "seed": 29, "step": 250, "stage": "trained", "width": 192, "wall_s": 5.859755600000426, "train_s": 3.558980900000279, "bpc": 4.196069663174891}
+{"kind": "R", "seed": 29, "step": 500, "stage": "trained", "width": 192, "wall_s": 10.514339100000143, "train_s": 7.164339200000541, "bpc": 3.871010741679993}
+{"kind": "R", "seed": 29, "step": 750, "stage": "trained", "width": 192, "wall_s": 15.037936200000331, "train_s": 10.661631600000874, "bpc": 3.7682663930055726}
+{"kind": "R", "seed": 29, "step": 1000, "stage": "trained", "width": 192, "wall_s": 19.48623300000054, "train_s": 14.124128100001144, "bpc": 3.697612615213026}
+{"kind": "R", "seed": 29, "step": 1250, "stage": "trained", "width": 192, "wall_s": 24.13177540000015, "train_s": 17.59845150000183, "bpc": 3.6717705954977595}
+{"kind": "R", "seed": 29, "step": 1500, "stage": "trained", "width": 192, "wall_s": 28.579339400000208, "train_s": 21.063666900002318, "bpc": 3.638624711304467}
+{"kind": "R", "seed": 29, "step": 1750, "stage": "trained", "width": 192, "wall_s": 33.06079960000079, "train_s": 24.54567490000227, "bpc": 3.58988462495655}
+{"kind": "R", "seed": 29, "step": 2000, "stage": "trained", "width": 192, "wall_s": 37.53676560000076, "train_s": 27.967058800002633, "bpc": 3.534896619250159}
+{"kind": "R", "seed": 29, "step": 2250, "stage": "trained", "width": 192, "wall_s": 41.99037170000065, "train_s": 31.3818048000021, "bpc": 3.4789565780924168}
+{"kind": "R", "seed": 29, "step": 2500, "stage": "trained", "width": 192, "wall_s": 46.52057550000063, "train_s": 34.873433900002055, "bpc": 3.403482934300397}
+{"kind": "R", "seed": 29, "step": 2750, "stage": "trained", "width": 192, "wall_s": 51.03370210000048, "train_s": 38.350654300001224, "bpc": 3.341366906418319}
+{"kind": "R", "seed": 29, "step": 3000, "stage": "trained", "width": 192, "wall_s": 55.46134190000066, "train_s": 41.7883481000008, "bpc": 3.2677114929840823}
+{"kind": "R", "seed": 29, "step": 3250, "stage": "trained", "width": 192, "wall_s": 59.953083600000355, "train_s": 45.24263840000094, "bpc": 3.2125775190262678}
+{"kind": "R", "seed": 29, "step": 3500, "stage": "trained", "width": 192, "wall_s": 64.4513392000008, "train_s": 48.69931450000149, "bpc": 3.168716885092204}
+{"kind": "R", "seed": 29, "step": 3750, "stage": "trained", "width": 192, "wall_s": 68.93053540000074, "train_s": 52.114235500001996, "bpc": 3.1420006041447213}
+{"kind": "R", "seed": 29, "step": 4000, "stage": "trained", "width": 192, "wall_s": 73.40480880000086, "train_s": 55.53953310000179, "bpc": 3.0792627045422623}
+{"event": "run_done", "kind": "R", "seed": 29, "wall_s": 73.41054359999998, "final_bpc": 3.0792627045422623}
+{"kind": "R", "seed": 43, "step": 0, "stage": "initial", "width": 192, "wall_s": 1.135290299999724, "train_s": 0.0, "bpc": 185.71411297047368}
+{"kind": "R", "seed": 43, "step": 250, "stage": "trained", "width": 192, "wall_s": 5.614790199999334, "train_s": 3.4225681999996596, "bpc": 4.128042922610096}
+{"kind": "R", "seed": 43, "step": 500, "stage": "trained", "width": 192, "wall_s": 10.040510599999834, "train_s": 6.8375435999996625, "bpc": 3.856952354467579}
+{"kind": "R", "seed": 43, "step": 750, "stage": "trained", "width": 192, "wall_s": 14.497067099999185, "train_s": 10.297460499999943, "bpc": 3.760979280489023}
+{"kind": "R", "seed": 43, "step": 1000, "stage": "trained", "width": 192, "wall_s": 19.1946769999995, "train_s": 13.907462699999996, "bpc": 3.7013918661964196}
+{"kind": "R", "seed": 43, "step": 1250, "stage": "trained", "width": 192, "wall_s": 24.250230799999372, "train_s": 17.64642930000082, "bpc": 3.6633201964816817}
+{"kind": "R", "seed": 43, "step": 1500, "stage": "trained", "width": 192, "wall_s": 28.93954769999982, "train_s": 21.344812500000444, "bpc": 3.6270186900608996}
+{"kind": "R", "seed": 43, "step": 1750, "stage": "trained", "width": 192, "wall_s": 33.44835339999918, "train_s": 24.849496499999987, "bpc": 3.596567256646836}
+{"kind": "R", "seed": 43, "step": 2000, "stage": "trained", "width": 192, "wall_s": 37.93021999999928, "train_s": 28.290630699999383, "bpc": 3.5581011340270807}
+{"kind": "R", "seed": 43, "step": 2250, "stage": "trained", "width": 192, "wall_s": 42.33517429999938, "train_s": 31.710449100000005, "bpc": 3.5150277312940172}
+{"kind": "R", "seed": 43, "step": 2500, "stage": "trained", "width": 192, "wall_s": 46.80337299999974, "train_s": 35.14921130000039, "bpc": 3.420019855925009}
+{"kind": "R", "seed": 43, "step": 2750, "stage": "trained", "width": 192, "wall_s": 51.49595289999979, "train_s": 38.61801500000092, "bpc": 3.390463515830708}
+{"kind": "R", "seed": 43, "step": 3000, "stage": "trained", "width": 192, "wall_s": 55.960268099999666, "train_s": 42.09097270000166, "bpc": 3.277213032555924}
+{"kind": "R", "seed": 43, "step": 3250, "stage": "trained", "width": 192, "wall_s": 60.46660299999985, "train_s": 45.56396610000229, "bpc": 3.2381042821687647}
+{"kind": "R", "seed": 43, "step": 3500, "stage": "trained", "width": 192, "wall_s": 64.95623499999965, "train_s": 49.02277470000263, "bpc": 3.2032845321587806}
+{"kind": "R", "seed": 43, "step": 3750, "stage": "trained", "width": 192, "wall_s": 69.45426099999986, "train_s": 52.4848671000027, "bpc": 3.1783091784039}
+{"kind": "R", "seed": 43, "step": 4000, "stage": "trained", "width": 192, "wall_s": 74.42624139999953, "train_s": 55.89415090000239, "bpc": 3.119238400843451}
+{"event": "run_done", "kind": "R", "seed": 43, "wall_s": 74.43216909999956, "final_bpc": 3.119238400843451}
+{"kind": "M", "seed": 43, "step": 0, "stage": "initial", "width": 96, "wall_s": 0.585813099999541, "train_s": 0.0, "bpc": 88.99012534650903}
+{"kind": "M", "seed": 43, "step": 250, "stage": "trained", "width": 96, "wall_s": 3.095322000000124, "train_s": 1.9181505000005927, "bpc": 4.776059432929132}
+{"kind": "M", "seed": 43, "step": 500, "stage": "trained", "width": 96, "wall_s": 5.7712557999993805, "train_s": 4.007965600000716, "bpc": 3.9645501623492554}
+{"kind": "M", "seed": 43, "step": 750, "stage": "trained", "width": 96, "wall_s": 8.259845900000073, "train_s": 5.903886800000691, "bpc": 3.800387148832285}
+{"kind": "M", "seed": 43, "step": 1000, "stage": "trained", "width": 96, "wall_s": 10.804769599999418, "train_s": 7.858436300000903, "bpc": 3.733872229859358}
+{"kind": "M", "seed": 43, "step": 1250, "stage": "trained", "width": 96, "wall_s": 13.308595599999535, "train_s": 9.774235900000349, "bpc": 3.675249758992449}
+{"kind": "M", "seed": 43, "step": 1500, "stage": "trained", "width": 96, "wall_s": 15.849351699999715, "train_s": 11.726927900000192, "bpc": 3.6419149293233}
+{"kind": "M", "seed": 43, "step": 1750, "stage": "trained", "width": 96, "wall_s": 18.388922000000093, "train_s": 13.67928960000063, "bpc": 3.6168003910480753}
+{"kind": "M", "seed": 43, "step": 2000, "stage": "trained", "width": 96, "wall_s": 20.94359170000007, "train_s": 15.647473200000604, "bpc": 3.5909723486589127}
+{"event": "growth", "seed": 43, "surgery_s": 0.14760709999973187, "step": 2000, "optimizer": ["reset de momentos (conversion densa->factorizada, 16 capas)", "migrado (ledger aplicado, grupos y opciones conservados)", "estado q re-escalado (1/c, 1/c^2; incluye AMSGrad)"], "accepted": true, "rolled_back": false, "guarded": true, "logits_drift_rel": 0.014418840323867851, "kl_div": 0.0027631046195524646, "loss_before": 2.7287519936483804, "loss_after": 2.732660084534678, "loss_delta": 0.003908090886297622}
+{"kind": "M", "seed": 43, "step": 2000, "stage": "after_surgery", "width": 192, "wall_s": 22.11697540000023, "train_s": 15.647473200000604, "bpc": 3.5945784264440364}
+{"kind": "M", "seed": 43, "step": 2250, "stage": "trained", "width": 192, "wall_s": 26.54413039999963, "train_s": 19.098275600000306, "bpc": 3.5823246016370542}
+{"kind": "M", "seed": 43, "step": 2500, "stage": "trained", "width": 192, "wall_s": 31.1951597999996, "train_s": 22.57300430000032, "bpc": 3.508144846515133}
+{"kind": "M", "seed": 43, "step": 2750, "stage": "trained", "width": 192, "wall_s": 35.65363369999977, "train_s": 26.040171000000555, "bpc": 3.371668207439317}
+{"kind": "M", "seed": 43, "step": 3000, "stage": "trained", "width": 192, "wall_s": 40.090087599999606, "train_s": 29.485819300000003, "bpc": 3.246886758606506}
+{"kind": "M", "seed": 43, "step": 3250, "stage": "trained", "width": 192, "wall_s": 44.56873429999996, "train_s": 32.95551270000033, "bpc": 3.158892975497344}
+{"kind": "M", "seed": 43, "step": 3500, "stage": "trained", "width": 192, "wall_s": 49.033395100000234, "train_s": 36.427317600000606, "bpc": 3.0586468646645453}
+{"kind": "M", "seed": 43, "step": 3750, "stage": "trained", "width": 192, "wall_s": 53.505035099999986, "train_s": 39.88703810000061, "bpc": 3.006689193686115}
+{"kind": "M", "seed": 43, "step": 4000, "stage": "trained", "width": 192, "wall_s": 57.96752120000019, "train_s": 43.35143850000077, "bpc": 2.938959267716399}
+{"kind": "M", "seed": 43, "step": 4250, "stage": "trained", "width": 192, "wall_s": 62.462781399999585, "train_s": 46.78312150000056, "bpc": 2.8968483462126158}
+{"kind": "M", "seed": 43, "step": 4500, "stage": "trained", "width": 192, "wall_s": 67.46558349999941, "train_s": 50.6608769000004, "bpc": 2.83433500396835}
+{"kind": "M", "seed": 43, "step": 4750, "stage": "trained", "width": 192, "wall_s": 72.49704279999969, "train_s": 54.5187274000009, "bpc": 2.7980816488270235}
+{"kind": "M", "seed": 43, "step": 5000, "stage": "trained", "width": 192, "wall_s": 76.98587669999961, "train_s": 57.96716610000112, "bpc": 2.7555207769342838}
+{"kind": "M", "seed": 43, "step": 5250, "stage": "trained", "width": 192, "wall_s": 81.47989169999983, "train_s": 61.42468330000065, "bpc": 2.717868320679535}
+{"kind": "M", "seed": 43, "step": 5500, "stage": "trained", "width": 192, "wall_s": 85.90793659999963, "train_s": 64.87623330000042, "bpc": 2.677077554595115}
+{"kind": "M", "seed": 43, "step": 5750, "stage": "trained", "width": 192, "wall_s": 90.41379609999967, "train_s": 68.34511480000037, "bpc": 2.6410726753179956}
+{"kind": "M", "seed": 43, "step": 6000, "stage": "trained", "width": 192, "wall_s": 94.89491509999971, "train_s": 71.80958890000056, "bpc": 2.6212632299443857}
+{"event": "run_done", "kind": "M", "seed": 43, "wall_s": 94.9010632999998, "final_bpc": 2.6212632299443857}
+{"event": "summary", "pairs": [{"seed": 17, "target_bpc": 3.064609990150075, "reference_sufficient": true, "same_layout": true, "growth_accepted": true, "R_hit": {"point": {"step": 4000, "stage": "trained", "width": 192, "wall_s": 86.03386469999987, "train_s": 64.60810159999801, "bpc": 3.064609990150075}, "previous_observation_wall_s": 81.23367899999994}, "M_hit": {"point": {"step": 3750, "stage": "trained", "width": 192, "wall_s": 56.823647600000186, "train_s": 41.668337999998585, "bpc": 3.0055873563948388}, "previous_observation_wall_s": 51.91656400000011}, "ratio": 0.6604800074731535}, {"seed": 29, "target_bpc": 3.0792627045422623, "reference_sufficient": true, "same_layout": true, "growth_accepted": true, "R_hit": {"point": {"step": 4000, "stage": "trained", "width": 192, "wall_s": 73.40480880000086, "train_s": 55.53953310000179, "bpc": 3.0792627045422623}, "previous_observation_wall_s": 68.93053540000074}, "M_hit": {"point": {"step": 3500, "stage": "trained", "width": 192, "wall_s": 49.533158600000206, "train_s": 35.88483960000303, "bpc": 3.071837786144168}, "previous_observation_wall_s": 45.113429500000166}, "ratio": 0.6747944638744107}, {"seed": 43, "target_bpc": 3.119238400843451, "reference_sufficient": true, "same_layout": true, "growth_accepted": true, "R_hit": {"point": {"step": 4000, "stage": "trained", "width": 192, "wall_s": 74.42624139999953, "train_s": 55.89415090000239, "bpc": 3.119238400843451}, "previous_observation_wall_s": 69.45426099999986}, "M_hit": {"point": {"step": 3500, "stage": "trained", "width": 192, "wall_s": 49.033395100000234, "train_s": 36.427317600000606, "bpc": 3.0586468646645453}, "previous_observation_wall_s": 44.56873429999996}, "ratio": 0.6588186394698221}], "geometric_mean_ratio": 0.6646592017647361, "local_savings_supported": true, "scope": "Esta escala/configuracion, tres semillas y tiempo hasta calidad; no calidad asintotica"}

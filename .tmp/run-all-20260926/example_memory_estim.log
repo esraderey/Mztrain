@@ -1,0 +1,239 @@
+MZTrain - Estimacion de Ahorro de Memoria
+
+============================================================
+Modelo: MLP (MNIST-like)
+Parametros totales: 1,462,538
+============================================================
+
+--- Rango r=8 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................       5.58 MB
+  gradients_mb..................       5.58 MB
+  optimizer_mb..................      11.16 MB
+  total_mb......................      22.32 MB
+
+MZTrain (r=8)
+--------------------------------------------------
+  params_mb.....................       0.14 MB
+  gradients_mb..................       0.14 MB
+  optimizer_mb..................       0.07 MB
+  total_mb......................       0.36 MB
+
+  Ahorro total:     98.4%
+  Ahorro en params: 97.6%
+  Factor:           62.8x
+  Capas reemplazadas: 3
+  Capas omitidas:     1
+
+--- Rango r=16 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................       5.58 MB
+  gradients_mb..................       5.58 MB
+  optimizer_mb..................      11.16 MB
+  total_mb......................      22.32 MB
+
+MZTrain (r=16)
+--------------------------------------------------
+  params_mb.....................       0.27 MB
+  gradients_mb..................       0.27 MB
+  optimizer_mb..................       0.13 MB
+  total_mb......................       0.67 MB
+
+  Ahorro total:     97.0%
+  Ahorro en params: 95.4%
+  Factor:           33.3x
+  Capas reemplazadas: 3
+  Capas omitidas:     1
+
+--- Rango r=32 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................       5.58 MB
+  gradients_mb..................       5.58 MB
+  optimizer_mb..................      11.16 MB
+  total_mb......................      22.32 MB
+
+MZTrain (r=32)
+--------------------------------------------------
+  params_mb.....................       0.52 MB
+  gradients_mb..................       0.52 MB
+  optimizer_mb..................       0.26 MB
+  total_mb......................       1.30 MB
+
+  Ahorro total:     94.2%
+  Ahorro en params: 90.9%
+  Factor:           17.2x
+  Capas reemplazadas: 3
+  Capas omitidas:     1
+
+--- Rango r=64 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................       5.58 MB
+  gradients_mb..................       5.58 MB
+  optimizer_mb..................      11.16 MB
+  total_mb......................      22.32 MB
+
+MZTrain (r=64)
+--------------------------------------------------
+  params_mb.....................       1.02 MB
+  gradients_mb..................       1.02 MB
+  optimizer_mb..................       0.51 MB
+  total_mb......................       2.55 MB
+
+  Ahorro total:     88.6%
+  Ahorro en params: 81.8%
+  Factor:           8.7x
+  Capas reemplazadas: 3
+  Capas omitidas:     1
+
+============================================================
+Modelo: Red Profunda (10 capas x 512)
+Parametros totales: 2,631,690
+============================================================
+
+--- Rango r=16 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................      10.04 MB
+  gradients_mb..................      10.04 MB
+  optimizer_mb..................      20.08 MB
+  total_mb......................      40.16 MB
+
+MZTrain (r=16)
+--------------------------------------------------
+  params_mb.....................       0.67 MB
+  gradients_mb..................       0.67 MB
+  optimizer_mb..................       0.33 MB
+  total_mb......................       1.66 MB
+
+  Ahorro total:     95.9%
+  Ahorro en params: 93.4%
+  Factor:           24.1x
+  Capas reemplazadas: 11
+  Capas omitidas:     0
+
+--- Rango r=32 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................      10.04 MB
+  gradients_mb..................      10.04 MB
+  optimizer_mb..................      20.08 MB
+  total_mb......................      40.16 MB
+
+MZTrain (r=32)
+--------------------------------------------------
+  params_mb.....................       1.29 MB
+  gradients_mb..................       1.29 MB
+  optimizer_mb..................       0.65 MB
+  total_mb......................       3.23 MB
+
+  Ahorro total:     92.0%
+  Ahorro en params: 87.1%
+  Factor:           12.4x
+  Capas reemplazadas: 11
+  Capas omitidas:     0
+
+--- Rango r=64 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................      10.04 MB
+  gradients_mb..................      10.04 MB
+  optimizer_mb..................      20.08 MB
+  total_mb......................      40.16 MB
+
+MZTrain (r=64)
+--------------------------------------------------
+  params_mb.....................       2.54 MB
+  gradients_mb..................       2.54 MB
+  optimizer_mb..................       1.27 MB
+  total_mb......................       6.35 MB
+
+  Ahorro total:     84.2%
+  Ahorro en params: 74.7%
+  Factor:           6.3x
+  Capas reemplazadas: 11
+  Capas omitidas:     0
+
+============================================================
+Modelo: Red Ancha (4096 ocultas)
+Parametros totales: 25,175,040
+============================================================
+
+--- Rango r=32 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................      96.04 MB
+  gradients_mb..................      96.04 MB
+  optimizer_mb..................     192.07 MB
+  total_mb......................     384.14 MB
+
+MZTrain (r=32)
+--------------------------------------------------
+  params_mb.....................       2.29 MB
+  gradients_mb..................       2.29 MB
+  optimizer_mb..................       1.14 MB
+  total_mb......................       5.71 MB
+
+  Ahorro total:     98.5%
+  Ahorro en params: 97.6%
+  Factor:           67.2x
+  Capas reemplazadas: 3
+  Capas omitidas:     0
+
+--- Rango r=64 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................      96.04 MB
+  gradients_mb..................      96.04 MB
+  optimizer_mb..................     192.07 MB
+  total_mb......................     384.14 MB
+
+MZTrain (r=64)
+--------------------------------------------------
+  params_mb.....................       4.54 MB
+  gradients_mb..................       4.54 MB
+  optimizer_mb..................       2.27 MB
+  total_mb......................      11.34 MB
+
+  Ahorro total:     97.0%
+  Ahorro en params: 95.3%
+  Factor:           33.9x
+  Capas reemplazadas: 3
+  Capas omitidas:     0
+
+--- Rango r=128 ---
+
+Entrenamiento Tradicional
+--------------------------------------------------
+  params_mb.....................      96.04 MB
+  gradients_mb..................      96.04 MB
+  optimizer_mb..................     192.07 MB
+  total_mb......................     384.14 MB
+
+MZTrain (r=128)
+--------------------------------------------------
+  params_mb.....................       9.04 MB
+  gradients_mb..................       9.04 MB
+  optimizer_mb..................       4.52 MB
+  total_mb......................      22.59 MB
+
+  Ahorro total:     94.1%
+  Ahorro en params: 90.6%
+  Factor:           17.0x
+  Capas reemplazadas: 3
+  Capas omitidas:     0
+
+============================================================
+Analisis completado.

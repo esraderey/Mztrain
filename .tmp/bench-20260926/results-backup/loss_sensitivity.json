@@ -1,0 +1,65 @@
+[
+  {
+    "epoch": 0,
+    "loss_base": 2.321836,
+    "n_directions": 32,
+    "global": {
+      "median": -0.00018,
+      "p10": -0.002292,
+      "p90": 0.002072,
+      "max": 0.00494,
+      "cv": 10.7082,
+      "p90_p10_ratio": 0.904
+    },
+    "global_spearman": {
+      "spectral": 0.1639,
+      "update": 0.1723,
+      "coherence": -0.1184
+    },
+    "verdict": {
+      "heterogeneous": false,
+      "p90_abs_rel_delta": 0.003576,
+      "min_effect": 0.001,
+      "reading": "PLANO/EFECTO~0 -> ElasticRank solo puede aspirar a 'no da\u00f1ar' (rollback es el nucleo correcto)",
+      "proxies_predictive": {
+        "spectral": false,
+        "update": false,
+        "coherence": false
+      }
+    },
+    "layers": [
+      {
+        "layer": "0",
+        "rank": 16,
+        "probed": 16,
+        "rel_delta": {
+          "median": -0.000135,
+          "p10": -0.002119,
+          "p90": 0.001156,
+          "max": 0.00494,
+          "cv": 13.2228,
+          "p90_p10_ratio": 0.545
+        },
+        "spearman_vs_spectral": 0.5412,
+        "spearman_vs_update": 0.6029,
+        "spearman_vs_coherence": -0.5412
+      },
+      {
+        "layer": "2",
+        "rank": 16,
+        "probed": 16,
+        "rel_delta": {
+          "median": -0.0004,
+          "p10": -0.002892,
+          "p90": 0.002839,
+          "max": 0.00429,
+          "cv": 9.2279,
+          "p90_p10_ratio": 0.982
+        },
+        "spearman_vs_spectral": -0.0382,
+        "spearman_vs_update": -0.0176,
+        "spearman_vs_coherence": 0.0941
+      }
+    ]
+  }
+]

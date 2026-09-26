@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "D:\mztrain\.tmp\elasticshape-evidence-20260907\benchmark.py", line 316, in <module>
+    main()
+    ~~~~^^
+  File "D:\mztrain\.tmp\elasticshape-evidence-20260907\benchmark.py", line 288, in main
+    raise FileExistsError("No sobrescribir una corrida existente")
+FileExistsError: No sobrescribir una corrida existente

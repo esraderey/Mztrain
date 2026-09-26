@@ -1,0 +1,92 @@
+2026-09-26 13:24:05,356 - mneme.mneme_core - WARNING - No secret key provided. Generating a transient secure key.
+{"step": 1, "train_loss": 11.052827835083008}
+{
+  "activation_checkpoint": {
+    "bytes_saved": 11010048,
+    "mneme_available": true,
+    "total_compressed": 24,
+    "total_decompressed": 24
+  },
+  "amp": "fp16",
+  "config": {
+    "activation": "gelu",
+    "attention_probs_dropout_prob": 0.0,
+    "factor_init_method": "kaiming",
+    "hidden_dropout_prob": 0.0,
+    "hidden_size": 1792,
+    "intermediate_size": 7168,
+    "layer_norm_eps": 1e-12,
+    "max_position_embeddings": 512,
+    "mneme_compression_level": "balanced",
+    "num_attention_heads": 28,
+    "num_hidden_layers": 24,
+    "rank": 64,
+    "type_vocab_size": 2,
+    "use_activation_checkpointing": true,
+    "vocab_size": 50000
+  },
+  "cuda_available": true,
+  "cuda_device": "NVIDIA GeForce RTX 4060",
+  "dataset": {
+    "batch_size": 1,
+    "files": 40,
+    "roots": [
+      "src",
+      "tests",
+      "D:/mztrain/src",
+      "D:/mztrain/tests"
+    ],
+    "seq_len": 64,
+    "snippets": 341
+  },
+  "device": "cuda",
+  "elapsed_seconds": 2.135916900000666,
+  "gpu_memory": {
+    "allocated_mb": 1105.2919921875,
+    "max_allocated_mb": 1468.73046875,
+    "max_reserved_mb": 1840.0,
+    "reserved_mb": 1840.0
+  },
+  "loss": {
+    "final_eval": 11.200851440429688,
+    "history": [
+      {
+        "step": 1,
+        "train_loss": 11.052827835083008
+      }
+    ],
+    "initial_eval": 11.200148900349935,
+    "train_steps": [
+      11.052827835083008
+    ]
+  },
+  "mneme_storage": {
+    "available": true,
+    "path": "D:\\mztrain\\.tmp\\run-all-20260926\\mneme_storage_zcoder1b",
+    "stored": true
+  },
+  "model": "ZCodeBERTForCausalLM",
+  "model_stats": {
+    "compression_ratio": 0.13824705484220345,
+    "equivalent_params": 1018968832,
+    "factorized_layers": 145,
+    "hidden_size": 1792,
+    "num_heads": 28,
+    "num_layers": 24,
+    "rank": 64,
+    "task": "CausalLM",
+    "total_params": 141154256,
+    "trainable_params": 140869440
+  },
+  "optimizer_stats": {
+    "compressed_params": 0,
+    "full_memory_mb": 0.0,
+    "memory_saved_pct": 100.0,
+    "state_memory_mb": 0.0,
+    "step_count": 0,
+    "total_params": 0
+  },
+  "scale": "1B_dense_equivalent_compressed",
+  "status": "completed",
+  "torch": "2.11.0+cu128"
+}

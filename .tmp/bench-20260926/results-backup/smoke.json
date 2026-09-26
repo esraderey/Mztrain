@@ -1,0 +1,76 @@
+{
+  "label": "smoke",
+  "timestamp": "2026-05-05T06:26:39.663924Z",
+  "device": "cuda",
+  "torch_version": "2.6.0+cu124",
+  "config": {
+    "initial_rank": 16,
+    "max_rank": 64,
+    "rank_schedule": "exponential",
+    "rank_growth_interval": 4,
+    "rank_growth_factor": 2.0,
+    "compress_optimizer_states": true,
+    "use_amp": false,
+    "learning_rate": 0.001,
+    "log_interval": 200
+  },
+  "epochs": 8,
+  "seeds": [
+    42
+  ],
+  "runs": [
+    {
+      "seed": 42,
+      "wall_time_s": 19.653252124786377,
+      "train_losses": [
+        44464269189.91629,
+        16220306578.379747,
+        74389879403084.97,
+        5487215300405.177,
+        8745063.702136075,
+        296329.88528481015,
+        174262.67563291139,
+        125018.03332674051
+      ],
+      "val_losses": [
+        427720102.0,
+        13036095600.0,
+        6489542911488.0,
+        109373550.0,
+        655439.21484375,
+        244953.1865234375,
+        216669.37890625,
+        153005.6826171875
+      ],
+      "ranks": [
+        16,
+        16,
+        16,
+        16,
+        32,
+        32,
+        32,
+        32
+      ],
+      "rank_min": 16,
+      "rank_max": 32,
+      "rank_grew": true,
+      "final_val_loss": 153005.6826171875,
+      "final_train_loss": 125018.03332674051,
+      "final_val_accuracy": 0.3175
+    }
+  ],
+  "int8_sanity": {
+    "input_unique_values": 4096,
+    "galore": {
+      "rel_reconstruction_error": 0.007451154291629791,
+      "recovered_unique_values": 407,
+      "max_abs_error": 0.00013047829270362854
+    },
+    "adaptive": {
+      "rel_reconstruction_error": 0.007451154291629791,
+      "recovered_unique_values": 407,
+      "max_abs_error": 0.00013047829270362854
+    }
+  }
+}

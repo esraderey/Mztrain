@@ -1,0 +1,61 @@
+2026-09-26 11:54:43,544 - mztrain - INFO - [MZTrain VRAM] mode=preventive pressure_ema=0.400: crecimiento de rango 64->128 BLOQUEADO por presion
+2026-09-26 11:54:51,504 - mztrain - WARNING - [MZTrain VRAM] OOM capturado
+2026-09-26 11:54:52,537 - mztrain - INFO - [MZTrain VRAM] recuperado tras OOM (retry)
+2026-09-26 11:55:04,062 - mztrain - WARNING - [MZTrain VRAM] OOM capturado
+2026-09-26 11:55:04,978 - mztrain - INFO - [MZTrain] Modelo factorizado: 2 capas reemplazadas, 1 omitidas (< 4096 params)
+2026-09-26 11:55:06,200 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cuda, SM: 89, FP8: si, BF16: si
+2026-09-26 11:55:06,200 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     2
+  Params totales:         7,834
+  Params (si full):       65,920
+  Ahorro en pesos:        90.1%
+  Rango actual:           8
+  Device:                 cuda
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+2026-09-26 11:55:06,200 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 3 epochs, rank 8 -> 32
+2026-09-26 11:55:06,440 - mztrain - INFO - [MZTrain] Epoch 0/3: train_loss=2.303463, rank=8, time=0.2s, mem=16376MB
+2026-09-26 11:55:06,460 - mztrain - INFO - ZFactorizedLinear rank: 8 -> 16 (256x128)
+2026-09-26 11:55:06,461 - mztrain - INFO - ZFactorizedLinear rank: 8 -> 16 (128x256)
+2026-09-26 11:55:06,521 - mztrain - INFO - [MZTrain] Rango crecido a 16 en 2 capas, 10 estados migrados, warmup 50 steps
+2026-09-26 11:55:06,546 - mztrain - INFO - [MZTrain] Epoch 1/3: train_loss=2.291680, rank=16, time=0.1s, mem=18MB
+2026-09-26 11:55:06,548 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (256x128)
+2026-09-26 11:55:06,549 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (128x256)
+2026-09-26 11:55:06,551 - mztrain - INFO - [MZTrain] Rango crecido a 32 en 2 capas, 10 estados migrados, warmup 50 steps
+2026-09-26 11:55:06,572 - mztrain - INFO - [MZTrain] Epoch 2/3: train_loss=2.290584, rank=32, time=0.0s, mem=18MB
+2026-09-26 11:55:06,572 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           0.4s (0.0min)
+  Mejor loss:             2.290584
+  Rango final:            32
+  Epochs completados:     3
+  Optimizer memory:       {'total_params': 10, 'compressed_params': 0, 'state_memory_mb': 0.2007598876953125, 'full_memory_mb': 0.2007598876953125, 'memory_saved_pct': 0.0, 'step_count': 4}
+  =================================================
+
+== 1. Sensor real ==
+  [PASS] observe() devuelve snapshot real
+  [PASS] total ~ mem_get_info  -- snap.total=8.59GB
+  [PASS] presion baja en arranque  -- pressure=0.0000 mode=normal
+  [PASS] no bloquea growth en arranque
+
+== 2. Lazo cerrado real: allocar -> bloquear -> liberar ==
+  [PASS] presion sube tras allocar real  -- pressure=0.400 (alloc~3.43GB) mode=preventive
+  [PASS] growth BLOQUEADO bajo presion real (no estaba antes)
+  [PASS] approve_rank_growth veta el crecimiento
+  [PASS] tras liberar+empty_cache+reset_peak: presion baja  -- pressure=0.0000 mode=normal
+  [PASS] growth RE-PERMITIDO tras liberar
+
+== 3. OOM real capturado y recuperado ==
+  [PASS] oom_guarded recupera tras OOM real (retry)  -- events=1 recov=1
+  [PASS] OOM persistente -> re-lanza
+
+== 4. Entrenamiento end-to-end en GPU con governor activo ==
+  [PASS] entrena en GPU sin crashear
+  [PASS] governor_stats con presion real  -- mode=normal pressure_ema=0.0027 hist_len=15
+  [PASS] rango crecio (presion baja, modelo pequeño)  -- ranks=[8, 16, 32]
+  [PASS] 0 OOM en run normal
+
+========================================================
+  VRAM Governor GPU validation: 15/15 PASS
+========================================================

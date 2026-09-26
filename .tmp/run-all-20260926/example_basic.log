@@ -1,0 +1,57 @@
+============================================================
+MZTrain - Ejemplo Basico
+============================================================
+
+Modelo original: 297,098 parametros
+
+--- Estimacion de Ahorro ---
+Tradicional:  4.5 MB
+MZTrain:      0.6 MB
+Ahorro:       86.6%
+Factor:       7.5x
+2026-09-26 12:25:19,271 - mztrain - INFO - [MZTrain] Modelo factorizado: 3 capas reemplazadas, 1 omitidas (< 4096 params)
+2026-09-26 12:25:20,541 - mztrain - INFO - [MZTrain Precision] Nivel: standard (solicitado: standard), Device: cpu, SM: 00, FP8: no, BF16: no
+2026-09-26 12:25:20,542 - mztrain - INFO - [MZTrain] ========== MODELO FACTORIZADO ==========
+  Capas factorizadas:     3
+  Params totales:         32,954
+  Params (si full):       295,808
+  Ahorro en pesos:        89.3%
+  Rango actual:           16
+  Device:                 cpu
+  AMP:                    False
+  Optimizer compress:     True
+  Grad compression:       none
+  =============================================
+
+--- Entrenamiento ---
+2026-09-26 12:25:20,542 - mztrain - INFO - [MZTrain] Iniciando entrenamiento: 10 epochs, rank 16 -> 64
+2026-09-26 12:25:20,752 - mztrain - INFO - [MZTrain] Epoch 0/10: train_loss=2.302357, val_loss=2.300427, rank=16, time=0.2s, mem=0MB
+2026-09-26 12:25:20,865 - mztrain - INFO - [MZTrain] Epoch 1/10: train_loss=2.257780, val_loss=2.310237, rank=16, time=0.1s, mem=0MB
+2026-09-26 12:25:21,000 - mztrain - INFO - [MZTrain] Epoch 2/10: train_loss=2.153456, val_loss=2.411830, rank=16, time=0.1s, mem=0MB
+2026-09-26 12:25:21,086 - mztrain - INFO - [MZTrain] Epoch 3/10: train_loss=1.954266, val_loss=2.488916, rank=16, time=0.1s, mem=0MB
+2026-09-26 12:25:21,165 - mztrain - INFO - [MZTrain] Epoch 4/10: train_loss=1.745431, val_loss=2.713252, rank=16, time=0.1s, mem=0MB
+2026-09-26 12:25:21,168 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (512x256)
+2026-09-26 12:25:21,169 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (256x512)
+2026-09-26 12:25:21,169 - mztrain - INFO - ZFactorizedLinear rank: 16 -> 32 (128x256)
+2026-09-26 12:25:21,170 - mztrain - INFO - [MZTrain] Rango crecido a 32 en 3 capas, 14 estados migrados, warmup 50 steps
+2026-09-26 12:25:21,264 - mztrain - INFO - [MZTrain] Early stopping en epoch 5 (paciencia 5)
+2026-09-26 12:25:21,265 - mztrain - WARNING - [MZTrain] best-state restaurado parcialmente: la topologia cambio desde el mejor epoch (15 tensores omitidos por cambio de shape; se conservan los pesos actuales para esos).
+2026-09-26 12:25:21,265 - mztrain - INFO - [MZTrain] ========== ENTRENAMIENTO COMPLETO ==========
+  Tiempo total:           0.7s (0.0min)
+  Mejor loss:             2.300427
+  Rango final:            32
+  Epochs completados:     6
+  Optimizer memory:       {'total_params': 14, 'compressed_params': 14, 'state_memory_mb': 0.12923049926757812, 'full_memory_mb': 0.4861602783203125, 'memory_saved_pct': 73.41812874674368, 'step_count': 25}
+  =================================================
+
+--- Resultados ---
+Epochs completados: 6
+Loss final (train): 1.5007
+Loss final (val):   2.8104
+Rango final:        32
+Tiempo total:       0.7s
+
+--- Exportacion ---
+Modelo exportado: 297,098 params
+
+Ejemplo completado.

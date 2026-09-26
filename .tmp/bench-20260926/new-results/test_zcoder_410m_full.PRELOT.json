@@ -6,7 +6,7 @@
   "device": "cuda",
   "torch": "2.11.0+cu128",
   "epochs": 3,
-  "wall_time_s": 216.33,
+  "wall_time_s": 296.08,
   "cuda_peak_mb": 3953.962890625,
   "train_losses": [
     8.036061843236288,
