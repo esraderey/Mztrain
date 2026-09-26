@@ -1,0 +1,362 @@
+{
+ "total": 51,
+ "puntos": [
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "_validate_map",
+   "linea": 25,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "_new_rows_mask",
+   "linea": 40,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "_noise",
+   "linea": 46,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "_validate_noise",
+   "linea": 55,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "_functional_noise",
+   "linea": 61,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "_inherit_parameter_flags",
+   "linea": 91,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "widen_factorized_linear",
+   "linea": 99,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "widen_embedding",
+   "linea": 149,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "widen_layernorm",
+   "linea": 200,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "scale_output_rows",
+   "linea": 241,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "dense_to_factorized",
+   "linea": 257,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "zero_block_outputs",
+   "linea": 284,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "pad_state_tensor",
+   "linea": 298,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/shape_ops.py",
+   "simbolo": "pad_adam_entry",
+   "linea": 325,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_shape_transaction",
+   "linea": 43,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_atomic_shape",
+   "linea": 72,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "dense_lin",
+   "linea": 83,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "fact_lin",
+   "linea": 87,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "Block",
+   "linea": 94,
+   "publico": true,
+   "tipo": "ClassDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "Block.__init__",
+   "linea": 95,
+   "publico": false,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "Block.forward",
+   "linea": 105,
+   "publico": true,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "GPT",
+   "linea": 116,
+   "publico": true,
+   "tipo": "ClassDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "GPT.__init__",
+   "linea": 117,
+   "publico": false,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "GPT.forward",
+   "linea": 127,
+   "publico": true,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "MigrationRec",
+   "linea": 141,
+   "publico": true,
+   "tipo": "ClassDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_preflight_model",
+   "linea": 150,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "qkv_out_map",
+   "linea": 174,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "attn_in_map",
+   "linea": 182,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_recs_fact",
+   "linea": 189,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "factorize_gpt",
+   "linea": 204,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "widen_gpt",
+   "linea": 221,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "deepen_gpt",
+   "linea": 305,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_require_adamw",
+   "linea": 346,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_new_adamw",
+   "linea": 351,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "migrate_optimizer",
+   "linea": 400,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_rescale_q_state",
+   "linea": 441,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "rel_drift",
+   "linea": 460,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "GrowthEvent",
+   "linea": 467,
+   "publico": true,
+   "tipo": "ClassDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "ShapeSchedule",
+   "linea": 475,
+   "publico": true,
+   "tipo": "ClassDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "ShapeSchedule.__init__",
+   "linea": 478,
+   "publico": false,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "ShapeSchedule.pop_due",
+   "linea": 483,
+   "publico": true,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "ShapeSchedule.pending",
+   "linea": 496,
+   "publico": true,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_GrowthRejected",
+   "linea": 500,
+   "publico": false,
+   "tipo": "ClassDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_probe_logits",
+   "linea": 505,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "_probe_metrics",
+   "linea": 524,
+   "publico": false,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "apply_event",
+   "linea": 541,
+   "publico": true,
+   "tipo": "FunctionDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "LrWarmup",
+   "linea": 646,
+   "publico": true,
+   "tipo": "ClassDef"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "LrWarmup.__init__",
+   "linea": 650,
+   "publico": false,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "LrWarmup._apply",
+   "linea": 663,
+   "publico": false,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "LrWarmup.step",
+   "linea": 667,
+   "publico": true,
+   "tipo": "Method"
+  },
+  {
+   "archivo": "src/mztrain/elastic_shape.py",
+   "simbolo": "LrWarmup.done",
+   "linea": 675,
+   "publico": true,
+   "tipo": "Method"
+  }
+ ]
+}

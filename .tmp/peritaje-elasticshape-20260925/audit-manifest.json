@@ -1,0 +1,81 @@
+{
+  "objetivo": {
+    "repo": "D:/mztrain (github.com/esraderey/Mztrain)",
+    "commit": "e095ac0e837167f0004e2a6ad605ca59c8ca776d",
+    "rama": "main",
+    "arbol_sucio": true,
+    "nota_arbol": "Los archivos objetivo tienen cambios SIN COMMITEAR (revision 'cirugia reversible' 2026-09-07: elastic_shape.py +1092/-?, shape_ops.py +617/-?; docs/ELASTICSHAPE-SAFETY.md y tests/test_elastic_shape_safety.py sin trackear). Se audita el arbol de trabajo tal cual, copiado al laboratorio."
+  },
+  "auditoria": {
+    "nivel": "A2",
+    "justificacion_nivel": "API publica exportada en PyPI (mztrain), refactor amplio (>1000 lineas), fallo = corrupcion silenciosa del entrenamiento (pesos/estado Adam). Sin entrada externa no confiable, sin dinero, sin cripto, sin concurrencia, sin LLM: no A3.",
+    "alcance": [
+      "src/mztrain/shape_ops.py (348 lineas, 8 primitivas publicas)",
+      "src/mztrain/elastic_shape.py (676 lineas: GPT ref, transaccion, cirugias, migracion AdamW, apply_event, schedule, warmup)",
+      "docs/ELASTICSHAPE-SAFETY.md como contrato declarado",
+      "src/mztrain/layers.py::ZFactorizedLinear solo como dependencia (semantica), no se audita"
+    ],
+    "exclusiones": [
+      "engine.py, refactorize, elastic rank, scheduler, checkpoint, precision (fuera de ElasticShape)",
+      "evidencia empirica T8-T14 (no se re-corre; se contrasta solo lo que SAFETY.md afirma del codigo)",
+      "DDP, torch.compile, optimizadores distintos de torch.optim.AdamW (fuera del contrato declarado)"
+    ],
+    "timestamp_utc": "2026-09-25T22:19:21Z",
+    "auditor": "peritaje 3.x — director Claude Fable 5.1; peritos PER-LOG (opus), PER-MAT (opus), PER-API (sonnet)",
+    "origen": "de_oficio (peticion directa del usuario: 'haz un peritaje de elastic shape')",
+    "modo_ciego": false
+  },
+  "modelo_amenazas": {
+    "activos": [
+      "preservacion funcional prometida (exacta a nivel de capa con noise=0; deriva acotada con noise>0; identidad exacta en deepen; correccion SDPA exacta)",
+      "integridad del estado AdamW migrado (sin perdida silenciosa, sin alias, escalas 1/c y 1/c^2 en las filas correctas, step por valor, AMSGrad/capturable/fused/grupos/excluidos)",
+      "atomicidad: tras excepcion o rechazo, modelo+optimizer+RNG identicos al pre-evento",
+      "fallos ruidosos, nunca silenciosos",
+      "fidelidad de docs/ELASTICSHAPE-SAFETY.md y README con el codigo"
+    ],
+    "actores": ["caller honesto con entradas de borde y secuencias de llamadas fuera del orden feliz", "el propio codigo (defectos logicos/numericos)"],
+    "fronteras": [
+      "API publica exportada en mztrain.__init__ (8 primitivas + GrowthEvent/ShapeSchedule/LrWarmup/apply_event)",
+      "formato interno del estado de torch.optim.AdamW (por version de torch)",
+      "dtypes mixtos (U/V bf16 con S fp32), CPU vs CUDA, generator RNG explicito"
+    ]
+  },
+  "entorno": {
+    "engine": "copia desechable en scratchpad + venv del proyecto (sandbox del harness)",
+    "runtime": "Python 3.13.2, torch 2.11.0+cu128, CUDA RTX 4060 8.6GB, Windows 11",
+    "hash_lockfile": "n/a (venv preexistente del proyecto)"
+  },
+  "aislamiento": {
+    "zonas_ejecutadas": ["Z0", "Z1"],
+    "network": "none (ningun PoC ni test requiere red; no se instala nada)",
+    "justificacion_red": null,
+    "limits": {"timeout_s": 600, "memory": "host", "cpus": "host", "nota": "sin contenedor: el objetivo es la libreria del propio usuario, ya instalada en su venv; los PoC solo importan mztrain desde la copia del laboratorio"},
+    "regla": "peritos SOLO LECTURA (proponen PoC como scripts); ejecuta unicamente el director en la copia lab/, nunca sobre D:/mztrain"
+  },
+  "baseline": {
+    "comando": ["python", "-m", "pytest", "-q", "--no-cov", "-o", "addopts=", "tests/test_shape_ops.py", "tests/test_elastic_shape.py", "tests/test_elastic_shape_safety.py"],
+    "exit_code": 0,
+    "resultado": "74 passed, 1 warning in 14.17s",
+    "zona": "Z1",
+    "notas": "Linea base VERDE de los tres archivos de test de ElasticShape sobre la copia del arbol de trabajo (incluye los cambios sin commitear)."
+  },
+  "inventario_superficie": {
+    "mecanico_crisol": "verificar_cobertura.py devolvio 0 puntos (busca sinks de seguridad; la libreria no los tiene) — no aplicable",
+    "ast_propio": "lab/inv/inventario_ast.json (todas las funciones/clases/metodos de los dos modulos) — cobertura se contrasta contra esta lista",
+    "tipo": "autodeclarado con soporte mecanico (AST)"
+  },
+  "limitaciones": [
+    "Sin contenedor: aislamiento por copia + venv, no por rootfs/limites de kernel",
+    "Sin calibracion crisol previa de esta cuadrilla: recall desconocido",
+    "No se re-ejecuta la evidencia empirica T8-T14"
+  ],
+  "presupuesto": {
+    "techo_global_tokens": 900000,
+    "techo_por_perito_tokens": 200000,
+    "intentos_reproduccion_por_sospecha": 2,
+    "criterio_suficiencia": "las 3 clases (logica/estado/rollback, matematica/numerica, API/contratos/docs) con cobertura declarada por simbolo del inventario AST; toda sospecha alta/critica con veredicto (reproducido/no_reproducido/descartado) tras re-disparo del director",
+    "consumido": {"director": null, "PER-LOG": null, "PER-MAT": null, "PER-API": null},
+    "suficiencia_alcanzada": null
+  },
+  "calibracion": {"ensayo_crisol": null, "recall_por_clase": "no calibrada"}
+}

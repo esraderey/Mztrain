@@ -1,0 +1,185 @@
+diff --git a/tests/test_shape_ops.py b/tests/test_shape_ops.py
+index adfeea5..a5b07d2 100644
+--- a/tests/test_shape_ops.py
++++ b/tests/test_shape_ops.py
+@@ -1,5 +1,6 @@
+ """Tests de M1 shape_ops — criterios ejecutables de SPEC-elasticshape-v1.md."""
+ import math
++import warnings
+ 
+ import pytest
+ import torch
+@@ -365,3 +366,173 @@ def test_new_dims_dead_without_downstream_readers():
+     loss = out[:, :8].square().mean()  # la loss solo ve dims viejas
+     loss.backward()
+     assert float(a2.U.grad[8:, :].abs().sum()) == 0.0
++
++
++# ---------- anclas del peritaje PER-SHAPE (ver ORDEN-PER-SHAPE.md) ----------
++
++def test_ancla_PER_API_001():
++    """PER-API-001: _validate_map debe rechazar mapas no enteros ANTES del
++    cast (antes: floats truncados en silencio via as_tensor(dtype=long))."""
++    ln = nn.LayerNorm(4)
++    with torch.no_grad():
++        ln.weight.copy_(torch.tensor([1.0, 2.0, 3.0, 4.0]))
++        ln.bias.copy_(torch.tensor([10.0, 20.0, 30.0, 40.0]))
++    with pytest.raises(ValueError):
++        widen_layernorm(ln, new_dim=6, dim_map=torch.tensor([0.1, 1.1, 2.1, 3.1]))
++    with pytest.raises(ValueError):
++        widen_layernorm(ln, new_dim=6, dim_map=[0, 1, True, 3])  # bool no es indice
++    # control negativo: mapa entero real sigue funcionando
++    new_ln = widen_layernorm(ln, new_dim=6, dim_map=torch.tensor([0, 1, 2, 3], dtype=torch.long))
++    assert torch.equal(new_ln.weight.data[:4], ln.weight.data)
++
++
++def test_ancla_PER_API_002():
++    """PER-API-002: scale_output_rows debe exigir factor > 0 (su unico uso
++    documentado, la correccion SDPA, siempre es sqrt(...) > 0)."""
++    torch.manual_seed(0)
++    layer = ZFactorizedLinear(8, 8, rank=4, bias=True, init_method="random")
++    with torch.no_grad():
++        layer.U.data.copy_(torch.arange(32, dtype=torch.float32).reshape(8, 4) + 1.0)
++        layer.bias.data.copy_(torch.arange(8, dtype=torch.float32) + 1.0)
++    with pytest.raises(ValueError):
++        scale_output_rows(layer, rows=[0, 1, 2], factor=-2.5)
++    with pytest.raises(ValueError):
++        scale_output_rows(layer, rows=[0, 1, 2], factor=0.0)
++    # control negativo: factor positivo sigue funcionando
++    before = layer.U.data.clone()
++    scale_output_rows(layer, rows=[0, 1, 2], factor=2.0)
++    assert torch.allclose(layer.U.data[:3], before[:3] * 2.0)
++
++
++def test_ancla_PER_API_004():
++    """PER-API-004: pad_state_tensor debe rechazar new_shape que no sea una
++    secuencia de int de Python (p.ej. un tensor) con ValueError explicito."""
++    t = torch.randn(4)
++    with pytest.raises(ValueError):
++        pad_state_tensor(t, torch.tensor([6]))
++    # control negativo: tupla de enteros funciona
++    out = pad_state_tensor(t, (6,))
++    assert out.shape == (6,)
++    assert torch.equal(out[:4], t)
++
++
++def test_ancla_PER_API_005():
++    """PER-API-005: pad_adam_entry sin 'step' debe dar ValueError explicativo,
++    no un KeyError crudo."""
++    entry = {"exp_avg": torch.zeros(4), "exp_avg_sq": torch.zeros(4)}
++    with pytest.raises(ValueError, match="step"):
++        pad_adam_entry(entry, (6,))
++    # control negativo: con 'step' presente funciona normalmente
++    entry_ok = {"exp_avg": torch.zeros(4), "exp_avg_sq": torch.zeros(4), "step": torch.tensor(5.0)}
++    out = pad_adam_entry(entry_ok, (6,))
++    assert float(out["step"]) == 5.0
++
++
++def test_ancla_PER_API_009():
++    """PER-API-009 (y el resto del hallazgo 3): new_dim/new_in/new_out deben
++    ser int (no bool, no float) en widen_layernorm/widen_embedding/
++    widen_factorized_linear, con ValueError explicito en vez de un TypeError
++    interno de PyTorch."""
++    ln = nn.LayerNorm(4)
++    with pytest.raises(ValueError):
++        widen_layernorm(ln, new_dim=6.5)
++    with pytest.raises(ValueError):
++        widen_layernorm(ln, new_dim=True)  # bool no es entero valido
++    emb = nn.Embedding(5, 4)
++    with pytest.raises(ValueError):
++        widen_embedding(emb, new_dim=6.0)
++    lay = _layer(i=8, o=8, r=4)
++    with pytest.raises(ValueError):
++        widen_factorized_linear(lay, new_in=12.0, new_out=8)
++    with pytest.raises(ValueError):
++        widen_factorized_linear(lay, new_in=12, new_out=True)
++    # control negativo: enteros reales funcionan
++    new_ln = widen_layernorm(ln, new_dim=6)
++    assert new_ln.normalized_shape == (6,)
++
++
++def test_ancla_PER_API_011():
++    """PER-API-011: pad_adam_entry solo debe paddear las claves explicitas de
++    AdamW/AMSGrad; una clave ajena que coincide en forma por casualidad debe
++    quedar intacta (deep-copiada), no expandida."""
++    old_shape = (4,)
++    entry = {
++        "exp_avg": torch.zeros(old_shape),
++        "exp_avg_sq": torch.zeros(old_shape),
++        "step": torch.tensor(3.0),
++        "custom_adapter_counter": torch.arange(4, dtype=torch.float32),
++    }
++    out = pad_adam_entry(entry, (6,))
++    assert out["custom_adapter_counter"].shape == entry["custom_adapter_counter"].shape
++    assert torch.equal(out["custom_adapter_counter"], entry["custom_adapter_counter"])
++    # control negativo: las claves documentadas si se expanden
++    assert out["exp_avg"].shape == (6,)
++
++
++def test_ancla_PER_MAT_002():
++    """PER-MAT-002: en fp16 con gauge extremo, la calibracion funcional puede
++    colapsar a cero por underflow sin ningun aviso; debe lanzar NoiseError."""
++    from mztrain.shape_ops import NoiseError
++
++    torch.manual_seed(1)
++    layer = ZFactorizedLinear(16, 16, rank=4, bias=False, init_method="random")
++    with torch.no_grad():
++        layer.U.normal_()
++        layer.V.normal_()
++        layer.S.fill_(1.0)
++        gauge = 1e-3
++        layer.U.mul_(gauge)  # mismo W: U*g, S/g
++        layer.S.div_(gauge)
++    layer = layer.to(torch.float16)
++    layer.S.data = layer.S.data.float()  # regla del proyecto: S fp32
++    g = torch.Generator().manual_seed(3)
++    with pytest.raises(NoiseError):
++        widen_factorized_linear(layer, 16, 32, noise_scale=1e-5, generator=g)
++
++
++def test_ancla_PER_MAT_003():
++    """PER-MAT-003: dense_to_factorized en baja precision (fp16/bf16) debe
++    avisar del error de reconstruccion ~1e-3-1e-2; en fp32 no debe avisar.
++    Residuo R5: en bf16 S queda en fp32 y el forward (sin autocast) funciona."""
++    torch.manual_seed(0)
++    lin_bf = nn.Linear(48, 144, bias=False).to(torch.bfloat16)
++    with pytest.warns(RuntimeWarning):
++        fac_bf = dense_to_factorized(lin_bf)
++    assert fac_bf.S.dtype == torch.float32
++    assert fac_bf.U.dtype == fac_bf.V.dtype == torch.bfloat16
++    x = torch.randn(9, 48).to(torch.bfloat16)
++    with torch.no_grad():
++        y_ref, y = lin_bf(x).float(), fac_bf(x).float()
++    assert float((y - y_ref).norm() / y_ref.norm()) < 1e-2
++    lin_f32 = nn.Linear(48, 144, bias=False)
++    with warnings.catch_warnings(record=True) as rec:
++        warnings.simplefilter("always")
++        dense_to_factorized(lin_f32)
++    assert not any(issubclass(w.category, RuntimeWarning) for w in rec)
++
++
++def test_ancla_PER_MAT_004():
++    """PER-MAT-004: widen_layernorm(variance_compensation=True) debe tambien
++    reescalar eps (eps' = eps*old_dim/new_dim); si no, con sigma^2=eps queda
++    un residuo no declarado de ~18%."""
++    d, dn, eps = 8, 16, 1e-5
++    torch.manual_seed(0)
++    ln = nn.LayerNorm(d, eps=eps).double()
++    with torch.no_grad():
++        ln.weight.uniform_(0.5, 1.5)
++        ln.bias.normal_()
++
++    def centered(var):
++        x = torch.randn(32, d, dtype=torch.float64)
++        x = x - x.mean(-1, keepdim=True)  # mu = 0 exacto
++        return x / x.std(-1, unbiased=False, keepdim=True) * math.sqrt(var)
++
++    def err(new, x):
++        xp = torch.cat([x, torch.zeros(x.shape[0], dn - d, dtype=x.dtype)], -1)
++        with torch.no_grad():
++            y_old, y_new = ln(x), new(xp)[:, :d]
++            return ((y_new - y_old).norm() / (y_old - ln.bias).norm()).item()
++
++    new = widen_layernorm(ln, dn, variance_compensation=True)
++    e_bad = err(new, centered(eps))
++    assert e_bad < 1e-6, f"residuo de eps no compensado: {e_bad:.3f}"

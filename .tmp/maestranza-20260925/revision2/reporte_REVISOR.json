@@ -1,0 +1,36 @@
+{"schema_version": 1,
+ "veredicto": "aprobar",
+ "independencia": "contextual",
+ "dimensiones": [
+  {"dimension": "correccion", "juicio": "ok", "evidencia": "D1-D4 implementados como fija el contrato (layers.py:274-281,331-337,412-418,775-777,796-805; shape_ops.py:290-331; elastic_shape.py:98-140,290,363,705-758). Sondas propias en revisor/: forward y reconstruct_weight bit a bit iguales a HEAD con gate=1 en fp32/fp64/bf16 (denso y sparse); bajo autocast CPU/CUDA bf16 con parametros fp32 y con U/V bf16+S fp32, torch.equal(new, HEAD)=True; refactorize con gates [1,.5,0,.25] + reset del engine: salto relativo 3.5e-7 (HEAD: 0.92); grow_rank(preserve=False) conserva funcion y resetea gates; export mixto bf16 da weight bf16 (promote_types+.to(U.dtype) correctos; nn.Linear fp32 se reemplaza por .data). LrWarmup: casos a,b,c,d,e (override), e2 (override==ultimo escrito), f, g, j (multi-grupo) dan el LR esperado y claves limpias al terminar; _new_adamw deep-copia ambas claves. D4: widen doble + deepen -> eps unico 2.5e-6 en ln_eps/lnf/ln1/ln2; reconstruccion GPT(...,ln_eps) drift 0.0; rechazo por guard restaura d y ln_eps."},
+  {"dimension": "regresiones", "juicio": "hallazgos", "evidencia": "Suite de 6 archivos 202 passed; banco_residuos_jefe.json verde; PoC director 0/7. Unica regresion observable: forward en device meta con dtype mixto ahora lanza RuntimeError (torch.is_autocast_enabled('meta')), antes devolvia tensor meta. Checkpoints de HEAD guardados a mitad de warmup (solo _mzshape_base_lr) pierden la proteccion G4-B."},
+  {"dimension": "errores", "juicio": "ok", "evidencia": "RuntimeWarning de dense_to_factorized conservado con texto nuevo; guard de tamano de _gated_s mantiene reconstruct_weight sin gate si hay desajuste (sonda rec_guard_mismatch_ungated=True)."},
+  {"dimension": "seguridad", "juicio": "no_aplica", "evidencia": "Sin superficie de entrada externa."},
+  {"dimension": "concurrencia", "juicio": "no_aplica", "evidencia": "Codigo monohilo."},
+  {"dimension": "eficiencia", "juicio": "ok", "evidencia": "is_autocast_enabled solo se evalua si h.dtype != U.dtype (cortocircuito); dynamo lo trata como constant_fold (torch/_dynamo/variables/torch.py:185); .to() no-op con dtype unico."},
+  {"dimension": "mantenibilidad", "juicio": "ok", "evidencia": "Cambios minimos y localizados; docstrings actualizados; ruff E9,F,B,PLE limpio (incluye F401 Tuple eliminado)."},
+  {"dimension": "oraculo", "juicio": "hallazgos", "evidencia": "Anclas R1 (gate 0.5 detecta ausencia y doble gating), R2, R3, R3b (con control G4-B), R4 (atol 1e-12 frente a delta eps 5e-6), R5/R5b fallarian en HEAD (sonda: HEAD mixto sin autocast -> RuntimeError). Faltan anclas para dos afirmaciones del contrato verificadas solo por sonda: invariancia bajo autocast de D1.4 y continuidad de refactorize con gates parciales."}
+ ],
+ "objecion_mas_fuerte": {
+  "descripcion": "D1 cambia la semantica de reconstruct_weight para todos sus consumidores (export engine/zcodebert, refactorize, grow_rank sparse): refactorize ahora hornea el wake_gate en la base nueva, de modo que una direccion recien revivida (gate 0) queda anulada en vez de saltar a gate 1; y un llamador publico de refactorize_model que no resetee gates aplicaria el gate dos veces.",
+  "valoracion": "No bloquea. La funcion del modelo es U diag(S*gate) V; la continuidad es el invariante correcto y la sonda lo mide (salto 3.5e-7 frente a 0.92 en HEAD). El unico llamador en el repo (engine.py:1160-1164) resetea gates via reset_after_refactorize inmediatamente; standalone sin reset ya era incorrecto en HEAD (gates viejos sobre base SVD nueva). Ningun consumidor necesita la W sin gate: los exports quieren la funcion del forward, y grow_rank(preserve=False) ahora resetea gates, coherente con ZSparse.grow_rank y con ElasticRank (_states se reinicia por desajuste de tamano, elastic_rank.py:289)."
+ },
+ "hallazgos": [
+  {"severidad": "menor", "descripcion": "Con LR tensor (AdamW lo admite), _mzshape_warmup_lr es alias del mismo tensor que g['lr']; LRScheduler de torch escribe in-place (fill_), asi que la escritura externa es invisible y gana la base caduca (sonda: externo 1e-5 -> LR final 1e-3). Variante no cubierta de R3; no es regresion frente a HEAD. Arreglo trivial: guardar una copia/valor escalar.", "evidencia": "src/mztrain/elastic_shape.py:727,739; torch/optim/lr_scheduler.py:83-92; revision2/revisor/probe_d3.py (caso i)"},
+  {"severidad": "menor", "descripcion": "Checkpoints de la version en HEAD guardados a mitad de warmup solo tienen _mzshape_base_lr; la regla nueva los trata como escritura externa y el warmup siguiente toma el LR escalado como base (sonda: 3.7e-4 en vez de 1e-3). Compromiso inevitable (en HEAD tambien quedaban bases caducas tras terminar), pero no esta documentado como nota de migracion.", "evidencia": "src/mztrain/elastic_shape.py:726-731; revision2/revisor/probe_d3.py (caso h)"},
+  {"severidad": "menor", "descripcion": "Forward en device 'meta' con U/V bf16 y S fp32 lanza RuntimeError: torch.is_autocast_enabled('meta') no es un tipo valido para autocast. HEAD devolvia un tensor meta.", "evidencia": "src/mztrain/layers.py:278,776"},
+  {"severidad": "menor", "descripcion": "El documento afirma que la exportacion a denso es 'exacta' con gates parciales; eso es cierto hasta el redondeo con dtype unico, pero con U/V bf16 y S fp32 la W se redondea a bf16 y difiere del forward en 3.8e-3 relativo.", "evidencia": "docs/ELASTICSHAPE-SAFETY.md:187-190; revision2/revisor/probe_d1.py (export_mixed_rel)"},
+  {"severidad": "menor", "descripcion": "Oraculo: sin ancla de invariancia bajo autocast para D1.4 ni de continuidad de refactorize+reset con gates parciales (el impacto semantico principal de D1 sobre consumidores no tocados); ambas solo las verifica la sonda del revisor.", "evidencia": "tests/test_layers.py:237-308"}
+ ],
+ "verificaciones_ejecutadas": [
+  {"comando": "D:/mztrain/.venv/Scripts/python.exe -m pytest -q -p no:cacheprovider -o addopts=\"\" tests/test_layers.py tests/test_shape_ops.py tests/test_elastic_shape.py tests/test_elastic_shape_safety.py tests/test_elastic_rank.py tests/test_engine.py  (202 passed)", "resultado": "pass"},
+  {"comando": "python -m ruff check --select E9,F,B,PLE (6 archivos tocados)", "resultado": "pass"},
+  {"comando": "python .tmp/maestranza-20260925/residuos/poc_residuos.py  (0 / 7 reproducen)", "resultado": "pass"},
+  {"comando": "python revision2/revisor/probe_d1.py  (bit a bit frente a HEAD, autocast, export mixto, refactorize, guard)", "resultado": "pass"},
+  {"comando": "python revision2/revisor/probe_sparse_grow.py  (grow_rank old vs new)", "resultado": "pass"},
+  {"comando": "python revision2/revisor/probe_d3.py  (casos LrWarmup a-k; caso i muestra hallazgo)", "resultado": "fail"},
+  {"comando": "python revision2/revisor/probe_d2d4.py  (dense_to_factorized bf16/fp16, pipeline bf16, eps/rollback)", "resultado": "pass"},
+  {"comando": "python -c forward meta con dtype mixto, HEAD frente a nuevo", "resultado": "fail"},
+  {"comando": "git -C D:/mztrain diff --stat", "resultado": "pass"}
+ ]
+}

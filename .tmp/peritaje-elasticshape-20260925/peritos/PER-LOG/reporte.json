@@ -1,0 +1,279 @@
+{
+  "dominio": "PER-LOG: correccion logica, maquina de estados, rollback y migracion de estado AdamW en ElasticShape",
+  "ambito_examinado": {
+    "raiz_lab": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab",
+    "archivos": [
+      "src/mztrain/elastic_shape.py (676 lineas, lectura completa; sha256 007653fc... identico a D:/mztrain)",
+      "src/mztrain/shape_ops.py (348 lineas, lectura completa; sha256 76e676ad... identico a D:/mztrain)",
+      "src/mztrain/layers.py L33-332 (ZFactorizedLinear: constructor, _gated_s, forward, grow_rank; solo semantica)",
+      "D:/mztrain/docs/ELASTICSHAPE-SAFETY.md (contrato; NO estaba en lab/docs, leido en solo lectura desde el repo)",
+      "tests/test_elastic_shape_safety.py, tests/test_elastic_shape.py (solo cobertura)",
+      "torch 2.11 fuente: optim/adam.py (__init__), optim/adamw.py, optim/optimizer.py (add_param_group, param_names)"
+    ],
+    "simbolos": ["_shape_transaction", "_atomic_shape", "factorize_gpt", "widen_gpt", "deepen_gpt", "_new_adamw", "migrate_optimizer", "_rescale_q_state", "apply_event", "ShapeSchedule", "GrowthEvent", "LrWarmup", "_probe_logits", "_probe_metrics", "pad_state_tensor", "pad_adam_entry", "_validate_map", "widen_factorized_linear", "_functional_noise", "widen_embedding", "widen_layernorm", "scale_output_rows", "dense_to_factorized", "zero_block_outputs"]
+  },
+  "hallazgos": [
+    {
+      "id": "PER-LOG-001",
+      "titulo": "LrWarmup reutiliza un _mzshape_base_lr caduco: tras un cambio de LR entre growths el warmup rampa al pico viejo y se queda ahi",
+      "dimension": "correctitud",
+      "clase": "estado persistente caduco / maquina de estados del LR",
+      "severidad": "alto",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "LrWarmup.__init__ / LrWarmup.step / _new_adamw",
+        "lineas": "657-659, 667-672, 357",
+        "fragmento_literal": "for g in opt.param_groups:\n            g.setdefault(\"_mzshape_base_lr\", g[\"lr\"])\n        self.base = [g[\"_mzshape_base_lr\"] for g in opt.param_groups]"
+      },
+      "amenaza": {
+        "actor": "caller honesto con LR decreciente (cosine/step decay escrito en g['lr'], o cambio manual) entre growths",
+        "precondiciones": "un LrWarmup previo TERMINADO sobre el optimizer (o su ancestro migrado); despues el LR vigente cambia; nuevo growth aceptado seguido de LrWarmup(new_opt, n) como indica SAFETY/README",
+        "activo": "LR efectivo del entrenamiento tras el growth",
+        "invariante": "LrWarmup: 'Rampa lineal floor->1.0 del LR tras un growth'; comentario L654-656: la base persistente existe para no 'perder el objetivo real'. El objetivo real tras un cambio de LR es el LR vigente, no el pico historico"
+      },
+      "descripcion": "setdefault solo escribe _mzshape_base_lr la primera vez; step() nunca la borra al terminar (done) y _new_adamw la deep-copia a cada optimizer migrado (L357). Cualquier LrWarmup posterior ignora el LR vigente y rampa hasta la base historica. Tras done el LR queda fijado en esa base (p.ej. 10x el LR programado) hasta que alguien lo reescriba; si el scheduler externo estaba ligado al optimizer viejo, nunca se reescribe.",
+      "propiedad_falsable": "Para todo optimizer opt y growth aceptado: si lr_pre = opt.param_groups[i]['lr'] justo antes de apply_event y no hay warmup SIN terminar, entonces al completar LrWarmup(new_opt, n) se cumple new_opt.param_groups[i]['lr'] == lr_pre.",
+      "contraejemplo_minimo": "GPT(64,16,24,1,2,fact_lin(8)), AdamW(lr=1e-3); LrWarmup(opt,5) x5 pasos (done, lr=1e-3); g['lr']=1e-4; apply_event(GrowthEvent(1,new_d=36)); LrWarmup(new,5) x5 -> lr final 1e-3 (10x lr_pre=1e-4).",
+      "control_negativo": "Misma secuencia sin cambiar g['lr'] entre growths: lr final == lr_pre == 1e-3. El caso legitimo (warmup sobre warmup SIN terminar, test_lr_warmup_stacking_preserves_base) debe seguir pasando tras la remediacion.",
+      "poc_script": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/peritos/PER-LOG/poc_PER-LOG-001.py",
+      "impacto": "Corrupcion silenciosa del LR: sube el LR al pico original en la fase tardia (cuando el decaimiento ya lo habia bajado) y lo mantiene; riesgo de divergencia o de perder la convergencia de la cola. Ningun documento (SAFETY, SPEC, README) lo declara como limitacion; SAFETY L118-119 presenta la conservacion de 'la base de warmup' como garantia.",
+      "remediacion": "Al llegar a done, eliminar la clave (g.pop('_mzshape_base_lr', None)) o guardar tambien el ultimo lr aplicado y, en __init__, si g['lr'] != ultimo_aplicado tratar el lr vigente como nueva base. Anadir test: warmup terminado + cambio de LR + growth + warmup -> lr final == lr vigente."
+    },
+    {
+      "id": "PER-LOG-002",
+      "titulo": "apply_event descarta en silencio lr/weight_decay explicitos cuando el evento no migra (factorize redundante, new_d == d)",
+      "dimension": "correctitud",
+      "clase": "parametro de control ignorado en rama sin migracion",
+      "severidad": "medio",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "apply_event",
+        "lineas": "603-614, 621-623",
+        "fragmento_literal": "if recs or ev.add_layers:\n                opt = migrate_optimizer(model, opt, recs, lr, weight_decay)"
+      },
+      "amenaza": {
+        "actor": "caller honesto que fija el LR/WD post-growth via apply_event(lr=..., weight_decay=...)",
+        "precondiciones": "evento aceptado que no reconstruye el optimizer: factorize=True sobre modelo ya factorizado (n_conv == 0), new_d == model.d, o combinacion de ambos con add_layers=0 (p.ej. eventos duplicados o catch-up de ShapeSchedule)",
+        "activo": "hiperparametros de los grupos del optimizer devuelto",
+        "invariante": "SAFETY L123-124: 'lr=None y weight_decay=None heredan valores de CADA grupo; un override explicito afecta a todos.'; docstring migrate_optimizer: 'Overrides explicitos se aplican a todos.'"
+      },
+      "descripcion": "lr y weight_decay solo se aplican dentro de _new_adamw, que se invoca unicamente si hubo conversion densa (n_conv>0) o migracion (recs/add_layers). En las ramas sin migracion apply_event devuelve el optimizer original con accepted=True y el reporte ('factorize redundante: ... estado INTACTO') no menciona que el override se ignoro.",
+      "propiedad_falsable": "Si apply_event(model, opt, ev, lr=L, weight_decay=W) devuelve report['accepted'] is True, entonces para todo grupo g del optimizer devuelto g['lr'] == L y g['weight_decay'] == W.",
+      "contraejemplo_minimo": "GPT factorizado d=24, AdamW(lr=1e-3, wd=0.01); apply_event(model, opt, GrowthEvent(1, factorize=True), lr=5e-4, weight_decay=0.05) -> accepted=True, grupos con lr=1e-3, wd=0.01. Igual con GrowthEvent(1, new_d=24).",
+      "control_negativo": "GrowthEvent(1, add_layers=1) con los mismos overrides -> todos los grupos quedan con lr=5e-4, wd=0.05.",
+      "poc_script": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/peritos/PER-LOG/poc_PER-LOG-002.py",
+      "impacto": "El entrenamiento continua con un LR/WD distinto del solicitado sin senal alguna; tambien _mzshape_base_lr queda sin actualizar, por lo que un LrWarmup posterior rampa al objetivo viejo.",
+      "remediacion": "Si lr/weight_decay no son None y no hubo migracion, aplicar el override en un optimizer reconstruido (_new_adamw + copia de estado sin alias, como migrate_optimizer con recs=[]) o rechazar con ValueError; y registrar en report['optimizer'] el override aplicado."
+    },
+    {
+      "id": "PER-LOG-003",
+      "titulo": "Candidato no finito por ruido funcional desbordado se propaga como ValueError en vez de rechazo accepted=False",
+      "dimension": "recuperabilidad",
+      "clase": "clasificacion de fallo inconsistente (excepcion vs rechazo)",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "_functional_noise (llamado desde widen_gpt via widen_factorized_linear); apply_event captura solo _GrowthRejected",
+        "lineas": "shape_ops.py 85-87; elastic_shape.py 639",
+        "fragmento_literal": "noise = (noise * (target / size)).to(dt)\n    if not torch.isfinite(noise).all():\n        raise ValueError(\"ruido funcional no representable en el dtype de U\")"
+      },
+      "amenaza": {
+        "actor": "caller honesto con noise_scale finito grande o factores en dtype estrecho (fp16/bf16)",
+        "precondiciones": "noise_scale finito >= 0 (pasa ambas validaciones) cuyo ruido calibrado no cabe en el dtype de U",
+        "activo": "contrato de resultado de apply_event (rechazo recuperable vs excepcion)",
+        "invariante": "SAFETY L63-65: 'Al exceder un limite o encontrar un candidato no finito, el resultado contiene accepted=False, rolled_back=True, rejection_reason, y el optimizer devuelto es el ORIGINAL.'"
+      },
+      "descripcion": "El desborde en capas factorizadas lanza ValueError dentro de widen_gpt; apply_event solo traduce _GrowthRejected a rechazo, asi que la excepcion llega al caller (el rollback de topologia/RNG si ocurre). La misma condicion en widen_embedding (L190) NO lanza: escribe inf y el chequeo de finitud posterior la convierte en rechazo. Dos rutas para el mismo tipo de candidato con semanticas distintas; el bucle del ejemplo de SAFETY (solo mira reporte['accepted']) se cae.",
+      "propiedad_falsable": "Para todo noise_scale finito >= 0, apply_event(model, opt, GrowthEvent(1, new_d=36, noise_scale=s)) o devuelve accepted=True con parametros finitos, o devuelve (opt_original, report) con accepted=False y rolled_back=True; nunca lanza por no finitud del candidato.",
+      "contraejemplo_minimo": "GPT fp32 fact_lin(8) d=24, un paso AdamW; apply_event(..., GrowthEvent(1, new_d=36, noise_scale=1e300)) -> ValueError('ruido funcional no representable en el dtype de U').",
+      "control_negativo": "noise_scale=1e-3 -> accepted=True.",
+      "poc_script": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/peritos/PER-LOG/poc_PER-LOG-003.py",
+      "impacto": "Fallo ruidoso (no silencioso) y el estado se restaura; el caller que sigue el contrato documentado recibe una excepcion no esperada. Entrada de borde.",
+      "remediacion": "En _functional_noise (y simetricamente en widen_embedding) lanzar una excepcion especifica que apply_event mapee a _GrowthRejected, o dejar pasar el inf y confiar en el chequeo de finitud de apply_event (L627-629) como hace el embedding."
+    },
+    {
+      "id": "PER-LOG-004",
+      "titulo": "probe_targets solo se valida por forma: dtype/rango invalidos se detectan tras la cirugia completa; en CUDA el device-side assert anula la garantia de rollback",
+      "dimension": "robustez",
+      "clase": "validacion tardia de entrada",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "media",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "apply_event / _probe_metrics",
+        "lineas": "575-576, 531-535, 633-634",
+        "fragmento_literal": "if probe_targets is not None and (probe_x is None or probe_targets.shape != probe_x.shape):\n        raise ValueError(\"probe_targets requiere la misma forma que probe_x\")"
+      },
+      "amenaza": {
+        "actor": "caller honesto con targets de sonda mal construidos (indice fuera de vocab, dtype float/int32)",
+        "precondiciones": "probe_targets con la forma correcta pero valores fuera de [0, vocab) distintos de -100 o dtype no long",
+        "activo": "atomicidad/rollback (CUDA) y coste del evento",
+        "invariante": "SAFETY L69-71: 'Una excepcion de validacion/construccion/migracion se propaga despues de restaurar el estado. Se preservan ... RNG CPU/CUDA/generador explicito.'"
+      },
+      "descripcion": "La unica validacion previa es la forma. F.cross_entropy sobre 'before' se ejecuta por primera vez en _probe_metrics, despues de factorize/widen/deepen/migrate. En CPU lanza IndexError/RuntimeError y el rollback funciona (solo se desperdicia la cirugia). En CUDA el target fuera de rango dispara un device-side assert asincrono: el contexto CUDA queda envenenado, los parametros del modelo en GPU quedan inutilizables y la restauracion de RNG CUDA/generator no tiene garantia (no verificado ejecutando).",
+      "propiedad_falsable": "Si probe_targets contiene un valor fuera de [0, vocab) distinto de ignore_index o no es de dtype entero long, apply_event lanza ValueError sin haber invocado widen_gpt/deepen_gpt/factorize_gpt (contador de llamadas == 0).",
+      "contraejemplo_minimo": "GPT d=24 CPU; apply_event(model, opt, GrowthEvent(1,new_d=36), probe_x=x, probe_targets=torch.full((2,16),999), max_kl=10.0) -> IndexError con widen_gpt ya ejecutado 1 vez.",
+      "control_negativo": "probe_targets=x (valido) -> accepted=True, widen_gpt llamado 1 vez. Variante CUDA en subproceso con --cuda.",
+      "poc_script": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/peritos/PER-LOG/poc_PER-LOG-004.py",
+      "impacto": "Entrada invalida con fallo ruidoso; en CPU coste desperdiciado; en CUDA el proceso debe reiniciarse y la promesa de rollback no aplica.",
+      "remediacion": "Validar antes de la transaccion: dtype long, y ((t >= 0) & (t < model.vocab)) | (t == -100) en todas las posiciones."
+    },
+    {
+      "id": "PER-LOG-005",
+      "titulo": "migrate_optimizer acepta un ledger ya consumido junto con el optimizer pre-migracion y transplanta momentos caducos en silencio",
+      "dimension": "observabilidad",
+      "clase": "guarda de ledger caduco incompleta (maquina de estados del ledger)",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "migrate_optimizer",
+        "lineas": "416-418, 436",
+        "fragmento_literal": "pending = getattr(model, \"_mzshape_pending_recs\", [])\n    if pending and (len(pending) != len(recs) or any(a is not b for a, b in zip(pending, recs))):\n        raise ValueError(\"ledger de migracion pendiente distinto del proporcionado\")"
+      },
+      "amenaza": {
+        "actor": "caller honesto que 'migra dos veces' (reintento, variable reutilizada) pasando el optimizer anterior al widen",
+        "precondiciones": "widen_gpt directo -> migrate_optimizer(model, opt, recs) -> K pasos con opt2 -> migrate_optimizer(model, opt, recs) otra vez",
+        "activo": "integridad del estado AdamW (momentos y step)",
+        "invariante": "widen_gpt L234-237 y migrate_optimizer L422: un ledger/optimizer caduco debe fallar ruidosamente ('un ledger caduco pierde momentum en silencio (G4-B)')"
+      },
+      "descripcion": "Tras migrar, _mzshape_pending_recs pasa a False (L436) y la comprobacion de identidad solo corre si hay ledger pendiente. Un ledger consumido sigue siendo 'valido' (r.new vivos) y el optimizer pre-widen sigue conteniendo exactamente los r.old; _new_adamw no detecta nada y se transplanta el estado de hace K pasos (step retrocede).",
+      "propiedad_falsable": "Tras una migracion exitosa de recs, cualquier llamada posterior migrate_optimizer(model, X, recs) con X distinto del optimizer vivo lanza ValueError/RuntimeError.",
+      "contraejemplo_minimo": "3 pasos, recs=widen_gpt(model,36), opt2=migrate(model,opt,recs), 4 pasos con opt2 (step=7), opt3=migrate(model,opt,recs) -> opt3 con step=3, sin error.",
+      "control_negativo": "La primera migracion conserva step=3 y limpia el ledger; migrar de nuevo desde opt2 (el vivo) es idempotente e inocuo.",
+      "poc_script": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/peritos/PER-LOG/poc_PER-LOG-005.py",
+      "impacto": "Perdida silenciosa de K pasos de momento y regresion del contador; requiere uso directo de primitivas no exportadas en el paquete raiz.",
+      "remediacion": "Marcar el ledger como consumido (atributo en cada MigrationRec o generacion/token en el modelo) y rechazar recs consumidos; o rechazar si algun r.old del ledger ya no pertenece al modelo y no hay ledger pendiente."
+    },
+    {
+      "id": "PER-LOG-006",
+      "titulo": "Con migracion pendiente (widen_gpt/deepen_gpt directos) el modelo sigue entrenable con el optimizer viejo y no aprende, sin error",
+      "dimension": "observabilidad",
+      "clase": "estado intermedio no protegido",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "widen_gpt / deepen_gpt",
+        "lineas": "299-301, 342-343 (guardas solo en 233-240 y 583-584)",
+        "fragmento_literal": "model.d = new_d\n    model._mzshape_pending_recs = recs\n    return recs"
+      },
+      "amenaza": {
+        "actor": "caller honesto que usa las primitivas publicas del modulo y olvida migrate_optimizer",
+        "precondiciones": "widen_gpt o deepen_gpt directo; bucle de entrenamiento continua con el optimizer anterior",
+        "activo": "progreso del entrenamiento",
+        "invariante": "modelo de amenazas (c) 'ninguna ruta degrada en silencio (migracion sin aplicar)'; widen_gpt L234-237 reconoce que el ledger pendiente degrada en silencio pero solo lo protege frente a otro widen/evento"
+      },
+      "descripcion": "El flag de ledger pendiente solo se consulta en widen_gpt y apply_event. forward/backward/opt.step() funcionan: tras widen todos los parametros del modelo tienen grad pero ninguno esta en el optimizer (que referencia los viejos, sin grad) -> ningun parametro cambia; tras deepen el bloque nuevo nunca entrena.",
+      "propiedad_falsable": "Mientras _mzshape_pending_recs o _mzshape_new_param_sources esten pendientes, un paso de entrenamiento con el optimizer viejo o lanza, o actualiza todos los parametros entrenables del modelo.",
+      "contraejemplo_minimo": "widen_gpt(model,36); 3 pasos con el opt viejo -> 0 excepciones, todos los parametros sin cambios. deepen_gpt(model,1); pasos con opt viejo -> parametros del bloque nuevo sin cambios.",
+      "control_negativo": "widen_gpt + migrate_optimizer -> 3 pasos cambian todos los parametros.",
+      "poc_script": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/peritos/PER-LOG/poc_PER-LOG-006.py",
+      "impacto": "Entrenamiento congelado total (widen) o parcial (deepen) sin senal; solo se detecta en el siguiente evento. Las primitivas no estan en __all__ del paquete, SAFETY recomienda apply_event, por eso severidad baja.",
+      "remediacion": "Registrar un forward_pre_hook en el modelo mientras haya migracion pendiente que lance RuntimeError (y retirarlo en migrate_optimizer), o documentar explicitamente en los docstrings de widen_gpt/deepen_gpt que el modelo queda inusable hasta migrar."
+    },
+    {
+      "id": "PER-LOG-007",
+      "titulo": "LrWarmup valida steps pero no floor: floor NaN/negativo deja LR NaN/negativo (ascenso de gradiente) en silencio",
+      "dimension": "robustez",
+      "clase": "validacion de entrada incompleta",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "LrWarmup.__init__",
+        "lineas": "650-653, 661",
+        "fragmento_literal": "if steps <= 0:\n            raise ValueError(\"steps > 0\")\n        self.opt, self.steps, self.floor = opt, steps, floor"
+      },
+      "amenaza": {
+        "actor": "caller honesto con un floor calculado/configurado erroneamente",
+        "precondiciones": "floor no finito o < 0",
+        "activo": "LR de todos los grupos",
+        "invariante": "Docstring LrWarmup 'Rampa lineal floor->1.0 del LR'; politica del modulo de rechazar entradas numericas invalidas antes de mutar (noise_scale, umbrales, steps)"
+      },
+      "descripcion": "floor se usa sin validar en _apply(floor) (L661) y en step(); AdamW no valida lr en step(), asi que NaN envenena los parametros y un lr negativo invierte el signo del update durante todo el warmup.",
+      "propiedad_falsable": "LrWarmup(opt, steps, floor) con floor no finito o < 0 lanza ValueError y no modifica opt.param_groups.",
+      "contraejemplo_minimo": "AdamW([p], lr=1e-3); LrWarmup(opt, 10, floor=float('nan')) -> lr=nan; un paso -> p NaN. floor=-0.5 -> lr=-5e-4, p sube en direccion del gradiente.",
+      "control_negativo": "steps=0 -> ValueError; floor=0.1 -> lr=1e-4.",
+      "poc_script": "C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/peritos/PER-LOG/poc_PER-LOG-007.py",
+      "impacto": "Corrupcion silenciosa con entrada invalida.",
+      "remediacion": "if not math.isfinite(floor) or floor < 0: raise ValueError(...) (decidir si floor > 1 se admite)."
+    }
+  ],
+  "superficie_examinada_sin_hallazgos": [
+    {
+      "clase": "atomicidad de _shape_transaction (instantanea superficial)",
+      "que": "todas las escrituras de factorize_gpt/widen_gpt/deepen_gpt/migrate_optimizer/_probe_logits sobre modulos preexistentes",
+      "metodo": "traza linea a linea: toda mutacion de modulos existentes es rebind via Module.__setattr__ de submodulos (_modules, copiado) o atributos planos (__dict__, copiado: d, _mzshape_*, training, _forward_count); ninguna escritura in-place en .data, requires_grad, .grad, _parameters ni _buffers de objetos preexistentes (scale_output_rows, zero_block_outputs, p.data=..., requires_grad_ y module.training actuan solo sobre modulos recien construidos); ModuleList.append -> add_module sobre _modules copiado; transacciones anidadas y RNG CPU/CUDA/generator restaurados en BaseException (incluye _GrowthRejected)",
+      "limitaciones": "no ejecutado; hooks y mutadores externos quedan fuera por contrato; RNG de MPS/XPU no se captura (el contrato solo promete CPU/CUDA/generator)"
+    },
+    {
+      "clase": "inmutabilidad y no-alias del optimizer original",
+      "que": "_new_adamw, migrate_optimizer, pad_adam_entry, pad_state_tensor, _rescale_q_state",
+      "metodo": "grupos nuevos por deepcopy de valores; estado por deepcopy o pad (torch.zeros nuevo); step por deepcopy; _rescale_q_state opera solo sobre new_opt; torch Adam.__init__/add_param_group revisados: no mutan grupos ni tensores del viejo",
+      "limitaciones": "tensores lr/betas compartidos entre grupos se desdoblan (ver observaciones)"
+    },
+    {
+      "clase": "mapeo old->new del estado AdamW",
+      "que": "recs de embeddings, LN, qkv/proj/fc1/fc2 (U,S,V,bias) frente a los in_map/out_map usados en widen; GPT con bias=True, 2 grupos, param excluido, param_names, initial_lr, _mzshape_base_lr, amsgrad on/off, estado ausente (lazy)",
+      "metodo": "comparacion simbolica de mapas; ownership/exclusion en _new_adamw; herencia de grupo de bloques nuevos por _mzshape_new_param_sources; orden qkv,proj,fc1,fc2 del closure lin coincide con Block.__init__ L99-102",
+      "limitaciones": "sin ejecucion; fused/capturable solo por lectura"
+    },
+    {
+      "clase": "reescalado SDPA del estado q",
+      "que": "_rescale_q_state",
+      "metodo": "derivacion: con U_q*c y escala SDPA 1/sqrt(hd2), dL/dU_q y dL/db_q escalan 1/c; S, V, filas k/v invariantes; q_rows = qkv_out_map(d_old,d_new,h)[:d_old] son exactamente las filas q viejas; filas q nuevas tienen estado 0; ocurre despues del pad; con factorize=True en el mismo evento el estado esta vacio (coherente); bloques de deepen del mismo evento sin estado",
+      "limitaciones": "no verificado numericamente"
+    },
+    {
+      "clase": "guardas de ledger y orden de llamadas",
+      "que": "widen sin migrar, doble widen, deepen->widen separados, widen+deepen+migrate, migrar dos veces con el optimizer vivo, ledger parcial, factorize+new_d+add_layers, new_d == d, add_layers=0, modelo ya factorizado, rechazo seguido de reintento",
+      "metodo": "enumeracion de estados (_mzshape_pending_recs, _mzshape_new_param_sources) y sus transiciones; unicos huecos reportados en PER-LOG-005/006",
+      "limitaciones": "no se modelo concurrencia (fuera de contrato)"
+    },
+    {
+      "clase": "sonda y metricas",
+      "que": "_probe_logits (modos, autocast por dtype), _probe_metrics (fp64, KL, loss, no finitos)",
+      "metodo": "lectura; modos restaurados en finally incluso para modulos nuevos; no consume RNG",
+      "limitaciones": "solo validacion de targets reportada (PER-LOG-004)"
+    },
+    {
+      "clase": "ShapeSchedule / GrowthEvent bordes",
+      "que": "step negativo, eventos duplicados, catch-up, new_d/add_layers bool, noise_scale tensor/numpy",
+      "metodo": "lectura; pop_due correcto y sin mutar durante iteracion; bordes solo como observaciones (sin invariante declarada rota)",
+      "limitaciones": "no hay API de persistencia del schedule que auditar"
+    }
+  ],
+  "observaciones": [
+    "Controladores de LR ligados al optimizer viejo (LRScheduler de torch, LrWarmup en curso) quedan desconectados tras apply_event; el nuevo optimizer hereda el lr transitorio y se congela ahi si el caller no crea un nuevo LrWarmup. No documentado en SAFETY/README (agrava PER-LOG-001).",
+    "weight_decay explicito se aplica tambien al grupo sin decay (LN/bias/S): documentado ('afecta a todos') pero es una trampa habitual.",
+    "Conversion densa: U, S y V heredan el grupo del peso denso; S acaba en el grupo con decay y el decay desacoplado sobre U, S y V a la vez equivale a ~(1-lr*wd)^3 sobre W. Politica, no invariante rota.",
+    "Conversion parcial (modelo mixto denso/factorizado) reinicia tambien el estado de las capas ya factorizadas, embeddings y LN; queda reportado en report['optimizer'].",
+    "deepen_gpt usa blocks[0] como plantilla: si el primer bloque esta congelado/excluido, los bloques nuevos tambien (documentado). No hereda wake_gate/sleep_mask y Block.to(dtype) convierte wake_gate al dtype de U (fp32->bf16), a diferencia de widen que conserva el gate fp32; sin efecto funcional (gate=1).",
+    "param_names se regenera desde model.named_parameters(): se pierden prefijos/nombres personalizados del caller.",
+    "Optimizer con parametros ajenos al GPT: _new_adamw lanza 'optimizer/ledger caduco: parametro fuera del modelo' (mensaje engañoso) en todo evento con migracion; fallo ruidoso, el soporte no esta declarado.",
+    "deepcopy por grupo de lr/betas Tensor rompe el compartido entre grupos (patron de LR tensor para CUDA graphs).",
+    "GrowthEvent: add_layers=True se acepta como 1, factorize admite cualquier truthy, new_d numpy int se rechaza; ShapeSchedule no deduplica eventos (add_layers duplicado profundiza dos veces) ni tiene state_dict; add_layers no es idempotente al rejugar el schedule.",
+    "Tras un rechazo el RNG/generator se restaura: reintentar con el mismo noise_scale y generator reproduce bit a bit el mismo candidato (coherente con SAFETY 'con otro ruido').",
+    "migrate_optimizer directo no aplica el reescalado q (documentado) y _rescale_q_state es privado: la ruta de primitivas no puede completar la migracion sin API privada.",
+    "_validate_map convierte con torch.as_tensor(dtype=long): indices float se truncan en silencio.",
+    "Capas lineales compartidas entre bloques: factorize_gpt las convierte por separado, rompe el atado y replacements[old.weight] solo conserva la ultima copia (la primera queda fuera del optimizer); widen lo detecta como 'ledger duplicado'. Fuera del GPT de referencia."
+  ],
+  "limitaciones": [
+    "Auditoria estatica: no se ejecuto Python, pytest ni los PoC; todos los hallazgos estan en estado 'sospecha' pendientes del re-disparo del director.",
+    "docs/ELASTICSHAPE-SAFETY.md no existe en la copia de laboratorio; se leyo (solo lectura) desde D:/mztrain/docs. Los .py del lab son identicos por sha256 a los de D:/mztrain.",
+    "La consecuencia CUDA de PER-LOG-004 (contexto envenenado, rollback de RNG CUDA sin garantia) se infiere de la semantica de device-side asserts; el PoC la aisla en subproceso con --cuda.",
+    "PER-LOG-003 usa noise_scale=1e300 en fp32 por determinismo; en fp16/bf16 el umbral es mucho menor pero depende de las normas de los factores.",
+    "Semantica de torch 2.11 confirmada por lectura de optim/adam.py, adamw.py y optimizer.py; no se reviso el kernel fused."
+  ]
+}

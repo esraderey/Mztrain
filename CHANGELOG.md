@@ -5,7 +5,52 @@ Todos los cambios notables en MZTrain se documentan en este archivo.
 El formato esta basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Sin publicar] - 2026-08-22
+## [Sin publicar] - 2026-09-07
+
+### ElasticShape: cirugia reversible y migracion AdamW
+- `apply_event` restaura topologia, identidades de parametros, modos y RNG al fallar.
+  Las guardas opcionales `max_loss_increase` y `max_kl` usan sondas de perdida/KL en
+  nats por token; un rechazo devuelve el optimizer original con `accepted=False`.
+  Los candidatos con parametros/estado/logits no finitos se rechazan.
+- Ruido funcional por capa: norma Frobenius de las filas nuevas del mapa efectivo
+  calibrada contra la norma del mapa original, mediante QR de los factores sin
+  reconstruir una matriz densa. Corrige la dependencia de magnitud respecto a `std(U)`.
+- Migracion de grupos, opciones, metadatos y estados AdamW/AMSGrad sin alias; fuentes
+  por parametro para bloques nuevos, conservacion de parametros excluidos y base de
+  warmup. La conversion densa sigue reiniciando momentos por politica explicita.
+- Preflight completo; migracion de bias; profundizacion conserva dtype, rangos,
+  bias, modos y trainability. Se conserva S/gates fp32 cuando U/V estan en bf16.
+- Nuevas regresiones CPU/CUDA y documentacion en `docs/ELASTICSHAPE-SAFETY.md`.
+
+### Peritaje ElasticShape (2026-09-25) y reparaciones
+- Auditoria A2 de `shape_ops`/`elastic_shape` (3 peritos + re-disparo del director): 1 alto, 2 medio,
+  15 bajo confirmados; rollback, migracion AdamW, correccion SDPA y calibracion QR verificados exactos.
+  Expediente en `.tmp/peritaje-elasticshape-20260925/`.
+- Reparado (maestranza, cada arreglo con ancla roja->verde): `LrWarmup` libera la base de LR al terminar
+  (un warmup posterior ya no vuelve al pico viejo tras un cambio externo del LR); `apply_event` aplica
+  los overrides `lr`/`weight_decay` aunque el evento no migre; `migrate_optimizer` rechaza un ledger ya
+  consumido; ruido no representable -> rechazo recuperable (`NoiseError`); `probe_targets` validado
+  (dtype y rango) antes de la transaccion; `LrWarmup.floor` en [0, 1]; indices, dimensiones y `new_shape`
+  deben ser enteros; `pad_adam_entry` usa la lista explicita de momentos; la correccion SDPA escala solo
+  las filas q viejas (el presupuesto de ruido de qkv vuelve a ser exacto); `widen_layernorm` compensa
+  tambien `eps` (`eps*d/d'`); `dense_to_factorized` avisa en fp16/bf16 (S queda en ese dtype).
+- Forja: `GPT.forward` emite `RuntimeWarning` si hay migracion de optimizer pendiente y el gradiente esta
+  habilitado (entrenar con el optimizer anterior ya no es silencioso); inferencia y sondas no avisan.
+- Residuos cerrados (2026-09-26, forja + revisor ciego): `ZFactorizedLinear.reconstruct_weight` y la
+  variante sparse devuelven la W EFECTIVA (incluye `wake_gate`): la exportacion a denso y `refactorize`
+  reproducen el forward tambien durante un mini-warmup de ElasticRank; `grow_rank(preserve_weights=False)`
+  resetea gates/mask porque la re-SVD cambia la base; el forward tolera U/V bf16 con S fp32 sin autocast y
+  `dense_to_factorized` conserva S en fp32 tambien en bf16/fp16; `LrWarmup` aplica la regla 'la escritura
+  externa gana' (un warmup abandonado o reanudado de checkpoint ya no devuelve al pico viejo si el LR
+  cambio fuera); `GPT(..., ln_eps=)`/`Block(..., eps=)` y `model.ln_eps` hacen reconstruible el `eps`
+  compensado de LayerNorm. Import muerto `Tuple` eliminado en `layers.py`.
+
+### Compatibilidad
+- Cambia el significado de `noise_scale` positivo; no se heredan los claims de reloj
+  de T8-T14 sin repetir experimentos. LayerNorm y weight decay conservan la politica
+  previa: sus alternativas matematicas requieren una comparacion separada.
+- Esta revision de fuentes requiere un nuevo sello firmado antes de publicarse;
+  `SEAL.json` y `MANIFEST.sha256` siguen describiendo el snapshot anterior.
 
 ### Evidencia
 - **T9-T14: seis experimentos preregistrados sobre ElasticShape** (85 corridas). T9 cierra las
@@ -26,7 +71,8 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
   ancla de no-regresion bit a bit y re-ejecucion de la unica celda afectada.
 
 ### Notas
-- No cambia el codigo de `src/mztrain`: esta entrada es evidencia y documentacion.
+- La ampliacion de evidencia T9-T14 no modifico `src/mztrain`; la revision de
+  cirugia reversible descrita arriba si introduce cambios de implementacion.
 
 ## [1.3.2] - 2026-08-14
 

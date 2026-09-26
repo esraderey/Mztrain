@@ -1,0 +1,115 @@
+{
+  "modulo": "D:\\mztrain\\.tmp\\maestranza-20260925\\staging",
+  "hash_pieza": "093ada8c5a42f90b",
+  "banco": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur",
+  "modo": "bateria",
+  "so": "nt/win32",
+  "python": "3.13.2",
+  "inicio": "2026-09-25T23:53:30+00:00",
+  "herramientas": {
+    "ruff": "ruff 0.15.12"
+  },
+  "pasos": [
+    {
+      "paso": "preparar",
+      "estado": "verde",
+      "nota": "sin venv (python actual) · copia aislada"
+    },
+    {
+      "paso": "compilar",
+      "estado": "verde",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-m",
+        "compileall",
+        "-q",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\src\\mztrain\\shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\src\\mztrain\\elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\tests\\test_shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\tests\\test_elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\tests\\test_elastic_shape_safety.py"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj",
+      "exit": 0,
+      "s": 0.14,
+      "salida": "",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\logs\\compilar.log"
+    },
+    {
+      "paso": "importar",
+      "estado": "verde",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-c",
+        "import sys; sys.path.insert(0, 'C:\\\\Users\\\\Raul\\\\AppData\\\\Local\\\\Temp\\\\maestranza-2ivogjur\\\\obj\\\\src'); [__import__(n) for n in ['mztrain']]; print('importados:', ['mztrain'])"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj",
+      "exit": 0,
+      "s": 3.27,
+      "salida": "importados: ['mztrain']",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\logs\\importar.log"
+    },
+    {
+      "paso": "lint",
+      "estado": "verde",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "--select",
+        "E9,F,B,PLE",
+        "--quiet",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\src\\mztrain\\shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\src\\mztrain\\elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\tests\\test_shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\tests\\test_elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\tests\\test_elastic_shape_safety.py"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj",
+      "exit": 0,
+      "s": 0.16,
+      "salida": "",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\logs\\lint.log"
+    },
+    {
+      "paso": "tipos",
+      "estado": "omitido",
+      "nota": "opt-in (--tipos)"
+    },
+    {
+      "paso": "tests",
+      "estado": "rojo",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-x",
+        "-q",
+        "--color=no"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj",
+      "exit": 1,
+      "s": 11.14,
+      "salida": "........................................................................ [ 18%]\n........................................................................ [ 36%]\n........................................................................ [ 55%]\n.........................................................F\n================================== FAILURES ===================================\n___________________________ test_ancla_PER_API_001 ____________________________\n\n    def test_ancla_PER_API_001():\n        \"\"\"PER-API-001: _validate_map debe rechazar mapas no enteros ANTES del\n        cast (antes: floats truncados en silencio via as_tensor(dtype=long)).\"\"\"\n        ln = nn.LayerNorm(4)\n        with torch.no_grad():\n            ln.weight.copy_(torch.tensor([1.0, 2.0, 3.0, 4.0]))\n            ln.bias.copy_(torch.tensor([10.0, 20.0, 30.0, 40.0]))\n>       with pytest.raises(ValueError):\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\nE       Failed: DID NOT RAISE <class 'ValueError'>\n\ntests\\test_shape_ops.py:380: Failed\n============================== warnings summary ===============================\ntests/test_elastic_shape.py::test_ln_variance_compensation_reduces_drift\n  C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\obj\\tests\\test_elastic_shape.py:47: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.\n  Consider using tensor.detach() first. (Triggered internally at C:\\actions-runner\\_work\\pytorch\\pytorch\\pytorch\\torch\\csrc\\autograd\\generated\\python_variable_methods.cpp:837.)\n    err_no = float((no_comp(x_pad)[:, :48] - ref).norm())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_shape_ops.py::test_ancla_PER_API_001 - Failed: DID NOT RAIS...\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-2ivogjur\\logs\\tests.log"
+    },
+    {
+      "paso": "smoke",
+      "estado": "omitido",
+      "nota": "no solicitado (--smoke)"
+    }
+  ],
+  "degradado": [
+    "sin-venv: dependencias del entorno anfitrión — reproducibilidad perdida"
+  ],
+  "ambito": "src/mztrain/shape_ops.py,src/mztrain/elastic_shape.py,tests/test_shape_ops.py,tests/test_elastic_shape.py,tests/test_elastic_shape_safety.py",
+  "veredicto": "rojo-codigo",
+  "primer_rojo": "tests",
+  "omitidos": [
+    "tipos",
+    "smoke"
+  ],
+  "duracion_total_s": 14.88,
+  "banco_conservado": true
+}

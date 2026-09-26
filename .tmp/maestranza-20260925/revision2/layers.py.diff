@@ -1,0 +1,75 @@
+diff --git a/src/mztrain/layers.py b/src/mztrain/layers.py
+index 463265a..2ae33b3 100644
+--- a/src/mztrain/layers.py
++++ b/src/mztrain/layers.py
+@@ -7,7 +7,7 @@ en lugar de tensores completos, reduciendo drasticamente la memoria.
+ 
+ import math
+ import logging
+-from typing import Dict, Any, Optional, Tuple
++from typing import Dict, Any, Optional
+ 
+ logger = logging.getLogger("mztrain")
+ 
+@@ -274,6 +274,9 @@ class ZFactorizedLinear(nn.Module):
+             # Path estandar: F.linear (BF16/FP32 segun autocast).
+             h = F.linear(x, self.V)
+             h = h * s_eff.unsqueeze(0)
++            # U/V bf16 con S fp32 sin autocast: h promociona a fp32; volver al dtype de U.
++            if h.dtype != self.U.dtype and not torch.is_autocast_enabled(h.device.type):
++                h = h.to(self.U.dtype)
+             out = F.linear(h, self.U)
+ 
+         if self.bias is not None:
+@@ -325,7 +328,12 @@ class ZFactorizedLinear(nn.Module):
+             self._init_from_weight(W)
+ 
+         self.rank = new_rank
+-        self._resync_elastic_buffers(old_rank)
++        if preserve_weights:
++            self._resync_elastic_buffers(old_rank)
++        else:
++            # la re-SVD cambia la base: los gates viejos no corresponden a las direcciones nuevas
++            self.wake_gate = torch.ones(new_rank, device=device)
++            self.sleep_mask = torch.zeros(new_rank, dtype=torch.bool, device=device)
+         logger.info(
+             f"ZFactorizedLinear rank: {old_rank} -> {new_rank} "
+             f"({self.out_features}x{self.in_features})"
+@@ -402,9 +410,12 @@ class ZFactorizedLinear(nn.Module):
+         self.sleep_mask = sleep_mask.to(device=device, dtype=torch.bool).contiguous()
+ 
+     def reconstruct_weight(self) -> torch.Tensor:
+-        """Reconstruir el tensor de pesos completo W = U @ diag(S) @ V."""
++        """W efectiva = U diag(S*wake_gate) V (la misma funcion que forward)."""
+         with torch.no_grad():
+-            return (self.U * self.S.unsqueeze(0)) @ self.V
++            s = self._gated_s()
++            dt = torch.promote_types(self.U.dtype, s.dtype)
++            W = (self.U.to(dt) * s.to(dt).unsqueeze(0)) @ self.V.to(dt)
++            return W.to(self.U.dtype)
+ 
+     @property
+     def num_parameters(self) -> int:
+@@ -762,6 +773,8 @@ class ZSparseFactorizedLinear(ZFactorizedLinear):
+         # Low-rank path (heredado, inlined para evitar doble bias)
+         h = F.linear(x, self.V)       # x @ V^T
+         h = h * self._gated_s().unsqueeze(0)    # h * S (gated por ElasticRank)
++        if h.dtype != self.U.dtype and not torch.is_autocast_enabled(h.device.type):
++            h = h.to(self.U.dtype)     # S fp32 con U/V bf16 sin autocast
+         out = F.linear(h, self.U)      # h @ U^T
+ 
+         # Sparse path (torch.sparse.mm no soporta FP16 en CUDA)
+@@ -781,9 +794,11 @@ class ZSparseFactorizedLinear(ZFactorizedLinear):
+         return out
+ 
+     def reconstruct_weight(self) -> torch.Tensor:
+-        """Reconstruir W = U @ diag(S) @ V + sparse."""
++        """W efectiva = U diag(S*wake_gate) V + sparse (la misma funcion que forward)."""
+         with torch.no_grad():
+-            W_lr = (self.U * self.S.unsqueeze(0)) @ self.V
++            s = self._gated_s()
++            dt = torch.promote_types(self.U.dtype, s.dtype)
++            W_lr = ((self.U.to(dt) * s.to(dt).unsqueeze(0)) @ self.V.to(dt)).to(self.U.dtype)
+             # Materializar sparse a denso para reconstruccion
+             W_sparse = torch.zeros_like(W_lr)
+             W_sparse[self.sparse_row_idx, self.sparse_col_idx] = self.sparse_values.to(W_lr.dtype)

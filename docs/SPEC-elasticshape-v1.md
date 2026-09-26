@@ -1,5 +1,10 @@
 # SPEC — ElasticShape v1 (crecimiento de forma en espacio factorizado)
 
+> Documento historico del contrato v1. Para la revision de 2026-09-07, ver
+> [cirugia reversible y contrato actualizado](ELASTICSHAPE-SAFETY.md): ruido calibrado
+> funcionalmente, guardas opcionales de calidad y migracion completa AdamW/AMSGrad.
+> Las tolerancias empiricas y resultados v1 no certifican esa revision.
+
 **Fecha:** 2026-08-11 · **Riesgo:** R2 · **Proceso por módulo (contrato del usuario):**
 implementar → aislar (banco propio, fuera del árbol sellado) → probar (tests del módulo) →
 **revisar 2 veces (ciegas, independientes, lentes distintas)** → integrar solo tras certificar.

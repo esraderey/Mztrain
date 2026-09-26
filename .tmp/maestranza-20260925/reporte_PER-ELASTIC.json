@@ -1,0 +1,107 @@
+{
+  "pieza": "src/mztrain/elastic_shape.py",
+  "veredicto": "REPARADO-2",
+  "ciclos_usados": 2,
+  "hash_pieza": "5aa84b40251f29d9",
+  "banco_final": "D:/mztrain/.tmp/maestranza-20260925/banco_elastic_2.json",
+  "banco_final_resumen": {
+    "veredicto": "verde",
+    "hash_pieza": "5aa84b40251f29d9",
+    "pasos": [
+      {"paso": "preparar", "estado": "verde"},
+      {"paso": "compilar", "estado": "verde", "s": 0.15},
+      {"paso": "importar", "estado": "verde", "s": 3.31},
+      {"paso": "lint", "estado": "verde", "s": 0.16},
+      {"paso": "tipos", "estado": "omitido"},
+      {"paso": "tests", "estado": "verde", "s": 13.02, "resultado": "0 fallos, 0 rojo"},
+      {"paso": "smoke", "estado": "omitido"}
+    ]
+  },
+  "fallos": [
+    {
+      "id_hallazgo": "PER-LOG-001",
+      "causa_raiz": "LrWarmup guarda _mzshape_base_lr en el param_group y nunca lo libera al terminar; un warmup posterior sobre un LR ya decaido externamente sigue rampeando hacia el pico caduco del warmup anterior en vez del LR vigente.",
+      "ancla": "test_ancla_per_log_001_warmup_base_stale_after_external_lr_change",
+      "arreglo": "En LrWarmup.step(), tras aplicar s=1.0 (self.done), g.pop('_mzshape_base_lr', None) en cada grupo; el caso sin terminar (G4-B) no se toca.",
+      "lineas_tocadas": "708-716 (LrWarmup.step)"
+    },
+    {
+      "id_hallazgo": "PER-LOG-002",
+      "causa_raiz": "apply_event solo aplicaba overrides de lr/weight_decay cuando el evento migraba el optimizer (recs o add_layers); factorize redundante o new_d==d devolvian accepted=True descartando el override en silencio.",
+      "ancla": "test_ancla_per_log_002_lr_weight_decay_overrides_apply_without_surgery",
+      "arreglo": "Nueva rama elif en apply_event: si no hubo rebuild (recs vacio, add_layers=0) y no hubo conversion (n_conv==0) pero lr/weight_decay no son None, opt = migrate_optimizer(model, opt, [], lr, weight_decay) y se registra en report['optimizer'].",
+      "lineas_tocadas": "618-620, 655-662 (n_conv inicializado; rama elif tras el bloque de migracion)"
+    },
+    {
+      "id_hallazgo": "PER-LOG-005",
+      "causa_raiz": "migrate_optimizer no comprobaba que hubiera un ledger PENDIENTE antes de aceptar un recs no vacio; volver a migrar con el optimizer pre-migracion y el mismo ledger ya consumido transplantaba momentos caducos en silencio.",
+      "ancla": "test_ancla_per_log_005_rejects_reuse_of_consumed_ledger",
+      "arreglo": "if recs and not pending: raise ValueError('ledger ya consumido o no emitido por widen_gpt: nada que migrar'), antes de la comprobacion de coincidencia existente. recs==[] (deepen) sigue permitido.",
+      "lineas_tocadas": "425-427 (migrate_optimizer)"
+    },
+    {
+      "id_hallazgo": "PER-LOG-003",
+      "causa_raiz": "Un noise_scale finito y valido pero no representable en el dtype de destino hacia que widen_factorized_linear lanzara NoiseError(ValueError) sin capturar, propagandose como excepcion no manejada en vez de un rechazo de calidad (accepted=False, rolled_back=True, optimizer original).",
+      "ancla": "test_ancla_per_log_003_noise_error_becomes_quality_rejection",
+      "arreglo": "La llamada a widen_gpt dentro de apply_event se envuelve en try/except NoiseError as e: raise _GrowthRejected(f'ruido no representable: {e}') from e; NoiseError importado de .shape_ops.",
+      "lineas_tocadas": "31-40 (import), 644-646 (try/except alrededor de widen_gpt)"
+    },
+    {
+      "id_hallazgo": "PER-LOG-004",
+      "causa_raiz": "probe_targets solo se validaba por forma; dtype no entero o valores fuera de [0, vocab)/-100 se descubrian tarde dentro de _probe_metrics, despues de ejecutar la cirugia completa (widen_gpt/deepen_gpt/migrate_optimizer).",
+      "ancla": "test_ancla_per_log_004_probe_targets_validated_before_surgery",
+      "arreglo": "Tras la validacion de forma, se valida probe_targets.dtype (int64/32/16/8, uint8) y sus valores en {-100} union [0, model.vocab); ValueError antes de entrar a la transaccion.",
+      "lineas_tocadas": "590-596 (apply_event, validaciones previas a la transaccion)"
+    },
+    {
+      "id_hallazgo": "PER-API-006",
+      "causa_raiz": "LrWarmup.__init__ no validaba floor; floor>1 invierte el proposito documentado del warmup (arranca en un PICO por encima de la base y desciende) sin ninguna excepcion.",
+      "ancla": "test_ancla_per_api_006_floor_above_one_rejected",
+      "arreglo": "if not (math.isfinite(floor) and 0.0 <= floor <= 1.0): raise ValueError('floor debe estar en [0, 1]'), justo despues de la validacion de steps.",
+      "lineas_tocadas": "686-689 (LrWarmup.__init__)"
+    },
+    {
+      "id_hallazgo": "PER-LOG-007",
+      "causa_raiz": "Mismo punto que PER-API-006: floor NaN o negativo producia g['lr'] no finito o negativo (ascenso de gradiente) en silencio.",
+      "ancla": "test_ancla_per_log_007_floor_nonfinite_or_negative_rejected",
+      "arreglo": "Cubierto por la misma validacion de floor en LrWarmup.__init__ (ver PER-API-006).",
+      "lineas_tocadas": "686-689 (LrWarmup.__init__)"
+    },
+    {
+      "id_hallazgo": "PER-API-010",
+      "causa_raiz": "math.isfinite(None) lanza TypeError('must be real number, not NoneType') antes de llegar al ValueError disenado para noise_scale invalido, tanto en apply_event como en widen_gpt.",
+      "ancla": "test_ancla_per_api_010_noise_scale_none_raises_clear_valueerror",
+      "arreglo": "En ambos puntos (widen_gpt l.226 y apply_event l.577) se antepone isinstance(noise_scale, (int, float)) and not isinstance(noise_scale, bool) a la comprobacion math.isfinite, cayendo en el mismo ValueError('noise_scale debe ser finito y >= 0') para None/bool/tipos no numericos.",
+      "lineas_tocadas": "227-233 (widen_gpt), 596-599 (apply_event)"
+    },
+    {
+      "id_hallazgo": "PER-MAT-001",
+      "causa_raiz": "scale_output_rows escalaba TODO el bloque q en el layout nuevo (torch.arange(new_d)), incluyendo las filas q recien ruideadas; eso rompe el presupuesto de ruido ||dW||=noise_scale*||W|| en qkv (ratio realizado ~1.39x en vez de 1.0 con noise=1e-2, growth 4x).",
+      "ancla": "test_ancla_per_mat_001_qkv_noise_budget_survives_sdpa_correction",
+      "arreglo": "scale_output_rows(blk.qkv, omap_qkv[:d], math.sqrt(hd2/hd)) — solo las filas q VIEJAS (mismas que usa _rescale_q_state); comentario actualizado.",
+      "lineas_tocadas": "283-287 (widen_gpt)"
+    },
+    {
+      "id_hallazgo": "PER-MAT-006",
+      "causa_raiz": "Comentario impreciso en _probe_metrics: atribuia el uso de FP64 a evitar que 'redondeos bf16/fp32 dominen KL o diferencias de loss', sin distinguir que el piso real (~3e-5 nats) lo fija la cuantizacion de los logits de entrada, no el calculo.",
+      "ancla": "sin ancla (solo comentario, per orden)",
+      "arreglo": "Comentario corregido: 'FP64 evita que el redondeo del CALCULO de KL/loss domine; si los logits ya son bf16, su cuantizacion fija un piso de ~3e-5 nats en la KL.'",
+      "lineas_tocadas": "535-536 (_probe_metrics)"
+    }
+  ],
+  "diff_resumen": {
+    "comando": "git -C D:/mztrain diff --stat -- src/mztrain/elastic_shape.py tests/test_elastic_shape_safety.py",
+    "nota": "git diff --stat compara contra HEAD, cuya version de elastic_shape.py es la PRE-repair (416 lineas) porque el archivo llegaba con cambios sin commitear de la pieza anterior (shape_ops); por eso el stat muestra 720 inserciones/416 borrados en vez de solo mis 9 hallazgos. tests/test_elastic_shape_safety.py es un archivo nuevo sin commit (?? en git status), por lo que no aparece en --stat; las 12 anclas nuevas (9 hallazgos, 3 con parametrize) se anadieron al final del archivo existente sin tocar ningun test previo.",
+    "elastic_shape.py": "1 file changed, 720 insertions(+), 416 deletions(-) (acumulado del arbol; mis 9 ediciones puntuales listadas arriba con lineas_tocadas)",
+    "test_elastic_shape_safety.py": "12 funciones de test nuevas (test_ancla_per_log_001/002/003/004/005/007, test_ancla_per_api_006/010, test_ancla_per_mat_001) anadidas al final; 0 tests existentes modificados o eliminados"
+  },
+  "verificacion_anclas_en_rojo": {
+    "metodo": "exploracion puntual (no evidencia de banco): se reconstruyo temporalmente el elastic_shape.py PRE-fix revirtiendo exactamente mis 12 ediciones (deje intacto el resto del arbol) y se corrio pytest -k ancla contra tests/test_elastic_shape_safety.py; las 12 anclas fallaron (rojo) confirmando que cada una ancla su defecto y no pasa por accidente; se restauro el archivo reparado byte a byte antes del banco final",
+    "resultado": "12 failed, 34 deselected (todas las anclas rojas sin el arreglo)"
+  },
+  "deuda": [
+    "--cov-fail-under=85 excluido en el staging (deuda preexistente 81.7%, aceptada por el jefe segun la orden)",
+    "PER-MAT-006 es solo correccion de comentario, sin ancla ejecutable (per orden)"
+  ],
+  "escalacion": null
+}

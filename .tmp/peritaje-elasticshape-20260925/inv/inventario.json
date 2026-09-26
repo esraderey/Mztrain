@@ -1,0 +1,8 @@
+{
+ "arbol": "C:\\Users\\Raul\\AppData\\Local\\Temp\\claude\\D--mztrain\\0fd148d5-7bed-475f-955f-d563a3883047\\scratchpad\\lab\\inv\\only",
+ "total_puntos": 0,
+ "por_clase": {},
+ "archivos_no_parseados": [],
+ "limitacion": "Solo Python, solo sintáctico, sin resolución de alias ni de flujo. Es una cota INFERIOR de la superficie real.",
+ "puntos": []
+}

@@ -1,0 +1,342 @@
+{
+  "dominio": "PER-API: robustez de entradas de borde y fidelidad documental de la API publica de ElasticShape (shape_ops.py + elastic_shape.py)",
+  "ambito_examinado": {
+    "codigo": [
+      "src/mztrain/shape_ops.py (348 lineas, integro)",
+      "src/mztrain/elastic_shape.py (676 lineas, integro)",
+      "src/mztrain/__init__.py:85-134 (superficie publica exportada)",
+      "src/mztrain/layers.py (solo ZFactorizedLinear, para semantica de rank/buffers/_use_fp8/_epsi_scaling)"
+    ],
+    "documentos": [
+      "docs/ELASTICSHAPE-SAFETY.md (D:\\mztrain, 165 lineas)",
+      "docs/SPEC-elasticshape-v1.md (D:\\mztrain, 112 lineas)",
+      "README.md (D:\\mztrain, seccion ElasticShape ~125-190 y tabla de componentes ~320)"
+    ],
+    "tests_leidos": [
+      "tests/test_elastic_shape_safety.py (411 lineas)",
+      "tests/test_elastic_shape.py",
+      "tests/test_shape_ops.py"
+    ],
+    "nota_rutas": "docs/ y README.md no existen en la copia de laboratorio (lab/); se leyeron en modo SOLO LECTURA desde D:\\mztrain, como permite el encargo para el README. No se modifico nada en D:\\mztrain."
+  },
+  "hallazgos": [
+    {
+      "id": "PER-API-001",
+      "titulo": "_validate_map acepta mapas de indices float y los trunca en silencio (sin exigir dtype entero)",
+      "dimension": "robustez",
+      "clase": "validacion de entrada ausente / coercion silenciosa",
+      "severidad": "medio",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "_validate_map",
+        "lineas": "25-37",
+        "fragmento_literal": "m = torch.as_tensor(m, dtype=torch.long)\n    m = m.cpu()\n    if m.ndim != 1 or m.numel() != old_dim:"
+      },
+      "promesa": null,
+      "descripcion": "_validate_map es el punto unico de validacion de in_map/out_map/dim_map/row_map/col_map en toda la API publica (widen_factorized_linear, widen_embedding, widen_layernorm, pad_state_tensor). Convierte cualquier entrada con torch.as_tensor(m, dtype=torch.long), lo que TRUNCA valores float hacia cero en vez de exigir un dtype entero. Un caller que pase por error un array de indices en float (comun si vienen de numpy.argsort, de una mascara booleana interpretada como float, etc.) no obtiene ninguna excepcion: el mapa se acepta silenciosamente con los valores truncados, que pueden diferir de los indices que el caller realmente queria expresar.",
+      "contraejemplo_minimo": "widen_layernorm(ln, new_dim=6, dim_map=torch.tensor([0.1, 1.1, 2.1, 3.1])) no lanza excepcion; el mapa efectivo usado es [0,1,2,3], no lo que el caller escribio.",
+      "control_negativo": "widen_layernorm(ln, new_dim=6, dim_map=torch.tensor([0,1,2,3], dtype=torch.long)) funciona identico y correctamente.",
+      "poc_script": "poc_PER-API-001.py",
+      "impacto": "Un mapa de indices erroneo (por tipo, no por rango) se acepta y se usa para reubicar pesos/estado en una cirugia de forma, con el riesgo de silenciar un bug de mas arriba en el pipeline del caller sin ningun aviso.",
+      "remediacion": "Antes de torch.as_tensor(..., dtype=torch.long), verificar que el dtype de origen (si ya es tensor) sea entero, o que todos los elementos (si es lista/array) sean int exactos; rechazar con ValueError explicito en caso contrario."
+    },
+    {
+      "id": "PER-API-002",
+      "titulo": "scale_output_rows solo valida que `factor` sea finito, no que sea positivo, pese a que su unico uso documentado exige factor > 0",
+      "dimension": "robustez",
+      "clase": "validacion de entrada incompleta / estado imposible aceptado",
+      "severidad": "medio",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "scale_output_rows",
+        "lineas": "241-254",
+        "fragmento_literal": "if not math.isfinite(factor):\n        raise ValueError(\"factor no finito\")\n    ...\n        layer.U.data[idx, :] *= factor"
+      },
+      "promesa": {
+        "documento": "src/mztrain/shape_ops.py (docstring de scale_output_rows) y SPEC-elasticshape-v1.md #4",
+        "cita_literal": "Uso: correccion exacta de la escala de SDPA al crecer head_dim -- escalar el bloque q por sqrt(head_dim_nuevo / head_dim_viejo)"
+      },
+      "descripcion": "El unico uso documentado de esta primitiva publica es multiplicar por sqrt(head_dim'/head_dim), una cantidad siempre estrictamente positiva. La funcion, sin embargo, solo exige que `factor` sea finito; acepta 0 (anula filas) y valores negativos (invierte el signo de las filas U y del bias), produciendo un estado matematicamente imposible para el contrato que la funcion dice implementar, sin excepcion ni aviso.",
+      "contraejemplo_minimo": "scale_output_rows(layer, rows=[0,1,2], factor=-2.5) se ejecuta sin error e invierte el signo de U[0:3] y bias[0:3].",
+      "control_negativo": "scale_output_rows(layer, rows=[0,1,2], factor=2.0) escala correctamente sin cambiar signos.",
+      "poc_script": "poc_PER-API-002.py",
+      "impacto": "Un caller que construya el factor de correccion con una formula ligeramente equivocada (signo invertido, orden de division cambiado) corrompe silenciosamente el bloque q sin que la primitiva lo detecte; el error solo se manifestaria como una degradacion de calidad dificil de rastrear.",
+      "remediacion": "Anadir `if factor <= 0: raise ValueError(\"factor debe ser > 0\")`, ya que 0 y negativos no tienen sentido para el unico uso documentado."
+    },
+    {
+      "id": "PER-API-003",
+      "titulo": "widen_embedding con tabla de norma cero produce ruido EXACTAMENTE nulo pese a noise_scale>0, contradiciendo en silencio el remedio de SPEC #2 para las dims nuevas",
+      "dimension": "correctitud",
+      "clase": "caso limite no documentado / violacion silenciosa de invariante",
+      "severidad": "medio",
+      "estado": "sospecha",
+      "confianza": "media",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "widen_embedding",
+        "lineas": "178-190",
+        "fragmento_literal": "ref = emb.weight.detach().to(acc).norm()\n                if not torch.isfinite(ref):\n                    raise ValueError(\"embedding no finito\")\n                if norm > 0:\n                    W[:, fresh] = (noise * (noise_scale * ref / norm)).to(dt)"
+      },
+      "promesa": {
+        "documento": "docs/SPEC-elasticshape-v1.md #2",
+        "cita_literal": "Gradientes muertos si todo es 0 ... Remedio v1: ruido en las FILAS nuevas de U (noise_scale relativo, default 1e-3) -> deriva funcional acotada por epsilon y medible; el gradiente fluye desde el primer paso."
+      },
+      "descripcion": "Cuando la tabla de embedding original tiene norma de Frobenius 0, `ref` es 0, por lo que el escalar `noise_scale * ref / norm` tambien es 0 aunque `noise_scale` sea positivo: las columnas nuevas quedan en cero exacto (el valor inicial de `torch.zeros`). Esto es el mismo tipo de caso limite que `_functional_noise` (usado por widen_factorized_linear) SI documenta explicitamente (\"Un mapa efectivo nulo recibe ruido nulo\"), pero para widen_embedding no hay ninguna mencion de esta condicion ni en el docstring ni en SAFETY.md; el resultado es que el remedio contra 'gradientes muertos' de SPEC #2 falla en silencio exactamente en el caso (tabla nula) donde mas se necesitaria.",
+      "contraejemplo_minimo": "emb.weight.zero_(); widen_embedding(emb, new_dim=8, noise_scale=1e-3) produce columnas nuevas [:,4:] identicamente cero.",
+      "control_negativo": "La misma llamada sobre una tabla con pesos normales (no nulos) produce columnas nuevas con ruido no nulo.",
+      "poc_script": "poc_PER-API-003.py",
+      "impacto": "Bajo, dado que una tabla de embedding literalmente toda-cero es un caso de borde inusual en produccion (aunque plausible tras cierta inicializacion sintetica o de test). El riesgo real es documental: el mismo tipo de caso limite se documenta en un lugar del modulo y no en el otro.",
+      "remediacion": "Documentar explicitamente el caso ||W||_F=0 en el docstring de widen_embedding (igual que en _functional_noise), o usar una referencia alternativa (p.ej. norma unitaria por columna) cuando ref==0."
+    },
+    {
+      "id": "PER-API-004",
+      "titulo": "pad_state_tensor no valida el tipo de `new_shape`; un tensor en vez de tupla de ints produce un TypeError interno de torch.zeros en vez del ValueError de validacion",
+      "dimension": "observabilidad",
+      "clase": "mensaje de error no describe la causa real",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "pad_state_tensor",
+        "lineas": "298-322",
+        "fragmento_literal": "for k, (old_d, new_d) in enumerate(zip(t.shape, new_shape, strict=True)):\n        if new_d < old_d:\n            raise ValueError(f\"solo crece: new_shape[{k}]={new_d} < {old_d}\")\n    out = torch.zeros(*new_shape, device=t.device, dtype=t.dtype)"
+      },
+      "promesa": null,
+      "descripcion": "Todas las comparaciones de la funcion (ndim, crecimiento monotono) funcionan igual de bien con elementos 0-D de un tensor que con enteros de Python, asi que un `new_shape` pasado como `torch.Tensor` pasa la validacion completa sin error. El fallo ocurre recien en `torch.zeros(*new_shape, ...)`, con un TypeError interno de PyTorch que no menciona en absoluto que la causa es el tipo de `new_shape`. No hay corrupcion de estado (el fallo ocurre antes de escribir nada), pero rompe la consistencia de que toda entrada invalida de esta funcion produzca un ValueError propio y explicativo.",
+      "contraejemplo_minimo": "pad_state_tensor(torch.randn(4), torch.tensor([6])) -> TypeError interno de torch.zeros, no ValueError.",
+      "control_negativo": "pad_state_tensor(torch.randn(4), (6,)) funciona correctamente.",
+      "poc_script": "poc_PER-API-004.py",
+      "impacto": "Bajo: solo afecta la calidad del mensaje de error ante un uso indebido evidente; no hay mutacion parcial ni corrupcion.",
+      "remediacion": "Normalizar new_shape a tuple(int(x) for x in new_shape) al inicio de la funcion, o validar explicitamente `isinstance` antes de usarlo."
+    },
+    {
+      "id": "PER-API-005",
+      "titulo": "pad_adam_entry sin la clave 'step' produce un KeyError crudo en vez de un ValueError explicativo",
+      "dimension": "observabilidad",
+      "clase": "mensaje de error no describe la causa real",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "pad_adam_entry",
+        "lineas": "338-341",
+        "fragmento_literal": "entry[\"step\"]  # requerido; el contador se clona por valor"
+      },
+      "promesa": {
+        "documento": "src/mztrain/shape_ops.py (docstring de pad_adam_entry)",
+        "cita_literal": "`step` se conserva POR VALOR (clonado: AdamW lo incrementa in-place y un alias contaminaria el estado viejo)."
+      },
+      "descripcion": "La linea `entry[\"step\"]` sirve solo para forzar el KeyError si falta, pero no envuelve el acceso en ninguna comprobacion con mensaje propio, a diferencia de otras precondiciones del mismo modulo (p.ej. 'shapes incompatibles en los momentos AdamW', que SI tiene un ValueError dedicado). Un `entry` sin 'step' (por ejemplo, un estado AdamW de una version de PyTorch/optimizer distinta que no usa esa clave) falla con `KeyError('step')`, sin indicar que 'step' es una precondicion documentada de la funcion.",
+      "contraejemplo_minimo": "pad_adam_entry({'exp_avg':t,'exp_avg_sq':t2}, (6,)) -> KeyError('step').",
+      "control_negativo": "pad_adam_entry({'exp_avg':t,'exp_avg_sq':t2,'step':torch.tensor(5.0)}, (6,)) funciona correctamente.",
+      "poc_script": "poc_PER-API-005.py",
+      "impacto": "Bajo: solo calidad del mensaje de error; no hay corrupcion de estado.",
+      "remediacion": "Reemplazar la linea 341 por `if \"step\" not in entry: raise ValueError(\"pad_adam_entry: falta 'step' en el estado AdamW\")`."
+    },
+    {
+      "id": "PER-API-006",
+      "titulo": "LrWarmup no valida que `floor` este en [0,1]; floor>1 produce un PICO inicial de LR en vez de una rampa protectora, invirtiendo el proposito documentado",
+      "dimension": "correctitud",
+      "clase": "validacion de entrada ausente / estado imposible aceptado",
+      "severidad": "medio",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "LrWarmup.__init__",
+        "lineas": "650-661",
+        "fragmento_literal": "def __init__(self, opt: torch.optim.Optimizer, steps: int, floor: float = 0.1):\n        if steps <= 0:\n            raise ValueError(\"steps > 0\")\n        self.opt, self.steps, self.floor = opt, steps, floor"
+      },
+      "promesa": {
+        "documento": "src/mztrain/elastic_shape.py (docstring de LrWarmup)",
+        "cita_literal": "Rampa lineal floor->1.0 del LR tras un growth (absorbe el transitorio de LN residual y del estado Adam aproximado; SPEC S5/S8)."
+      },
+      "descripcion": "`steps` se valida (>0) pero `floor` no se valida en absoluto. Con `floor=2.0` (fuera de [0,1]), `_apply(floor)` en el constructor fija el LR inicial en `2*base` -- un PICO por encima de la base -- y la formula `s = floor + (1-floor)*progreso` hace que el LR DESCIENDA hacia `1.0*base` a medida que avanza el warmup. Esto es exactamente lo opuesto al proposito documentado ('absorbe el transitorio' empezando bajo y subiendo), sin ninguna excepcion ni aviso. Ademas, `steps` tampoco se valida como entero: `LrWarmup(steps=0.5)` no lanza nada y produce una rampa que se completa tras una sola llamada a `step()` (t=1 >= steps=0.5), en silencio.",
+      "contraejemplo_minimo": "LrWarmup(opt, steps=10, floor=2.0) deja opt.param_groups[0]['lr'] en 2x la base justo tras construirse (antes de cualquier step()).",
+      "control_negativo": "LrWarmup(opt, steps=10, floor=0.1) arranca en 0.1x la base, como se espera.",
+      "poc_script": "poc_PER-API-006.py",
+      "impacto": "Un caller que por error de unidades pase floor como porcentaje (p.ej. 50 en vez de 0.5) obtiene un LR 50x la base sin ningun error, justo despues de una cirugia de forma -- el peor momento para un pico de LR no controlado.",
+      "remediacion": "Anadir `if not (0.0 <= floor <= 1.0): raise ValueError(\"floor debe estar en [0,1]\")` y `if not isinstance(steps, int): raise TypeError(\"steps debe ser int\")`."
+    },
+    {
+      "id": "PER-API-007",
+      "titulo": "apply_event ACEPTA en silencio un growth cuando probe_targets esta completamente enmascarado (-100), contradiciendo la promesa explicita de SAFETY.md de rechazo por metrica no finita",
+      "dimension": "correctitud",
+      "clase": "guarda de seguridad que falla abierta / fidelidad documental",
+      "severidad": "alto",
+      "estado": "sospecha",
+      "confianza": "media-alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "_probe_metrics / apply_event",
+        "lineas": "523-538, 633-638",
+        "fragmento_literal": "first = F.cross_entropy(before.reshape(-1, vocab), targets.reshape(-1))\n        last = F.cross_entropy(after.reshape(-1, vocab), targets.reshape(-1))\n        result.update(loss_before=float(first), loss_after=float(last), loss_delta=float(last - first))\n    if not all(math.isfinite(value) for value in result.values()):\n        raise _GrowthRejected(\"metricas no finitas en la sonda\")"
+      },
+      "promesa": {
+        "documento": "docs/ELASTICSHAPE-SAFETY.md",
+        "cita_literal": "Un conjunto sin targets validos produce una metrica no finita y se rechaza."
+      },
+      "descripcion": "`F.cross_entropy` con `reduction='mean'` (el default, usado aqui) devuelve 0.0 -- no NaN -- cuando TODOS los elementos del batch quedan enmascarados por `ignore_index` (comportamiento de PyTorch moderno, corregido deliberadamente para evitar 0/0=nan). Con `probe_targets` completamente en -100, tanto `loss_before` como `loss_after` valen 0.0, `loss_delta` vale 0.0 -- un valor perfectamente finito. La comprobacion `not all(math.isfinite(...))` NO se dispara, y `report[\"loss_delta\"] > max_loss_increase` (0.0 > umbral) es False para cualquier umbral no negativo razonable: el growth se ACEPTA con `accepted=True`, exactamente en el escenario que SAFETY.md dice que 'produce una metrica no finita y se rechaza'.",
+      "contraejemplo_minimo": "apply_event(model, opt, GrowthEvent(step=0, factorize=True, new_d=48), probe_x=x, probe_targets=torch.full_like(x, -100), max_loss_increase=0.0) devuelve accepted=True con loss_delta=0.0.",
+      "control_negativo": "La misma llamada con probe_targets validos (no enmascarados) produce una cross-entropy real (>0), demostrando que el codigo evalua normalmente cuando el input es valido.",
+      "poc_script": "poc_PER-API-007.py",
+      "impacto": "Un caller que confia en el guard `max_loss_increase` para bloquear growths que degradan calidad puede aceptar en silencio una cirugia mal evaluada si su batch de sonda queda completamente enmascarado (p.ej. por un bug de padding/mascara en su propio pipeline de datos, plausible con secuencias cortas). El sistema reporta 'accepted=True' y 'guarded=True' dando una falsa sensacion de que hubo evaluacion real de calidad.",
+      "remediacion": "Antes de calcular cross_entropy, verificar que `(targets != -100).any()`; si no hay ningun target valido, tratarlo explicitamente como `_GrowthRejected(\"probe_targets sin ningun target valido\")` en vez de confiar en que cross_entropy produzca NaN."
+    },
+    {
+      "id": "PER-API-008",
+      "titulo": "_require_adamw rechaza subclases triviales de AdamW via type() exacto; SAFETY.md no aclara que 'AdamW estandar' excluye subclases",
+      "dimension": "observabilidad",
+      "clase": "ambiguedad documental / validacion mas estricta que lo esperado",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "media",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "_require_adamw",
+        "lineas": "346-348",
+        "fragmento_literal": "def _require_adamw(opt):\n    if type(opt) is not torch.optim.AdamW:\n        raise TypeError(\"ElasticShape soporta torch.optim.AdamW; otros optimizers requieren un adaptador\")"
+      },
+      "promesa": {
+        "documento": "docs/ELASTICSHAPE-SAFETY.md",
+        "cita_literal": "Se admite torch.optim.AdamW estandar."
+      },
+      "descripcion": "El chequeo usa `type(opt) is not torch.optim.AdamW` (identidad de tipo exacta), no `isinstance`. Correctamente rechaza `torch.optim.Adam` con weight_decay (que es un algoritmo distinto, L2 acoplado al gradiente en vez de weight decay desacoplado) -- eso SI es coherente con 'AdamW estandar'. Pero tambien rechaza cualquier SUBCLASE de AdamW, incluida una trivial sin logica adicional, con el mismo mensaje generico. La palabra 'estandar' en la documentacion no aclara que las subclases -- aunque sean funcionalmente identicas -- quedan excluidas por diseno.",
+      "contraejemplo_minimo": "class MyAdamW(torch.optim.AdamW): pass; apply_event(model, MyAdamW(...), ev) -> TypeError, pese a que MyAdamW es un AdamW sin ninguna modificacion.",
+      "control_negativo": "torch.optim.AdamW puro es aceptado sin problema.",
+      "poc_script": "poc_PER-API-008.py",
+      "impacto": "Bajo: es una eleccion de diseno defendible (evitar comportamientos no verificados de un optimizer desconocido), pero la documentacion no la menciona explicitamente, lo que puede sorprender a un integrador que use un wrapper/subclase corporativo de AdamW.",
+      "remediacion": "Aclarar en SAFETY.md que el chequeo es de tipo exacto (no isinstance) y que las subclases requieren el mismo 'adaptador' que otros optimizers, o relajar el chequeo a isinstance si se verifica que es seguro."
+    },
+    {
+      "id": "PER-API-009",
+      "titulo": "widen_layernorm no valida que `new_dim` sea entero; un float revienta con un TypeError interno de nn.LayerNorm que no menciona la causa",
+      "dimension": "observabilidad",
+      "clase": "mensaje de error no describe la causa real",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "widen_layernorm",
+        "lineas": "216-226",
+        "fragmento_literal": "if new_dim < old_dim:\n        raise ValueError(\"v1 solo crece: new_dim >= dim actual\")\n    dmap = _validate_map(dim_map, old_dim, new_dim, \"dim_map\")\n    ...\n    new = nn.LayerNorm(new_dim, eps=ln.eps, elementwise_affine=ln.elementwise_affine)"
+      },
+      "promesa": null,
+      "descripcion": "La comparacion `new_dim < old_dim` funciona igual con un float que con un int, asi que `new_dim=6.5` pasa esa validacion y la de `_validate_map`. El fallo ocurre al construir `nn.LayerNorm(6.5, ...)`, que internamente intenta `tuple(6.5)` y lanza `TypeError: 'float' object is not iterable` -- un mensaje que no menciona en absoluto que el problema es el tipo de `new_dim`. No hay mutacion antes del crash (el objeto `ln` original permanece intacto).",
+      "contraejemplo_minimo": "widen_layernorm(nn.LayerNorm(4), new_dim=6.5) -> TypeError('float' object is not iterable), no un ValueError de validacion.",
+      "control_negativo": "widen_layernorm(nn.LayerNorm(4), new_dim=6) funciona correctamente.",
+      "poc_script": "poc_PER-API-009.py",
+      "impacto": "Bajo: solo calidad del mensaje de error; no hay corrupcion de estado ni mutacion parcial.",
+      "remediacion": "Validar `isinstance(new_dim, int)` (o usar `operator.index`) al inicio de la funcion y de sus analogas (widen_factorized_linear, widen_embedding, pad_state_tensor) para dar un ValueError uniforme."
+    },
+    {
+      "id": "PER-API-010",
+      "titulo": "GrowthEvent(noise_scale=None) hace que apply_event falle con TypeError generico en vez del ValueError dedicado a ese mismo campo",
+      "dimension": "observabilidad",
+      "clase": "mensaje de error no describe la causa real",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "src/mztrain/elastic_shape.py",
+        "simbolo": "apply_event",
+        "lineas": "577-578",
+        "fragmento_literal": "if not math.isfinite(ev.noise_scale) or ev.noise_scale < 0:\n        raise ValueError(\"noise_scale debe ser finito y >= 0\")"
+      },
+      "promesa": null,
+      "descripcion": "`math.isfinite(None)` lanza `TypeError: must be real number, not NoneType` ANTES de que el `raise ValueError` disenado para ese campo pueda ejecutarse. Un `GrowthEvent(noise_scale=None)` -- construible libremente, ya que el dataclass no impide pasar None pese al type hint `float` -- produce un error que no identifica el campo invalido, a diferencia de `nan` o valores negativos, que SI obtienen el ValueError claro. El fallo ocurre antes de `_shape_transaction` (linea 588), asi que no hay mutacion de estado.",
+      "contraejemplo_minimo": "apply_event(model, opt, GrowthEvent(step=0, factorize=True, new_d=48, noise_scale=None)) -> TypeError('must be real number, not NoneType'), no el ValueError esperado.",
+      "control_negativo": "GrowthEvent(..., noise_scale=0.0) es valido y no lanza nada indebido.",
+      "poc_script": "poc_PER-API-010.py",
+      "impacto": "Bajo: solo calidad del mensaje de error; no hay corrupcion de estado.",
+      "remediacion": "Cambiar la comprobacion a `if ev.noise_scale is None or not math.isfinite(ev.noise_scale) or ev.noise_scale < 0:` (short-circuit seguro con `or`)."
+    },
+    {
+      "id": "PER-API-011",
+      "titulo": "pad_adam_entry trata cualquier clave con forma igual a exp_avg como si fuera un momento de Adam, sin restringirse a las claves documentadas",
+      "dimension": "mantenibilidad",
+      "clase": "generalizacion no documentada / posible sobre-alcance silencioso",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "media",
+      "ubicacion": {
+        "archivo": "src/mztrain/shape_ops.py",
+        "simbolo": "pad_adam_entry",
+        "lineas": "343-347",
+        "fragmento_literal": "for key, value in entry.items():\n        if key != \"step\" and isinstance(value, torch.Tensor) and value.shape == old_shape:\n            out[key] = pad_state_tensor(value, new_shape, row_map, col_map)\n        else:\n            out[key] = copy.deepcopy(value)"
+      },
+      "promesa": {
+        "documento": "docs/ELASTICSHAPE-SAFETY.md",
+        "cita_literal": "AMSGrad migra tambien max_exp_avg_sq; la correccion de Q escala este maximo y los momentos de U/bias correspondientes."
+      },
+      "descripcion": "La condicion para decidir 'esto es un momento de Adam a padear' es puramente estructural (tensor + misma forma que exp_avg), no una lista de claves conocidas ('exp_avg', 'exp_avg_sq', 'max_exp_avg_sq'). Cualquier clave adicional del dict `entry` que sea un tensor con esa misma forma -- por ejemplo, estado de un adaptador de optimizer externo -- se trata identicamente a un momento real y se le aplica zero-pad, sin ningun aviso de que se esta extrapolando mas alla de las claves que SAFETY.md documenta explicitamente. Puede ser una decision de diseno deliberada (generalidad frente a mantenimiento de una lista de claves), pero no esta documentada como tal.",
+      "contraejemplo_minimo": "pad_adam_entry({'exp_avg':t,'exp_avg_sq':t2,'step':s,'custom_adapter_counter':t3}, (6,)) expande tambien 'custom_adapter_counter' a shape (6,), no solo las claves de AdamW/AMSGrad.",
+      "control_negativo": "pad_adam_entry con solo las claves documentadas (exp_avg/exp_avg_sq/step) se comporta como se espera.",
+      "poc_script": "poc_PER-API-011.py",
+      "impacto": "Bajo-medio: solo relevante si el estado del optimizer contiene claves no estandar con la misma forma que los momentos (uso avanzado/adaptadores), en cuyo caso serian silenciosamente reinterpretadas como momentos de Adam.",
+      "remediacion": "Restringir explicitamente el padding a un conjunto conocido de claves ({'exp_avg','exp_avg_sq','max_exp_avg_sq'}) y documentar que cualquier otra clave se copia intacta via deepcopy sin padding."
+    },
+    {
+      "id": "PER-API-012",
+      "titulo": "Los ejemplos de codigo en README.md y ELASTICSHAPE-SAFETY.md no son ejecutables standalone (usan `model`/`opt`/`vocab`/`seq` sin definirlos)",
+      "dimension": "mantenibilidad",
+      "clase": "discrepancia cosmetica de documentacion",
+      "severidad": "bajo",
+      "estado": "sospecha",
+      "confianza": "alta",
+      "ubicacion": {
+        "archivo": "docs/ELASTICSHAPE-SAFETY.md y README.md (D:\\mztrain)",
+        "simbolo": "bloques de codigo de ejemplo",
+        "lineas": "SAFETY.md:15-34; README.md:162-172",
+        "fragmento_literal": "opt, reporte = apply_event(\n    model,\n    opt,\n    evento,\n    probe_x=probe_tokens,\n    ...\n)"
+      },
+      "promesa": null,
+      "descripcion": "Ambos ejemplos usan `model` y `opt` (y en el README tambien `vocab`, `seq`, `probe`) sin definirlos en el propio bloque de codigo mostrado. El README marca la omision con '# ... entrenar pequeno ...', dejando claro que es ilustrativo; SAFETY.md no tiene ese marcador y presenta el fragmento como si fuera completo. Ninguno de los dos ejecuta 'tal cual' -- fallarian con NameError si se copian y pegan literalmente.",
+      "contraejemplo_minimo": "Copiar y ejecutar literalmente el bloque de SAFETY.md (lineas 15-34) produce NameError: name 'model' is not defined.",
+      "control_negativo": "No aplica (hallazgo puramente documental).",
+      "poc_script": null,
+      "impacto": "Muy bajo: es una convencion comun de documentacion (fragmento ilustrativo con contexto implicito), no una promesa de literalidad rota de forma enganosa.",
+      "remediacion": "Anadir un comentario tipo '# asume model/opt ya construidos' en SAFETY.md, igual que ya hace el README con sus puntos suspensivos."
+    }
+  ],
+  "superficie_examinada_sin_hallazgos": {
+    "widen_factorized_linear": "Revisada exactitud documentada (V nuevas cols=0, U nuevas filas=0), herencia de flags runtime (_use_fp8, _epsi_scaling) y de requires_grad/training via _inherit_parameter_flags -- verificadas presentes en el codigo. _functional_noise con mapa efectivo nulo -> ruido nulo: coherente con su propio docstring. Comparte la validacion de mapas de PER-API-001; sin hallazgos propios adicionales.",
+    "widen_embedding": "Padding excluido del ruido (noise[padding_idx].zero_()) y el contrato 'padding=vector cero' sobreviviendo al copy_ posterior: verificados correctos en el codigo (comentario explicito y logica coherente). Caso limite de norma cero: PER-API-003.",
+    "widen_layernorm": "elementwise_affine=False correctamente rechazado con ValueError claro. variance_compensation=True/False: formula coherente con SPEC S5. Validacion de tipo de new_dim: PER-API-009.",
+    "scale_output_rows": "Duplicados en `rows` verificados inofensivos (index_put_ con duplicados sobre el mismo valor leido produce un resultado idempotente, no doble-escalado). Rows vacio: no-op correcto. Validacion de signo de factor: PER-API-002.",
+    "dense_to_factorized": "Revisado con pesos bf16 (upcast a float32 para SVD, downcast consistente), pesos 1xN/Nx1 (rank=1, sin ruta de crash evidente por lectura), requires_grad=False (se propaga correctamente a U/S/V/bias). No se pudo confirmar por ejecucion (solo lectura) el error de reconstruccion real reportado en _reconstruction_error.",
+    "zero_block_outputs": "Valida isinstance(ZFactorizedLinear,...) y anula U y bias en todas las capas pasadas; sin hallazgos.",
+    "pad_state_tensor": "Tensores 0-D y 3-D correctamente rechazados con ValueError claro ('solo estados 1-D o 2-D'). row_map/col_map con duplicados o fuera de rango: correctamente delegado a _validate_map (PER-API-001). Tipo de new_shape: PER-API-004.",
+    "pad_adam_entry": "step como tensor CUDA: correcto via copy.deepcopy (clona en el mismo device). Ausencia de step: PER-API-005. Claves extra del mismo shape: PER-API-011. max_exp_avg_sq migrado junto con exp_avg/exp_avg_sq: verificado coherente con SAFETY.md.",
+    "GrowthEvent / ShapeSchedule": "ShapeSchedule([]) y pop_due con step float: sin crash, comportamiento correcto. Eventos duplicados en el mismo step: preservan orden de insercion (verificado por lectura de _by_step.setdefault). GrowthEvent.step negativo: no se valida en ningun punto pero tampoco hay ninguna promesa documental que lo prohiba; no se considera hallazgo. add_layers=True (bool): pasa isinstance(int) por herencia estandar de Python (bool es subclase de int); no se considera hallazgo (semantica del lenguaje, no del framework).",
+    "LrWarmup": "Dos instancias LrWarmup construidas sobre el mismo optimizer: el mecanismo `_mzshape_base_lr` persistente en el param_group evita perder el LR objetivo real entre instancias -- verificado coherente con el comentario del propio codigo (documented tradeoff, no bug). floor fuera de [0,1] y steps no entero: PER-API-006.",
+    "apply_event": "probe_x en otro device: reconciliado automaticamente via `probe_x.to(dev)`, sin hallazgo. max_kl=0 y lr=0: aceptados y coherentes con su semantica (limite mas estricto posible / LR nulo explicito). heads que no divide new_d: correctamente rechazado con ValueError. probe_targets con shape distinto de probe_x: correctamente rechazado. Ausencia de sonda con limites activos: correctamente rechazado ('los limites de calidad requieren probe_x'). probe_targets con -100 parcial (no todo enmascarado): no se encontro discrepancia (cross_entropy calcula sobre los validos como se espera). Guardas max_loss_increase/max_kl combinadas: comportamiento AND coherente con el codigo. Caso especifico de todo -100: PER-API-007. AdamW estricto: PER-API-008. noise_scale=None: PER-API-010.",
+    "SAFETY.md por seccion": {
+      "Aplicar y aceptar un crecimiento": "Verificada la lista de restricciones del modelo soportado contra _preflight_model; coherente. Ejemplo no standalone: PER-API-012.",
+      "Rollback y manejo de fallos": "Verificado por lectura que _shape_transaction restaura _modules (via .copy() explicito) y training/eps/etc. (via __dict__ completo) en todos los modulos snapshotteados; los reemplazos de submodulos en widen_gpt/deepen_gpt/factorize_gpt siempre sustituyen el modulo completo via setattr en el padre (nunca reasignan un Parameter individual en un modulo existente), por lo que la promesa de 'identidades originales de modulos/parametros' se sostiene para TODAS las rutas actualmente alcanzables desde la API publica. El optimizer original nunca se muta (siempre se construye uno nuevo); confirmado coherente con 'el optimizer original se mantiene intacto'.",
+      "Nuevo contrato del ruido": "Formula de _functional_noise (QR + norma Frobenius) revisada matematicamente contra el docstring; coherente. 'Un mapa efectivo nulo recibe ruido nulo' verificado explicito en el codigo (linea 83-84 de shape_ops.py). Asimetria con widen_embedding: PER-API-003.",
+      "Optimizador y precision": "'None hereda LR/WD de CADA grupo' verificado exacto en _new_adamw (copia por grupo cuando lr/weight_decay es None). 'Un homologo excluido sigue excluido, sin adivinar' verificado exacto (ownership.get(id(source)) es None -> no se agrega). 'param_names se actualiza' verificado condicional a que la clave ya exista en el grupo (comportamiento coherente con una lectura literal de la frase). 'Se admite torch.optim.AdamW estandar' y el caso Adam-con-weight_decay: correctamente rechazado (type() distinto); ambiguedad sobre subclases: PER-API-008.",
+      "Verificacion y publicacion (381/34, cobertura, Ruff/Black)": "El conteo de 34 regresiones se contrasto mecanicamente contra test_elastic_shape_safety.py: es COHERENTE (ver conteo_tests). Cobertura 93%/94%, Ruff/Black y el total de 381 pruebas NO se pudieron verificar (requieren ejecucion, prohibida en este encargo); se documentan como no verificados, no como falsos."
+    }
+  },
+  "conteo_tests": {
+    "funciones": 24,
+    "parametrizaciones_estimadas": 34,
+    "coherente_con_34": true,
+    "nota": "test_elastic_shape_safety.py tiene 24 funciones 'def test_'. De ellas, 7 estan parametrizadas con @pytest.mark.parametrize con listas de tamano [2,3,3,3,2,2,2] (scale, noise, failed_layer, kwargs, dense, device, options) que suman 17 variantes; las 17 funciones restantes (24-7) no estan parametrizadas (1 caso cada una). Total de casos de prueba = 17 (no parametrizados) + 17 (variantes parametrizadas) = 34, exactamente igual al numero que SAFETY.md declara como 'regresiones nuevas'. La cuenta es coherente independientemente de si CUDA esta disponible (el parametro 'device'=['cpu','cuda'] cuenta como 2 casos de test-id aunque 'cuda' se skippee en una maquina sin GPU)."
+  },
+  "limitaciones": [
+    "Auditoria SOLO LECTURA: ninguno de los PoC en peritos/PER-API/ fue ejecutado por este perito; todas las aserciones y sus resultados esperados se derivan de lectura estatica del codigo y del conocimiento documentado del comportamiento de PyTorch (p.ej. F.cross_entropy con reduccion 'mean' y batch totalmente enmascarado). PER-API-007 en particular depende de un comportamiento especifico de PyTorch (retorno de 0.0 en vez de NaN) que no se confirmo por ejecucion en este entorno; se marca con confianza 'media-alta', no 'alta'.",
+    "No se ejecuto pytest ni se midio cobertura real; las cifras de SAFETY.md sobre cobertura (93%/94%/81.71%), Ruff y Black quedan sin verificar (ni confirmadas ni refutadas) en este informe.",
+    "El analisis de _shape_transaction identifico una fragilidad TEORICA (el snapshot solo copia explicitamente `_modules`, no `_parameters`/`_buffers`, por lo que una reasignacion in-situ de un Parameter en un modulo YA rastreado no se revertiria correctamente en un rollback) que NO es explotable hoy a traves de la API publica, porque todas las primitivas de shape_ops.py/elastic_shape.py sustituyen submodulos completos via setattr en el padre, nunca reasignan un Parameter individual en un modulo existente -- consistente con el propio comentario del codigo ('Las cirugias solo reemplazan modulos/parametros, nunca escriben pesos originales'). Por eso NO se reporto como hallazgo formal (seria atacar una precondicion que el propio codigo declara fuera de contrato), pero se deja anotado por si una futura primitiva rompe esa invariante.",
+    "No se examino en profundidad shape_ops.py mas alla del contrato con torch.optim.AdamW real (p.ej. AdamW capturable/fused en CUDA) por no tener GPU disponible para confirmar comportamiento; el codigo lee razonablemente coherente por inspeccion estatica.",
+    "El alcance se limito estrictamente a los 8 primitivos exportados de shape_ops mas GrowthEvent/ShapeSchedule/LrWarmup/apply_event, segun lo pedido; funciones internas no exportadas (_preflight_model, _new_adamw, migrate_optimizer, etc.) se revisaron solo como soporte para entender el contrato de las funciones publicas, no como superficie de ataque en si mismas."
+  ]
+}

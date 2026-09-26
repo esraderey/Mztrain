@@ -1,0 +1,275 @@
+--- C:/Users/Raul/AppData/Local/Temp/claude/D--mztrain/0fd148d5-7bed-475f-955f-d563a3883047/scratchpad/lab/tests/test_elastic_shape_safety.py	2026-09-25 16:18:04.015294200 -0600
++++ D:/mztrain/tests/test_elastic_shape_safety.py	2026-09-25 18:20:41.898287600 -0600
+@@ -2,6 +2,7 @@
+ 
+ import copy
+ import math
++import warnings
+ 
+ import pytest
+ import torch
+@@ -409,3 +410,264 @@
+     loss.backward()
+     new.step()
+     assert torch.isfinite(loss)
++
++
++# --- anclas de peritaje (PER-ELASTIC, 2026-09-25) ---------------------------
++
++
++def test_ancla_per_log_001_warmup_base_stale_after_external_lr_change():
++    """PER-LOG-001: un warmup TERMINADO debe soltar su base persistente; si un
++    scheduler externo cambia el LR despues (step decay), el proximo warmup
++    debe rampear a partir del LR vigente, no del pico del warmup anterior.
++    El caso G4-B (warmup SIN terminar) esta cubierto por
++    test_warmup_base_survives_optimizer_rebuild y debe seguir verde."""
++
++    def run(decay_between_growths):
++        model, opt, x = model_and_opt()
++        w1 = shape.LrWarmup(opt, steps=5)
++        for _ in range(5):
++            opt.zero_grad()
++            model(x, x)[1].backward()
++            opt.step()
++            w1.step()
++        assert w1.done and math.isclose(opt.param_groups[0]["lr"], 1e-3)
++        if decay_between_growths:
++            for g in opt.param_groups:
++                g["lr"] = 1e-4
++        pre_growth_lr = opt.param_groups[0]["lr"]
++        new, report = shape.apply_event(model, opt, shape.GrowthEvent(1, new_d=12, noise_scale=0.0))
++        assert report["accepted"]
++        w2 = shape.LrWarmup(new, steps=5)
++        for _ in range(5):
++            new.zero_grad()
++            model(x, x)[1].backward()
++            new.step()
++            w2.step()
++        assert w2.done
++        return pre_growth_lr, new.param_groups[0]["lr"]
++
++    # control negativo: sin cambio externo, el warmup vuelve al LR previo.
++    pre, final = run(decay_between_growths=False)
++    assert math.isclose(final, pre), f"control roto: {final} != {pre}"
++
++    # defecto: con decaimiento externo tras el warmup, el siguiente warmup
++    # debe terminar en el LR vigente (1e-4), no en la base caduca (1e-3).
++    pre, final = run(decay_between_growths=True)
++    assert math.isclose(final, pre, rel_tol=1e-9), (
++        f"PER-LOG-001: warmup termino en lr={final:g}, no en el LR vigente {pre:g} tras el cambio externo"
++    )
++
++
++def test_ancla_per_log_002_lr_weight_decay_overrides_apply_without_surgery():
++    """PER-LOG-002: si apply_event(..., lr=L, weight_decay=W) acepta el
++    evento, TODOS los grupos deben quedar con lr==L y weight_decay==W, aun
++    cuando el evento no dispara ninguna cirugia (factorize redundante,
++    new_d == d actual)."""
++    LR, WD = 5e-4, 0.05
++
++    def setup():
++        torch.manual_seed(1)
++        model = shape.GPT(23, 6, 8, 1, 2, shape.fact_lin(4))  # ya factorizado
++        opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
++        x = torch.randint(0, 23, (2, 6))
++        opt.zero_grad()
++        model(x, x)[1].backward()
++        opt.step()
++        return model, opt
++
++    # control negativo: un evento que SI migra (deepen) aplica el override.
++    model, opt = setup()
++    new, report = shape.apply_event(model, opt, shape.GrowthEvent(1, add_layers=1), lr=LR, weight_decay=WD)
++    assert report["accepted"]
++    assert all((g["lr"], g["weight_decay"]) == (LR, WD) for g in new.param_groups)
++
++    for event in (shape.GrowthEvent(1, factorize=True), shape.GrowthEvent(1, new_d=8)):
++        model, opt = setup()
++        new, report = shape.apply_event(model, opt, event, lr=LR, weight_decay=WD)
++        assert report["accepted"], event
++        groups = [(g["lr"], g["weight_decay"]) for g in new.param_groups]
++        assert all(g == (LR, WD) for g in groups), (event, groups)
++        assert new is not opt
++        assert opt.param_groups[0]["lr"] == 1e-3  # optimizer original intacto
++
++
++def test_ancla_per_log_005_rejects_reuse_of_consumed_ledger():
++    """PER-LOG-005: re-migrar un ledger YA consumido (o nunca emitido) debe
++    fallar ruidosamente, no transplantar momentos caducos en silencio.
++    recs == [] (deepen) debe seguir permitido sin ledger pendiente."""
++    model, opt, x = model_and_opt()
++    recs = shape.widen_gpt(model, 12)
++    opt2 = shape.migrate_optimizer(model, opt, recs)
++    assert not model._mzshape_pending_recs
++    opt2.zero_grad()
++    model(x, x)[1].backward()
++    opt2.step()
++    live_step = float(opt2.state[model.tok.weight]["step"])
++    assert live_step > 0
++
++    with pytest.raises(ValueError, match="ledger ya consumido"):
++        shape.migrate_optimizer(model, opt, recs)
++    # el optimizer vivo no debe haberse visto afectado por el intento.
++    assert float(opt2.state[model.tok.weight]["step"]) == live_step
++
++    # control: recs vacio (deepen) sigue permitido sin ledger pendiente.
++    shape.deepen_gpt(model, 1)
++    opt3 = shape.migrate_optimizer(model, opt2, [])
++    assert opt3 is not None and not model._mzshape_pending_recs
++
++
++def test_ancla_per_log_003_noise_error_becomes_quality_rejection():
++    """PER-LOG-003: un candidato no finito por ruido no representable en el
++    dtype (NoiseError de shape_ops) debe verse como cualquier otro rechazo de
++    calidad: accepted=False, rolled_back=True, optimizer ORIGINAL, modelo
++    restaurado — nunca una excepcion propagada."""
++    model, opt, x = model_and_opt()
++    original_state = copy.deepcopy(opt.state_dict())
++    params = list(model.parameters())
++
++    returned, report = shape.apply_event(model, opt, shape.GrowthEvent(1, new_d=12, noise_scale=1e300))
++
++    assert returned is opt
++    assert report["accepted"] is False and report["rolled_back"] is True
++    assert "ruido no representable" in report["rejection_reason"]
++    assert model.d == 8
++    assert all(a is b for a, b in zip(params, model.parameters()))
++    assert_state_equal(opt.state_dict(), original_state)
++
++
++@pytest.mark.parametrize(
++    "bad_targets",
++    [
++        torch.full((2, 6), 999, dtype=torch.long),
++        torch.zeros(2, 6, dtype=torch.float32),
++    ],
++)
++def test_ancla_per_log_004_probe_targets_validated_before_surgery(monkeypatch, bad_targets):
++    """PER-LOG-004: probe_targets invalido (fuera de [0, vocab) o dtype no
++    entero) debe rechazarse ANTES de ejecutar cualquier cirugia, no
++    descubrirse tarde dentro de _probe_metrics."""
++    model, opt, x = model_and_opt()
++    calls = {"widen": 0}
++    original_widen = shape.widen_gpt
++
++    def counting_widen(*args, **kwargs):
++        calls["widen"] += 1
++        return original_widen(*args, **kwargs)
++
++    monkeypatch.setattr(shape, "widen_gpt", counting_widen)
++    with pytest.raises(ValueError, match="probe_targets"):
++        shape.apply_event(model, opt, shape.GrowthEvent(1, new_d=12), probe_x=x, probe_targets=bad_targets, max_kl=10.0)
++    assert calls["widen"] == 0
++    assert model.d == 8
++
++
++def test_ancla_per_api_006_floor_above_one_rejected():
++    """PER-API-006: LrWarmup con floor > 1 invierte el proposito documentado
++    (rampa DESCENDENTE desde un pico); debe rechazarse."""
++    opt = torch.optim.AdamW([torch.nn.Parameter(torch.zeros(1))], lr=1e-3)
++    with pytest.raises(ValueError, match="floor"):
++        shape.LrWarmup(opt, steps=10, floor=2.0)
++
++    # control negativo: floor=0.1 (valido) sigue arrancando bajo.
++    opt2 = torch.optim.AdamW([torch.nn.Parameter(torch.zeros(1))], lr=1e-3)
++    shape.LrWarmup(opt2, steps=10, floor=0.1)
++    assert math.isclose(opt2.param_groups[0]["lr"], 1e-4)
++
++
++@pytest.mark.parametrize("bad_floor", [float("nan"), -0.5, float("inf")])
++def test_ancla_per_log_007_floor_nonfinite_or_negative_rejected(bad_floor):
++    """PER-LOG-007: floor no finito o negativo debe rechazarse; nunca debe
++    dejar g["lr"] no finito o negativo (ascenso de gradiente en silencio)."""
++    p = torch.nn.Parameter(torch.ones(3))
++    opt = torch.optim.AdamW([p], lr=1e-3, weight_decay=0.0)
++    with pytest.raises(ValueError, match="floor"):
++        shape.LrWarmup(opt, steps=10, floor=bad_floor)
++
++
++def test_ancla_per_api_010_noise_scale_none_raises_clear_valueerror():
++    """PER-API-010: GrowthEvent(noise_scale=None) (y widen_gpt(noise_scale=
++    None) directamente) deben producir el ValueError claro de validacion,
++    no un TypeError generico de math.isfinite(None)."""
++    model = shape.GPT(23, 6, 8, 1, 2, shape.dense_lin)
++    opt = torch.optim.AdamW(model.parameters(), lr=1e-3)
++    ev = shape.GrowthEvent(step=0, factorize=True, new_d=16, noise_scale=None)
++    with pytest.raises(ValueError, match="noise_scale"):
++        shape.apply_event(model, opt, ev)
++
++    with pytest.raises(ValueError, match="noise_scale"):
++        shape.widen_gpt(shape.GPT(23, 6, 8, 1, 2, shape.fact_lin(4)), 16, noise_scale=None)
++
++    # control negativo: noise_scale=0.0 es valido.
++    model2 = shape.GPT(23, 6, 8, 1, 2, shape.dense_lin)
++    opt2 = torch.optim.AdamW(model2.parameters(), lr=1e-3)
++    _, report = shape.apply_event(model2, opt2, shape.GrowthEvent(step=0, factorize=True, new_d=16, noise_scale=0.0))
++    assert report["accepted"] is True
++
++
++def test_ancla_per_mat_001_qkv_noise_budget_survives_sdpa_correction():
++    """PER-MAT-001: el presupuesto funcional de ruido ||dW||=noise_scale*||W||
++    debe cumplirse en la capa qkv RESULTANTE de widen_gpt (tras la correccion
++    de escala SDPA), no solo en la primitiva aislada."""
++    torch.manual_seed(0)
++    ns = 1e-2
++    d, new_d, heads = 8, 32, 2  # hd 4 -> 16, c = 2
++
++    def eff(layer):
++        return (layer.U.detach().double() * layer._gated_s().detach().double()) @ layer.V.detach().double()
++
++    model = shape.GPT(64, 16, d, 1, heads, shape.fact_lin(4)).double()
++    old_qkv = model.blocks[0].qkv
++    W_old = eff(old_qkv)
++    omap = shape.qkv_out_map(d, new_d, heads)
++    fresh = torch.ones(3 * new_d, dtype=torch.bool)
++    fresh[omap] = False
++
++    shape.widen_gpt(model, new_d, noise_scale=ns, generator=torch.Generator().manual_seed(7))
++    W_new = eff(model.blocks[0].qkv)
++    realized = (W_new[fresh].norm() / W_old.norm()).item() / ns
++    assert abs(realized - 1.0) < 1e-6, f"PER-MAT-001: ratio realizado/ns en qkv = {realized:.6f}, esperado 1.0"
++
++
++def test_forward_avisa_con_migracion_pendiente():
++    """PER-LOG-006: widen_gpt/deepen_gpt dejan migracion pendiente; un forward
++    de ENTRENAMIENTO (gradiente habilitado) debe avisar con RuntimeWarning en
++    vez de entrenar en silencio con un optimizer que ya no referencia los
++    parametros vivos. rel_drift y las sondas corren bajo no_grad y no deben
++    avisar; tampoco tras migrate_optimizer ni dentro de un apply_event
++    aceptado."""
++    model, opt, x = model_and_opt()
++
++    def pendientes(record):
++        return [
++            w
++            for w in record
++            if issubclass(w.category, RuntimeWarning) and "migracion de optimizer pendiente" in str(w.message)
++        ]
++
++    def assert_sin_aviso(fn):
++        with warnings.catch_warnings(record=True) as record:
++            warnings.simplefilter("always")
++            result = fn()
++        assert pendientes(record) == []
++        return result
++
++    recs = shape.widen_gpt(model, 12)
++    with pytest.warns(RuntimeWarning, match="migracion de optimizer pendiente"):
++        model(x)
++    with torch.no_grad():
++        assert_sin_aviso(lambda: model(x))
++    opt = shape.migrate_optimizer(model, opt, recs)
++    assert_sin_aviso(lambda: model(x))  # migrado: no debe avisar
++
++    shape.deepen_gpt(model, 1)
++    with pytest.warns(RuntimeWarning, match="migracion de optimizer pendiente"):
++        model(x)
++    with torch.no_grad():
++        assert_sin_aviso(lambda: model(x))
++    opt = shape.migrate_optimizer(model, opt, [])
++    assert_sin_aviso(lambda: model(x))  # migrado: no debe avisar
++
++    _, report = assert_sin_aviso(
++        lambda: shape.apply_event(model, opt, shape.GrowthEvent(1, new_d=16, add_layers=1), probe_x=x)
++    )
++    assert report["accepted"] is True

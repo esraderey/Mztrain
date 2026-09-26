@@ -1,0 +1,231 @@
+"""
+MZTrain - Refactorizacion periodica anti-rank-collapse.
+
+El rango efectivo de las matrices de peso decae durante el entrenamiento.
+Weight decay lo acelera (empuja hacia rank-2 en redes ReLU). Esto significa
+que los componentes de rango anadidos por crecimiento progresivo pueden
+colapsar si no se re-factorizan periodicamente.
+
+SLTrain (NeurIPS 2024) con re-starts cada ~200 iteraciones logra 14.37
+perplexity en modelos 1B, vs 18.22 sin refactorizacion (-3.85 puntos).
+
+Este modulo implementa la refactorizacion periodica:
+1. Reconstruir peso completo W = U @ diag(S) @ V
+2. SVD fresca sobre W
+3. Actualizar factores U, S, V
+4. Rotar estados del optimizer al nuevo subespacio (LDAdam-style)
+
+Referencias:
+- SLTrain benchmark: Mayo 2025 (arXiv:2505.22922v1)
+- LDAdam: ICLR 2025 (arXiv:2410.16103) — rotacion de momentum
+- Implicit Low-Rank Bias: 2024 (OpenReview:3zw9NhLhBM)
+"""
+
+import logging
+from typing import Optional
+
+logger = logging.getLogger("mztrain")
+
+try:
+    import torch
+    import torch.nn as nn
+    HAS_TORCH = True
+except ImportError:
+    HAS_TORCH = False
+
+if not HAS_TORCH:
+    raise ImportError(
+        "PyTorch es requerido para mztrain.refactorize. "
+        "Instalar con: pip install torch>=2.0.0"
+    )
+
+
+def refactorize_model(
+    model: nn.Module,
+    optimizer: torch.optim.Optimizer,
+    rank: int,
+    factorized_linear_cls: type,
+) -> int:
+    """Refactorizar todas las capas factorizadas con SVD fresca.
+
+    Reconstruye W = U @ diag(S) @ V, aplica SVD fresca, y rota los estados
+    del optimizer al nuevo subespacio para preservar momentum.
+
+    Args:
+        model: Modelo con capas factorizadas.
+        optimizer: Optimizer cuyo estado sera migrado.
+        rank: Rango actual de factorizacion.
+        factorized_linear_cls: Clase de la capa factorizada (ZFactorizedLinear).
+
+    Returns:
+        Numero de capas refactorizadas.
+    """
+    refactorized = 0
+
+    for _name, module in model.named_modules():
+        if not isinstance(module, factorized_linear_cls):
+            continue
+
+        r = min(rank, module.rank)
+
+        # 1. Reconstruir peso completo actual
+        W = module.reconstruct_weight().detach()
+
+        # 2. SVD fresca — skip si hay NaN/Inf (modelo divergio)
+        if not torch.isfinite(W).all():
+            logger.warning(f"[MZTrain] Skipping refactorize for '{_name}': non-finite weights")
+            continue
+        U_new, S_new, Vt_new = torch.linalg.svd(W.float(), full_matrices=False)
+        U_new = U_new[:, :r].to(W.dtype)
+        S_new = S_new[:r].to(W.dtype)
+        V_new = Vt_new[:r, :].to(W.dtype)
+
+        # 3. Calcular matrices de rotacion para momentum (LDAdam)
+        # R_U = U_new^T @ U_old  (r x r) — mapea subespacio viejo al nuevo
+        U_old = module.U.data
+        V_old = module.V.data
+
+        # Proteger contra cambio de rango
+        r_old = min(U_old.shape[1], r)
+        r_new = min(U_new.shape[1], r)
+        r_common = min(r_old, r_new)
+
+        rotation_U = U_new[:, :r_common].T @ U_old[:, :r_common]  # (r_common, r_common)
+        rotation_V = V_new[:r_common, :] @ V_old[:r_common, :].T  # (r_common, r_common)
+
+        # 4. Rotar estados del optimizer
+        _rotate_optimizer_states(
+            optimizer, module.U, U_new, rotation_U, r_common, dim='right'
+        )
+        _rotate_optimizer_states(
+            optimizer, module.V, V_new, rotation_V, r_common, dim='left'
+        )
+        # S (diagonal): no rotar, simplemente reemplazar
+        _replace_optimizer_state_scalar(optimizer, module.S, S_new)
+
+        # 5. Actualizar parametros del modulo
+        with torch.no_grad():
+            if module.U.shape == U_new.shape:
+                module.U.data.copy_(U_new)
+            else:
+                module.U = nn.Parameter(U_new)
+
+            if module.S.shape == S_new.shape:
+                module.S.data.copy_(S_new)
+            else:
+                module.S = nn.Parameter(S_new)
+
+            if module.V.shape == V_new.shape:
+                module.V.data.copy_(V_new)
+            else:
+                module.V = nn.Parameter(V_new)
+
+        refactorized += 1
+
+    if refactorized > 0:
+        logger.info(
+            f"[MZTrain] Refactorizacion completada: {refactorized} capas, rank={rank}"
+        )
+
+    return refactorized
+
+
+def _rotate_optimizer_states(
+    optimizer: torch.optim.Optimizer,
+    old_param: nn.Parameter,
+    new_param_data: torch.Tensor,
+    rotation: torch.Tensor,
+    r_common: int,
+    dim: str,
+) -> None:
+    """Rotar estados (m, v) del optimizer al nuevo subespacio.
+
+    Para el primer momento m, la rotacion es exacta: m_new = R @ m_old.
+    Para el segundo momento v, aplicamos decay (0.5x) en las regiones nuevas
+    ya que no tenemos historial de varianza para esas dimensiones.
+
+    Args:
+        optimizer: El optimizer.
+        old_param: Parametro viejo (para buscar su estado).
+        new_param_data: Datos del nuevo parametro (para conocer shape).
+        rotation: Matriz de rotacion (r_common x r_common).
+        r_common: Rango comun entre viejo y nuevo.
+        dim: 'left' para rotar por la izquierda (V: r x n), 'right' para la derecha (U: m x r).
+    """
+    if old_param not in optimizer.state:
+        return
+
+    state = optimizer.state[old_param]
+
+    for key in ('exp_avg', 'exp_avg_sq'):
+        moment = state.get(key)
+        if moment is None or not isinstance(moment, torch.Tensor):
+            continue
+
+        # Si esta comprimido, no rotar (la rotacion causaria corrupcion)
+        if state.get('compressed', False):
+            continue
+
+        # Rotar la region comun
+        if dim == 'right' and moment.dim() == 2:
+            # U shape: (m, r_old). Rotar columnas: m_new[:, :r] = m_old[:, :r] @ R^T
+            new_moment = torch.zeros(new_param_data.shape, device=moment.device, dtype=moment.dtype)
+            h = min(moment.shape[0], new_moment.shape[0])
+            if r_common > 0:
+                new_moment[:h, :r_common] = moment[:h, :r_common] @ rotation.T.to(moment.dtype)
+            state[key] = new_moment
+
+        elif dim == 'left' and moment.dim() == 2:
+            # V shape: (r_old, n). Rotar filas: m_new[:r, :] = R @ m_old[:r, :]
+            new_moment = torch.zeros(new_param_data.shape, device=moment.device, dtype=moment.dtype)
+            w = min(moment.shape[1], new_moment.shape[1])
+            if r_common > 0:
+                new_moment[:r_common, :w] = rotation.to(moment.dtype) @ moment[:r_common, :w]
+            state[key] = new_moment
+
+        elif moment.dim() == 1:
+            # S (diagonal): simplemente copiar lo que cabe
+            new_moment = torch.zeros(new_param_data.shape[0], device=moment.device, dtype=moment.dtype)
+            n = min(moment.shape[0], new_moment.shape[0])
+            new_moment[:n] = moment[:n]
+            state[key] = new_moment
+
+        # Para exp_avg_sq, las regiones nuevas necesitan un seed de varianza
+        if key == 'exp_avg_sq' and state[key] is not None:
+            m_tensor = state[key]
+            mask = m_tensor == 0
+            if mask.any():
+                existing_vals = m_tensor[~mask]
+                fill = float(existing_vals.abs().mean()) * 0.1 if existing_vals.numel() > 0 else 1e-8
+                m_tensor[mask] = max(fill, 1e-8)
+
+
+def _replace_optimizer_state_scalar(
+    optimizer: torch.optim.Optimizer,
+    param: nn.Parameter,
+    new_data: torch.Tensor,
+) -> None:
+    """Reemplazar estado del optimizer para parametro escalar/vector (S)."""
+    if param not in optimizer.state:
+        return
+
+    state = optimizer.state[param]
+    for key in ('exp_avg', 'exp_avg_sq'):
+        moment = state.get(key)
+        if moment is None or not isinstance(moment, torch.Tensor):
+            continue
+        if state.get('compressed', False):
+            continue
+
+        new_moment = torch.zeros_like(new_data)
+        n = min(moment.shape[0], new_moment.shape[0])
+        new_moment[:n] = moment[:n]
+
+        if key == 'exp_avg_sq':
+            mask = new_moment == 0
+            if mask.any():
+                existing = moment[:n]
+                fill = float(existing.abs().mean()) * 0.1 if existing.numel() > 0 else 1e-8
+                new_moment[mask] = max(fill, 1e-8)
+
+        state[key] = new_moment
