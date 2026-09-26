@@ -232,6 +232,8 @@ class ZTrainEngine:
         """
         checkpointed = 0
         layer_idx = 0
+        # Store ZSpace (MNEME/MNEMOSYS) solo si el usuario lo pide; por defecto INT8 interno.
+        ZActivationCheckpoint.prefer_zspace = bool(getattr(self.config, "mneme_activation_store", False))
 
         # Buscar bloques transformer o modulos Sequential significativos
         for name, module in self.model.named_modules():

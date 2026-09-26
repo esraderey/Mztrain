@@ -5,7 +5,20 @@ Todos los cambios notables en MZTrain se documentan en este archivo.
 El formato esta basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Sin publicar] - 2026-09-07
+## [1.4.0] - 2026-09-26
+
+### MNEMOSYS desde PyPI
+- MNEME ya se instala desde PyPI como `mnemosys` (import `mneme`): nuevo extra `pip install "mztrain[mneme]"`
+  (`mnemosys>=1.0.1`). `ZActivationCheckpoint` gana un adaptador de backend: fuerza `quantization_type="int8"`
+  al registrar (el enrutado automatico de mnemosys descompone tensorialmente las activaciones grandes: error
+  relativo ~0.9 medido; con INT8 ~6e-3), tolera `load()` sin kwarg `device` y restaura el device original,
+  exige evicción por clave (`delete`/`remove`) y hace una sonda de fidelidad en el primer uso; si el backend no
+  cumple, avisa con `RuntimeWarning` y usa el fallback INT8 interno en vez de fugar memoria.
+- El store ZSpace pasa a ser **opt-in** (`ZTrainConfig.mneme_activation_store=False` por defecto): con
+  mnemosys 1.0.1 cuesta ~0.2-0.6 s por activacion porque persiste cada tensor en disco (MZTrain usa un directorio
+  temporal propio, limpiado al salir, y sin cifrado en reposo para ese store efimero; extra acotado a
+  `mnemosys<2`). Cierra la fuga de activaciones
+  observada con backends sin API de evicción (`example_zcodebert` llegaba a OOM tras 57 min).
 
 ### ElasticShape: cirugia reversible y migracion AdamW
 - `apply_event` restaura topologia, identidades de parametros, modos y RNG al fallar.

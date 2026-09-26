@@ -186,6 +186,14 @@ class ZTrainConfig:
     mneme_compression_level: CompressionLevel = CompressionLevel.BALANCED
     """Nivel de compresion MNEME para activaciones."""
 
+    mneme_activation_store: bool = False
+    """Usar el ZSpace de MNEME/MNEMOSYS como store de activaciones (opt-in).
+    Requiere un backend con eviccion por clave (mnemosys>=1.0.1: pip install mztrain[mneme]);
+    sin el se avisa y se usa el INT8 interno. Coste medido con mnemosys 1.0.1: ~0.2-0.6 s por
+    activacion (persiste a disco en un directorio temporal que se limpia al salir); el fallback
+    INT8 interno (False) cuesta milisegundos. Es un ajuste GLOBAL del proceso
+    (ZActivationCheckpoint.prefer_zspace): el ultimo engine construido manda."""
+
     lazy_weight_loading: bool = True
     """Cargar pesos solo cuando se necesitan (lazy loading)."""
 

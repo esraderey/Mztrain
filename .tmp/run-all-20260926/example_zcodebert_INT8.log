@@ -1,0 +1,464 @@
+======================================================================
+ZCodeBERT - Modelo de Comprension de Codigo con MZTrain + MNEME
+======================================================================
+
+Device: cuda
+MNEME disponible: True
+
+--- Configuracion ---
+  Hidden size:     512
+  Num layers:      12
+  Num heads:       8
+  Intermediate:    2048
+  Max seq len:     256
+  Rank:            32
+  Vocab size:      50000
+
+--- Creando modelo ---
+  Parametros reales:       29,471,888
+  Parametros equivalentes: 63,799,808
+  Capas factorizadas:      73
+  Ratio compresion:        0.461
+  Ahorro:                  53.9%
+
+--- Generando datos sinteticos ---
+  Snippets generados: 1000
+  Lenguajes: Python, JavaScript, Java, Go, Ruby, PHP
+  Ejemplo: <?php
+class countRepository {{
+    private array $value;
+    private int $data;
+...
+  Train samples: 800, Val samples: 200
+  Batch size: 16
+
+--- Entrenamiento ---
+  Epochs: 15
+  Rango inicial: 32
+  Rango maximo: 128
+  Schedule: EXPONENTIAL
+  Epoch  0/15: train_loss=8.4228, val_loss=6.1339, rank=32, time=21.8s *
+  Epoch  1/15: train_loss=4.6727, val_loss=4.0184, rank=32, time=21.7s *
+  Epoch  2/15: train_loss=3.9382, val_loss=3.8698, rank=32, time=21.9s *
+  Epoch  3/15: train_loss=3.8563, val_loss=3.8749, rank=32, time=22.2s
+  Epoch  4/15: train_loss=3.7447, val_loss=3.7864, rank=32, time=21.1s *
+
+  >>> Crecimiento de rango: 32 -> 64
+2026-09-26 16:56:01,578 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,579 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,580 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,581 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,581 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,582 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,583 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,584 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,584 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,585 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,586 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,587 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,588 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,589 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,589 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,590 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,590 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,591 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,592 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,592 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,593 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,594 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,594 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,595 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,595 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,596 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,597 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,597 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,598 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,598 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,599 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,600 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,600 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,601 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,602 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,603 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,603 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,604 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,605 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,605 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,606 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,607 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,607 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,608 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,609 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,609 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,610 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,611 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,611 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,612 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,613 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,613 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,614 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,615 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,615 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,616 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,617 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,617 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,618 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,619 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,619 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,620 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,620 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,621 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,622 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,622 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,623 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,623 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,624 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,625 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,625 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (2048x512)
+2026-09-26 16:56:01,626 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x2048)
+2026-09-26 16:56:01,627 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+2026-09-26 16:56:01,627 - mztrain - INFO - [ZCodeBERT] Rango crecido a 64
+2026-09-26 16:56:01,627 - mztrain - INFO - ZFactorizedLinear rank: 32 -> 64 (512x512)
+  Epoch  5/15: train_loss=3.6911, val_loss=3.6878, rank=64, time=22.1s *
+  Epoch  6/15: train_loss=3.5872, val_loss=3.6026, rank=64, time=22.1s *
+  Epoch  7/15: train_loss=3.5425, val_loss=3.5579, rank=64, time=21.1s *
+  Epoch  8/15: train_loss=3.4985, val_loss=3.5139, rank=64, time=19.1s *
+  Epoch  9/15: train_loss=3.4424, val_loss=3.4935, rank=64, time=19.2s *
+
+  >>> Crecimiento de rango: 64 -> 128
+2026-09-26 16:57:45,167 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,168 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,168 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,169 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,169 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,170 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,171 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,171 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,172 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,172 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,173 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,173 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,174 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,174 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,175 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,176 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,176 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,177 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,177 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,178 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,179 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,179 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,180 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,180 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,181 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,181 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,182 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,182 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,183 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,183 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,184 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,184 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,185 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,186 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,186 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,187 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,187 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,188 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,188 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,189 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,190 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,190 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,191 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,191 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,192 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,192 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,193 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,194 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,194 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,195 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,195 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,196 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,196 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,197 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,197 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,198 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,199 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,199 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,200 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,200 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,201 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,201 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,202 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,202 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,203 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,204 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,204 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,205 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,205 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,206 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,206 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (2048x512)
+2026-09-26 16:57:45,207 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x2048)
+2026-09-26 16:57:45,207 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+2026-09-26 16:57:45,208 - mztrain - INFO - [ZCodeBERT] Rango crecido a 128
+2026-09-26 16:57:45,208 - mztrain - INFO - ZFactorizedLinear rank: 64 -> 128 (512x512)
+  Epoch 10/15: train_loss=3.3716, val_loss=3.3615, rank=128, time=20.6s *
+  Epoch 11/15: train_loss=3.3228, val_loss=3.3167, rank=128, time=21.0s *
+  Epoch 12/15: train_loss=3.2999, val_loss=3.3282, rank=128, time=21.0s
+  Epoch 13/15: train_loss=3.2466, val_loss=3.2949, rank=128, time=21.0s *
+  Epoch 14/15: train_loss=3.1763, val_loss=3.2431, rank=128, time=21.0s *
+
+--- Resultados ---
+  Tiempo total:    316.8s (5.3min)
+  Mejor val_loss:  3.2431
+  Rango final:     128
+  Optimizer stats: {'total_params': 348, 'compressed_params': 348, 'state_memory_mb': 81.39067840576172, 'full_memory_mb': 306.4019775390625, 'memory_saved_pct': 73.43663410416946, 'step_count': 250}
+  Activaciones comprimidas: 9000
+
+--- Compresion MNEME post-entrenamiento ---
+2026-09-26 16:59:29,914 - mneme.mneme_core - WARNING - No secret key provided. Generating a transient secure key.
+2026-09-26 16:59:29,915 - mneme.mneme_core - INFO - ZSpace initialized with device: cuda
+2026-09-26 16:59:29,915 - mneme.mneme_core - INFO - Security level: SAFETENSORS
+2026-09-26 16:59:29,915 - mneme.mneme_core - INFO - Using safetensors for secure serialization
+2026-09-26 16:59:30,011 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663322560_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,014 - mneme.mneme_core - INFO - Registered 'zlinear_2026663322560_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,014 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.0.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,071 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663651088_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,074 - mneme.mneme_core - INFO - Registered 'zlinear_2026663651088_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,074 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.0.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,131 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663651728_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,133 - mneme.mneme_core - INFO - Registered 'zlinear_2026663651728_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,133 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.0.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,192 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663241904_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,195 - mneme.mneme_core - INFO - Registered 'zlinear_2026663241904_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,195 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.0.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,263 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663242512_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,271 - mneme.mneme_core - INFO - Registered 'zlinear_2026663242512_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:30,271 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.0.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:30,321 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030661685264_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:30,334 - mneme.mneme_core - INFO - Registered 'zlinear_2030661685264_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:30,334 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.0.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:30,390 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663554288_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,393 - mneme.mneme_core - INFO - Registered 'zlinear_2026663554288_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,394 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.1.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,450 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663557552_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,453 - mneme.mneme_core - INFO - Registered 'zlinear_2026663557552_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,453 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.1.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,514 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663556464_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,517 - mneme.mneme_core - INFO - Registered 'zlinear_2026663556464_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,518 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.1.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,572 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663555648_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,576 - mneme.mneme_core - INFO - Registered 'zlinear_2026663555648_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,576 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.1.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,622 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663554016_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,631 - mneme.mneme_core - INFO - Registered 'zlinear_2026663554016_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:30,631 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.1.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:30,682 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663554560_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:30,692 - mneme.mneme_core - INFO - Registered 'zlinear_2026663554560_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:30,693 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.1.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:30,750 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026663558096_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,753 - mneme.mneme_core - INFO - Registered 'zlinear_2026663558096_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,753 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.2.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,811 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451058768_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,813 - mneme.mneme_core - INFO - Registered 'zlinear_2026451058768_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,813 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.2.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,872 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451062032_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,875 - mneme.mneme_core - INFO - Registered 'zlinear_2026451062032_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,875 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.2.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,931 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451062304_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,934 - mneme.mneme_core - INFO - Registered 'zlinear_2026451062304_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:30,935 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.2.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:30,981 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451062576_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:30,994 - mneme.mneme_core - INFO - Registered 'zlinear_2026451062576_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:30,994 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.2.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:31,049 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451062848_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:31,062 - mneme.mneme_core - INFO - Registered 'zlinear_2026451062848_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:31,062 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.2.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:31,118 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451063120_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,121 - mneme.mneme_core - INFO - Registered 'zlinear_2026451063120_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,122 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.3.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,177 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451063392_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,179 - mneme.mneme_core - INFO - Registered 'zlinear_2026451063392_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,180 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.3.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,236 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451063664_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,238 - mneme.mneme_core - INFO - Registered 'zlinear_2026451063664_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,239 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.3.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,295 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451063936_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,297 - mneme.mneme_core - INFO - Registered 'zlinear_2026451063936_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,298 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.3.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,343 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451064208_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,355 - mneme.mneme_core - INFO - Registered 'zlinear_2026451064208_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:31,355 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.3.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:31,406 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451064480_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:31,415 - mneme.mneme_core - INFO - Registered 'zlinear_2026451064480_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:31,415 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.3.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:31,477 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451064752_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,479 - mneme.mneme_core - INFO - Registered 'zlinear_2026451064752_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,479 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.4.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,533 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451065024_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,536 - mneme.mneme_core - INFO - Registered 'zlinear_2026451065024_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,536 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.4.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,591 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451065296_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,593 - mneme.mneme_core - INFO - Registered 'zlinear_2026451065296_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,594 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.4.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,649 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451065568_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,651 - mneme.mneme_core - INFO - Registered 'zlinear_2026451065568_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,651 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.4.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,707 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451065840_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,718 - mneme.mneme_core - INFO - Registered 'zlinear_2026451065840_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:31,718 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.4.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:31,770 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451066112_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:31,782 - mneme.mneme_core - INFO - Registered 'zlinear_2026451066112_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:31,782 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.4.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:31,840 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451066384_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,842 - mneme.mneme_core - INFO - Registered 'zlinear_2026451066384_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,842 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.5.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,897 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451066656_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,900 - mneme.mneme_core - INFO - Registered 'zlinear_2026451066656_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,900 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.5.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:31,953 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451066928_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:31,956 - mneme.mneme_core - INFO - Registered 'zlinear_2026451066928_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:31,957 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.5.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,010 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451067200_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,012 - mneme.mneme_core - INFO - Registered 'zlinear_2026451067200_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,013 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.5.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,058 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451067472_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,070 - mneme.mneme_core - INFO - Registered 'zlinear_2026451067472_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:32,070 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.5.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:32,125 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451067744_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:32,137 - mneme.mneme_core - INFO - Registered 'zlinear_2026451067744_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:32,137 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.5.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:32,193 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451068016_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,195 - mneme.mneme_core - INFO - Registered 'zlinear_2026451068016_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,195 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.6.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,251 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451068288_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,254 - mneme.mneme_core - INFO - Registered 'zlinear_2026451068288_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,254 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.6.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,313 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451068560_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,315 - mneme.mneme_core - INFO - Registered 'zlinear_2026451068560_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,316 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.6.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,371 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451068832_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,374 - mneme.mneme_core - INFO - Registered 'zlinear_2026451068832_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,374 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.6.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,419 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451069104_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,427 - mneme.mneme_core - INFO - Registered 'zlinear_2026451069104_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:32,428 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.6.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:32,483 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451069376_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:32,493 - mneme.mneme_core - INFO - Registered 'zlinear_2026451069376_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:32,493 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.6.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:32,551 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451069648_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,554 - mneme.mneme_core - INFO - Registered 'zlinear_2026451069648_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,555 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.7.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,609 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451069920_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,612 - mneme.mneme_core - INFO - Registered 'zlinear_2026451069920_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,612 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.7.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,668 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451070192_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,671 - mneme.mneme_core - INFO - Registered 'zlinear_2026451070192_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,671 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.7.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,723 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451070464_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,726 - mneme.mneme_core - INFO - Registered 'zlinear_2026451070464_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,727 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.7.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,779 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451070736_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,792 - mneme.mneme_core - INFO - Registered 'zlinear_2026451070736_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:32,793 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.7.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:32,845 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451071008_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:32,857 - mneme.mneme_core - INFO - Registered 'zlinear_2026451071008_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:32,857 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.7.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:32,914 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451071280_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,917 - mneme.mneme_core - INFO - Registered 'zlinear_2026451071280_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,917 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.8.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:32,977 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451071552_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:32,979 - mneme.mneme_core - INFO - Registered 'zlinear_2026451071552_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:32,979 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.8.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,036 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451071824_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,040 - mneme.mneme_core - INFO - Registered 'zlinear_2026451071824_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,040 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.8.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,095 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451072096_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,097 - mneme.mneme_core - INFO - Registered 'zlinear_2026451072096_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,097 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.8.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,143 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451072368_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,155 - mneme.mneme_core - INFO - Registered 'zlinear_2026451072368_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:33,155 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.8.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:33,208 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451072640_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:33,220 - mneme.mneme_core - INFO - Registered 'zlinear_2026451072640_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:33,221 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.8.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:33,277 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451072912_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,279 - mneme.mneme_core - INFO - Registered 'zlinear_2026451072912_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,279 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.9.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,333 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451073184_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,336 - mneme.mneme_core - INFO - Registered 'zlinear_2026451073184_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,336 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.9.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,389 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451073456_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,391 - mneme.mneme_core - INFO - Registered 'zlinear_2026451073456_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,391 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.9.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,447 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451073728_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,449 - mneme.mneme_core - INFO - Registered 'zlinear_2026451073728_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,449 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.9.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,498 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451074000_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,507 - mneme.mneme_core - INFO - Registered 'zlinear_2026451074000_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:33,508 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.9.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:33,558 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451074272_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:33,566 - mneme.mneme_core - INFO - Registered 'zlinear_2026451074272_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:33,567 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.9.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:33,623 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451074544_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,626 - mneme.mneme_core - INFO - Registered 'zlinear_2026451074544_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,626 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.10.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,679 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2026451074816_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,682 - mneme.mneme_core - INFO - Registered 'zlinear_2026451074816_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,682 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.10.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,737 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662189136_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,739 - mneme.mneme_core - INFO - Registered 'zlinear_2030662189136_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,739 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.10.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,795 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662189408_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,797 - mneme.mneme_core - INFO - Registered 'zlinear_2030662189408_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,798 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.10.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:33,849 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662189680_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,857 - mneme.mneme_core - INFO - Registered 'zlinear_2030662189680_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:33,857 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.10.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:33,910 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662189952_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:33,922 - mneme.mneme_core - INFO - Registered 'zlinear_2030662189952_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:33,922 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.10.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:33,978 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662190224_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:33,981 - mneme.mneme_core - INFO - Registered 'zlinear_2030662190224_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:33,981 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.11.attention.q_proj' with ZLinear (512->512)
+2026-09-26 16:59:34,036 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662190496_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:34,038 - mneme.mneme_core - INFO - Registered 'zlinear_2030662190496_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:34,038 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.11.attention.k_proj' with ZLinear (512->512)
+2026-09-26 16:59:34,097 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662190768_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:34,099 - mneme.mneme_core - INFO - Registered 'zlinear_2030662190768_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:34,099 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.11.attention.v_proj' with ZLinear (512->512)
+2026-09-26 16:59:34,157 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662191040_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:34,160 - mneme.mneme_core - INFO - Registered 'zlinear_2030662191040_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:34,160 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.11.attention.out_proj' with ZLinear (512->512)
+2026-09-26 16:59:34,205 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662191312_weight' (2048, 512): ratio=0.258, groups=4
+2026-09-26 16:59:34,214 - mneme.mneme_core - INFO - Registered 'zlinear_2030662191312_weight'. Type: quantized_group. Addr: 6514f7fe
+2026-09-26 16:59:34,214 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.11.mlp.0' with ZLinear (512->2048)
+2026-09-26 16:59:34,266 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662191584_weight' (512, 2048): ratio=0.258, groups=16
+2026-09-26 16:59:34,277 - mneme.mneme_core - INFO - Registered 'zlinear_2030662191584_weight'. Type: quantized_group. Addr: 7a940a91
+2026-09-26 16:59:34,277 - mneme.mneme_torch - INFO - Replaced 'encoder.layers.11.mlp.3' with ZLinear (2048->512)
+2026-09-26 16:59:34,351 - mneme.mneme_core - INFO - Group-int8_group 'zlinear_2030662191856_weight' (512, 512): ratio=0.258, groups=4
+2026-09-26 16:59:34,353 - mneme.mneme_core - INFO - Registered 'zlinear_2030662191856_weight'. Type: quantized_group. Addr: 1d772351
+2026-09-26 16:59:34,353 - mneme.mneme_torch - INFO - Replaced 'pooler.dense' with ZLinear (512->512)
+2026-09-26 16:59:34,354 - mztrain - INFO - [ZCodeBERT] Compresion MNEME completada:
+  Capas comprimidas: 73
+  Ratio compresion:  [0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.25798702239990234, 0.2578694820404053, 0.2578694820404053, 0.25798702239990234]
+
+  Capas comprimidas: 73
+  Params originales: 152,043,520.0
+  Params comprimidos: 39,213,423
+
+--- Guardando modelo ---
+  Guardado en: zcodebert_checkpoint.pt
+
+======================================================================
+ZCodeBERT - Resumen Final
+======================================================================
+  Parametros reales:       40,292,432
+  Parametros equivalentes: 63,799,808
+  Compresion factorizacion: 37.1%
+  Capas factorizadas:      73
+  Rango final:             128
+  MNEME compresion:        Si
+  Tiempo entrenamiento:    316.8s
+======================================================================
+Ejemplo completado.
+exit=0

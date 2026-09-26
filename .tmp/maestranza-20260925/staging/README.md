@@ -235,6 +235,7 @@ ahorro TOTAL depende de la escala: nulo bajo ~50M (dominan activaciones), 3.9× 
 
 ```bash
 pip install mztrain            # desde PyPI
+pip install "mztrain[mneme]"   # + MNEME (paquete PyPI `mnemosys`, import `mneme`)
 ```
 
 ```bash
@@ -244,12 +245,28 @@ python scripts/seal.py verify  # verifica integridad criptografica
 pip install -e .
 ```
 
-### MNEME (backend opcional de almacenamiento/cuantización)
+### MNEME / MNEMOSYS (backend opcional de almacenamiento y cuantización)
 
-MNEME **no se distribuye por PyPI**; instálalo manualmente desde
-[su repositorio](https://github.com/esraderey/MNEME---Motor-de-Memoria-Neural-M-rfica)
-si quieres el store de activaciones ZSpace o el despliegue GPTQ INT4. Sin MNEME,
-MZTrain usa su fallback INT8 integrado (acotado y verificado).
+MNEME se distribuye en PyPI como [`mnemosys`](https://pypi.org/project/mnemosys/)
+(mismos autores; el paquete conserva el import histórico `import mneme`). Con
+`pip install "mztrain[mneme]"` MZTrain lo detecta y habilita:
+
+- **Compresión post-entrenamiento** (`compress_model`, GPTQ INT4) y **almacenamiento
+  seguro** (`SecureStorageBackend`) en `ZCodeBERT` y en los ejemplos.
+- **Store de activaciones ZSpace** para `ZActivationCheckpoint`, **opt-in** con
+  `ZTrainConfig(mneme_activation_store=True)`. Medido con `mnemosys` 1.0.1: fidelidad
+  INT8 (error relativo ~6e-3, MZTrain fuerza `quantization_type="int8"` porque el
+  enrutado automático descompone tensorialmente las activaciones grandes) y un coste de
+  ~0.2-0.6 s por activación porque persiste cada tensor en disco (directorio temporal
+  propio, sin cifrado en reposo). Por eso el valor por defecto sigue siendo el INT8
+  interno (milisegundos). MZTrain exige al backend evicción por clave (`delete`/`remove`)
+  y hace una sonda de fidelidad en el primer uso; si algo falla, avisa y cae al INT8
+  interno en vez de fugar memoria. Fuera de `ZTrainEngine` (p. ej. `ZCodeBERT` con
+  `z_checkpoint`), el opt-in se activa con `ZActivationCheckpoint.prefer_zspace = True`.
+
+Sin `mnemosys`, MZTrain usa su fallback INT8 integrado (acotado y verificado). El
+[repositorio de MNEME](https://github.com/esraderey/mnemosys) es la otra mitad del
+pipeline: MZTrain entrena por rango, MNEME comprime por bits.
 
 ## Inicio rápido
 
@@ -373,7 +390,8 @@ y [`CLA.md`](CLA.md).
 
 ## Relacionados
 
-- [MNEME — Motor de Memoria Neural Mórfica](https://github.com/esraderey/MNEME---Motor-de-Memoria-Neural-M-rfica):
+- [MNEME / MNEMOSYS — Motor de Memoria Neural Mórfica](https://github.com/esraderey/mnemosys)
+  ([PyPI: `mnemosys`](https://pypi.org/project/mnemosys/), `pip install "mztrain[mneme]"`):
   la otra mitad del pipeline — MZTrain entrena por rango, MNEME comprime por bits
   (GPTQ INT4 medido: +35% PPL a 4× menos memoria, sobre el mismo Pythia-410M de la
   serie empírica).

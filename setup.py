@@ -28,7 +28,7 @@ def read_requirements():
 
 setup(
     name="mztrain",
-    version="1.3.2",
+    version="1.4.0",
     author="Esraderey and Raul Cruz Acosta",
     author_email="msc.framework@gmail.com",
     description=(
@@ -73,6 +73,9 @@ setup(
         ],
         "gpu": [
             "torch[cuda]>=2.0.0",
+        ],
+        "mneme": [
+            "mnemosys>=1.0.1,<2",
         ],
         "all": [
             "pytest>=7.0.0",

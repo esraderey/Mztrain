@@ -1,0 +1,132 @@
+{
+  "modulo": "D:\\mztrain\\.tmp\\maestranza-20260925\\staging",
+  "hash_pieza": "5fc733200703314d",
+  "banco": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7",
+  "modo": "bateria",
+  "so": "nt/win32",
+  "python": "3.13.2",
+  "inicio": "2026-09-26T22:51:02+00:00",
+  "herramientas": {
+    "ruff": "ruff 0.15.12"
+  },
+  "pasos": [
+    {
+      "paso": "preparar",
+      "estado": "verde",
+      "nota": "sin venv (python actual) · copia aislada"
+    },
+    {
+      "paso": "compilar",
+      "estado": "verde",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-m",
+        "compileall",
+        "-q",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\checkpoint.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\layers.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_checkpoint.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_layers.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_elastic_shape_safety.py"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj",
+      "exit": 0,
+      "s": 0.17,
+      "salida": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_checkpoint.py:152: SyntaxWarning: invalid escape sequence '\\('\n  with pytest.warns(RuntimeWarning, match=\"remove\\(\\)/delete\\(\\)\"):",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\logs\\compilar.log"
+    },
+    {
+      "paso": "importar",
+      "estado": "verde",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-c",
+        "import sys; sys.path.insert(0, 'C:\\\\Users\\\\Raul\\\\AppData\\\\Local\\\\Temp\\\\maestranza-4sodp4a7\\\\obj\\\\src'); [__import__(n) for n in ['mztrain']]; print('importados:', ['mztrain'])"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj",
+      "exit": 0,
+      "s": 3.2,
+      "salida": "importados: ['mztrain']",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\logs\\importar.log"
+    },
+    {
+      "paso": "lint",
+      "estado": "rojo",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "--select",
+        "E9,F,B,PLE",
+        "--quiet",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\checkpoint.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\layers.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_checkpoint.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_layers.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_shape_ops.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_elastic_shape.py",
+        "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_elastic_shape_safety.py"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj",
+      "exit": 1,
+      "s": 0.16,
+      "salida": "B007 Loop control variable `i` not used within loop body\n  --> tests\\test_checkpoint.py:33:13\n   |\n32 |     def test_multiple_compress(self):\n33 |         for i in range(5):\n   |             ^\n34 |             tensor = torch.randn(4, 64)\n35 |             ZActivationCheckpoint.compress_activation(tensor)\n   |\nhelp: Rename unused `i` to `_i`",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\logs\\lint.log"
+    },
+    {
+      "paso": "tipos",
+      "estado": "omitido",
+      "nota": "opt-in (--tipos)"
+    },
+    {
+      "paso": "tests",
+      "estado": "verde",
+      "cmd": [
+        "D:\\mztrain\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-x",
+        "-q",
+        "--color=no"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj",
+      "exit": 0,
+      "s": 14.94,
+      "salida": "........................................................................ [ 17%]\n........................................................................ [ 34%]\n........................................................................ [ 51%]\n........................................................................ [ 68%]\n........................................................................ [ 85%]\n............................................................             [100%]\n============================== warnings summary ===============================\ntests\\test_checkpoint.py:152\n  C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_checkpoint.py:152: SyntaxWarning: invalid escape sequence '\\('\n    with pytest.warns(RuntimeWarning, match=\"remove\\(\\)/delete\\(\\)\"):\n\ntests/test_elastic_shape.py::test_ln_variance_compensation_reduces_drift\n  C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\tests\\test_elastic_shape.py:47: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.\n  Consider using tensor.detach() first. (Triggered internally at C:\\actions-runner\\_work\\pytorch\\pytorch\\pytorch\\torch\\csrc\\autograd\\generated\\python_variable_methods.cpp:837.)\n    err_no = float((no_comp(x_pad)[:, :48] - ref).norm())\n\ntests/test_elastic_shape_safety.py::test_deepen_preserves_bfloat16_and_trainability\n  D:\\mztrain\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py:1790: RuntimeWarning: migracion de optimizer pendiente: el optimizer anterior ya no referencia estos parametros; llama migrate_optimizer (o usa apply_event) antes de entrenar\n    return forward_call(*args, **kwargs)\n\ntests/test_layers.py::test_residuo_R1_sparse_reconstruct_weight_incluye_wake_gate\n  C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj\\src\\mztrain\\layers.py:754: UserWarning: Sparse invariant checks are implicitly disabled. Memory errors (e.g. SEGFAULT) will occur when operating on a sparse tensor which violates the invariants, but checks incur performance overhead. To silence this warning, explicitly opt in or out. See `torch.sparse.check_sparse_tensor_invariants.__doc__` for guidance.  (Triggered internally at C:\\actions-runner\\_work\\pytorch\\pytorch\\pytorch\\aten\\src\\ATen\\Context.cpp:767.)\n    return torch.sparse_coo_tensor(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\logs\\tests.log"
+    },
+    {
+      "paso": "smoke",
+      "estado": "verde",
+      "cmd": [
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        "python -m pytest -q -p no:cacheprovider tests 2>&1 | tail -1"
+      ],
+      "cwd": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\obj",
+      "exit": 0,
+      "s": 13.73,
+      "salida": "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+      "log": "C:\\Users\\Raul\\AppData\\Local\\Temp\\maestranza-4sodp4a7\\logs\\smoke.log"
+    }
+  ],
+  "degradado": [
+    "sin-venv: dependencias del entorno anfitrión — reproducibilidad perdida"
+  ],
+  "ambito": "src/mztrain/checkpoint.py,src/mztrain/layers.py,src/mztrain/shape_ops.py,src/mztrain/elastic_shape.py,tests/test_checkpoint.py,tests/test_layers.py,tests/test_shape_ops.py,tests/test_elastic_shape.py,tests/test_elastic_shape_safety.py",
+  "veredicto": "rojo-codigo",
+  "primer_rojo": "lint",
+  "omitidos": [
+    "tipos"
+  ],
+  "duracion_total_s": 32.36,
+  "banco_conservado": true
+}
