@@ -69,12 +69,20 @@ En vez de entrenar tensores completos `W (m × n)`, MZTrain entrena sus factores
 orden**, no como compresión a posteriori. Los gradientes y los estados de Adam viven
 en el espacio factorizado: la memoria de entrenamiento entera se encoge con `r`.
 
-## Qué está medido (serie empírica T0–T7, preregistrada)
+## Qué está medido (serie empírica T0–T22, preregistrada)
 
 Todos los experimentos de esta sección tienen **preregistro previo a los datos**
 (hipótesis, métrica y condición de falsación fijadas antes de correr), artefactos JSON
 crudos y veredicto formal, en [`docs/evidencia/`](docs/evidencia/). Hardware: RTX 4060
 (8.6 GB), Windows 11, torch 2.11+cu128.
+
+### Calidad a iso-parámetro con la línea base sana (T20–T22, 2026-10)
+
+| Pregunta | Resultado (BPC de validación; 18 000 pasos y 3 semillas salvo indicación) | Dato |
+|---|---|---|
+| E1: con una línea base sana, ¿gana F a Ds? | No: F★ pierde en 3/3, hueco **+0,051** (el +0,086 anterior era de otro corpus y programación); el sumidero de norma no aparece | [T20](docs/evidencia/T20-VEREDICTO.md) |
+| E5: ¿importa la forma (d, r) a iso-parámetro? | Sí pero poco (6000 pasos, 1 semilla): subir r/d mejora a F de forma monótona y se satura (F448 −0,024); el denso con la forma de F pierde con el estrecho | [T21](docs/evidencia/T21-VEREDICTO.md) |
+| E9: ¿un optimizador espectral cierra el hueco? | No: la receta con Spectron da −0,063 a F y Muon −0,066 a Ds; el hueco queda en +0,054. Fspec queda por debajo del denso AdamW en 3/3 | [T22](docs/evidencia/T22-VEREDICTO.md) |
 
 ### Memoria y capacidad (T0, T5)
 
@@ -226,6 +234,23 @@ ahorro TOTAL depende de la escala: nulo bajo ~50M (dominan activaciones), 3.9× 
   arreglo) y `forward_context` usa fp16 en su rama fp8. No validado end-to-end.
 - **weight_decay nunca en 0 con capas factorizadas** (triplica el ruido entre seeds y
   empeora la media; T7).
+- **Línea base sana, por defecto en el engine y en `GPT` desde 1.5.0**
+  ([T20](docs/evidencia/T20-VEREDICTO.md)): embeddings N(0, 0,02²) (`GPT(emb_std=0.02)`), AdamW
+  con β₂ 0,95, eps 1e-8 y weight decay 0,01, recorte global a 1,0, rampa de 200 pasos y coseno a 0
+  (`lr_schedule="warmup_cosine"`, un calendario por llamada a `train()`). Medido: el BPC inicial a
+  d=768 baja de ≈ 720 a ≈ 10,4, y bajo esta receta el sumidero de norma del arco T4–T19 no
+  aparece (rms del flujo final 9–10 frente a 273–356). Para reproducir 1.4.0:
+  `GPT(..., emb_std=None)` y `ZTrainConfig(weight_decay=1e-4, betas=(0.9, 0.999),
+  lr_schedule="none")`. Cambios de comportamiento, en el [CHANGELOG](CHANGELOG.md).
+- **El hueco a iso-parámetro no se cierra con lo probado** ([T20–T22](docs/evidencia/)): bajo la
+  línea base sana el factorizado queda +0,051 BPC por detrás del denso estrecho (E1; el +0,086
+  anterior era de otro corpus y otra programación, no comparable pieza a pieza); subir r/d por la
+  hipérbola o usar un denso con la forma de F no lo cierra (E5); un optimizador espectral mejora
+  0,065 BPC a los dos brazos por igual y lo deja en +0,054 (E9). A 13,5M y 18 000 pasos el denso
+  estrecho gana bajo los dos optimizadores.
+- **ElasticShape con la línea base sana:** las bandas de deriva de `widen` de la SPEC (≤ 7 % en
+  el toy) se midieron con `emb_std=None`; con 0,02 la deriva en el init es 0,04–0,13. Mira la
+  deriva que reporta `apply_event` en tu modelo antes de fiarte de esa cota.
 - **Reporta ≥3 seeds** en cualquier comparación con factorizado: es la condición más
   ruidosa entre seeds (~×10 vs denso; causa abierta, sospecha de paisaje de pérdida).
 - El sello detecta manipulación **del árbol sellado**; binarios y rutas excluidas quedan

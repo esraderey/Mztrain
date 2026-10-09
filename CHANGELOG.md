@@ -5,6 +5,82 @@ Todos los cambios notables en MZTrain se documentan en este archivo.
 El formato esta basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-10-09
+
+### Linea base sana por defecto (evidencia: `docs/evidencia/T20-VEREDICTO.md`; T21 y T22 la usan)
+- `GPT(..., emb_std=0.02)`: `tok` y `pos` arrancan en N(0, 0,02²). El N(0, 1) de `nn.Embedding` se
+  escala (no se vuelve a sortear): no consume RNG, así que a igual semilla los bloques y el estado
+  del RNG global son los de 1.4.0 y `tok`/`pos` son exactamente 0,02 × los de 1.4.0.
+  `emb_std=None` recupera el init anterior. Motivo: con la cabeza atada, N(0, 1) arranca
+  prediciendo el token actual con margen ≈ 0,645·d (BPC inicial ≈ 720 a d=768 frente a ≈ 10,4).
+- `ZTrainConfig`: `weight_decay` 0,01 (antes 1e-4); `betas` (0,9, 0,95) y `eps` 1e-8, nuevos y
+  pasados por el engine a los tres optimizadores (también al reconstruirlos tras un crecimiento);
+  `warmup_steps` 200 (antes 100 y sin uso); `lr_schedule` `"warmup_cosine"` | `"none"`,
+  `lr_warmup_floor` 0,1, `lr_final_factor` 0,0 y `lr_warmup_max_fraction` 0,1 (la rampa no ocupa
+  más del 10 % del presupuesto; en el régimen medido, 200 de 6000 o de 18 000, no actúa).
+  Validación de todos ellos (reales finitos; admite listas y escalares de numpy).
+- Calendario de LR dentro del engine, por paso: rampa lineal desde `lr_warmup_floor`·pico y coseno
+  hasta `lr_final_factor`·pico en el último paso de `epochs × len(train_loader)`. Solo actúa en
+  `train()` sin `scheduler` y con `lr_schedule="warmup_cosine"`. El warmup post-crecimiento de
+  rango se compone como factor sobre el LR programado, con la misma secuencia que en 1.4.0.
+
+### Cambios de comportamiento que conviene conocer antes de actualizar
+- **El calendario cubre UNA llamada a `train()`.** Otra llamada, también tras `load_checkpoint`,
+  empieza rampa y coseno de nuevo sobre su presupuesto: no reanuda el calendario (el paso global
+  no viaja en el checkpoint). Al salir de `train()` por cualquier vía (fin, early stopping o
+  excepción) el LR vuelve a `learning_rate`, como quedaba en 1.4.0. Para continuar un calendario
+  a medias, pasa un scheduler propio.
+- **Para reproducir 1.4.0:** `GPT(..., emb_std=None)` y
+  `ZTrainConfig(weight_decay=1e-4, betas=(0.9, 0.999), lr_schedule="none")`. Un checkpoint de
+  1.4.0 cargado con la configuración por defecto de 1.5.0 conserva sus β y su weight decay solo
+  hasta el primer crecimiento de rango, que reconstruye el optimizador con los de la
+  configuración: usa la de arriba para continuar esas corridas.
+- **Las clases de optimizador usadas sueltas no cambian** (`ZCompressedAdam`,
+  `ZAdaptiveOptimizer` y `ZGaLoreOptimizer` conservan (0,9, 0,999) y 1e-4): la línea base sana es
+  el valor por defecto del engine y de `GPT`.
+- **Bancos, scripts y ejemplos** que construyen `ZTrainConfig` sin fijar estos campos corren
+  ahora con β₂ 0,95 y rampa + coseno (`bench/run.py`, `bench/elastic_bench_real.py`,
+  `bench/elastic_bench_guard.py`, `examples/example_basic.py`; en
+  `scripts/test_zcoder_410m_full.py`, `warmup_steps=5` pasa a actuar). Los resultados guardados en
+  `bench/results` y la evidencia T4–T14 se generaron con el régimen anterior.
+- **ElasticShape:** las bandas de deriva de `widen_gpt` de la SPEC (≤ 7 % en el toy 48→72) se
+  midieron con embeddings N(0, 1). Con `emb_std=0.02` la deriva relativa medida en el init (ruido
+  0, 20 semillas) es 0,04–0,13 y supera el 7 % en 12 de 20 (0,04–0,09 a 96→144); no está medida
+  en modelos entrenados. Los tests de cota de deriva fijan `emb_std=None`; el resto de la suite
+  de ElasticShape corre con el valor por defecto, y un test nuevo vigila que bajo la línea base
+  sana la deriva no pase de 0,2 en 10 semillas.
+
+### Qué dice y qué no dice la evidencia
+- T20 (13,5M, char-WT103, 18 000 pasos, 3 semillas) mide **bajo** la línea base sana: F★ no gana
+  a Ds★ en ninguna semilla (hueco +0,051 BPC) y el sumidero de norma del arco T4–T19 no aparece
+  (rms del flujo final 9–10 frente a 273–356; parte constante 13 % frente a 87–98 %). El +0,086
+  del montaje anterior se midió en otro corpus (WT-2) y con otra programación: **la diferencia no
+  es atribuible a la línea base sana sola**, y qué pieza quita el sumidero queda para la ablación
+  E6, pendiente. T21 (forma) y T22 (optimizador espectral) no cierran el hueco. Si tu modelo cabe
+  denso, entrena denso.
+- Tests: `tests/test_linea_base_sana.py`, con los valores esperados del calendario escritos a
+  mano; el test M7 de refactorización aísla su ruta con `lr_schedule="none"`.
+
+### Corregido
+- `optimizer_type="adaptive"` y `"galore"`: el primer paso tras reconstruir el optimizador
+  (crecimiento de rango, cirugía de ElasticRank o rollback del loss-guard) lanzaba
+  `KeyError: 'is_projected'`, también en 1.4.0. El engine migra estados Adam planos y estos
+  optimizadores solo creaban sus claves sobre un estado vacío; ahora completan el estado migrado
+  (conservan el momentum si el parámetro no se proyecta y lo reinician en el subespacio si se
+  proyecta). `compressed_adam` no cambia. Regresión en `tests/test_bug_regressions.py`.
+- `optimizer_type="adaptive"` y `"galore"` con `compress_optimizer_states=True` (el valor por
+  defecto) y factores U/V proyectados (rango ≥ 128): si el estado estaba comprimido al cambiar la
+  topología (contador de pasos del optimizador múltiplo de `compression_interval`, 10),
+  `_grow_model_rank` y la compactación de ElasticRank lanzaban `RuntimeError` por tamaños
+  incompatibles (la compactación, después de guardar en el sleep bank momentos del tamaño del
+  subespacio), y `observe()` de ElasticRank también cuando `rank == in_features`; también en
+  1.4.0. `decompress_opt_state` devolvía el momento comprimido del subespacio (p. ej. (8, 128)
+  para un factor (256, 128)) sin comprobar su forma; ahora devuelve `None`, como ya hacía con ese
+  momento sin comprimir, y el optimizador lo reinicia en el subespacio. De paso, la señal de
+  update de ElasticRank deja de depender de si la observación cae en un paso comprimido (U y V
+  proyectados aportan 0, como sin comprimir). `compressed_adam` no cambia. Regresión en
+  `tests/test_bug_regressions.py`.
+
 ## [1.4.0] - 2026-09-26
 
 ### MNEMOSYS desde PyPI

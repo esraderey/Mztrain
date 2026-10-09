@@ -20,6 +20,7 @@ Each test must FAIL before the fix and PASS after the fix.
 
 from __future__ import annotations
 
+import pytest
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -321,3 +322,322 @@ class TestBug7EpsiFromWeight:
             f"(expected ~1, allowed 0.5..2.0). Without EPSI in _init_from_weight, "
             f"low-rank truncation of Kaiming weights causes activation collapse."
         )
+
+
+_PROJECTED_OPTIMIZERS = ("adaptive", "galore")
+
+
+def _projected_growth_engine(opt_type: str, model: nn.Module, **overrides) -> ZTrainEngine:
+    config = dict(
+        initial_rank=4,
+        max_rank=8,
+        rank_schedule=RankSchedule.EXPONENTIAL,
+        rank_growth_interval=1,
+        use_elastic_rank=False,
+        use_amp=False,
+        compress_optimizer_states=False,
+        refactorize_interval=0,
+        optimizer_type=opt_type,
+        galore_rank=2,
+        learning_rate=1e-3,
+        log_interval=9999,
+    )
+    config.update(overrides)
+    return ZTrainEngine(model, ZTrainConfig(**config), device=torch.device("cpu"))
+
+
+def _two_factorized_layers() -> nn.Module:
+    return nn.Sequential(
+        ZFactorizedLinear(16, 32, rank=4, init_method="svd", bias=True),
+        nn.ReLU(),
+        ZFactorizedLinear(32, 8, rank=4, init_method="svd", bias=True),
+    )
+
+
+def _manual_steps(engine: ZTrainEngine, x: torch.Tensor, n: int) -> None:
+    for _ in range(n):
+        engine.optimizer.zero_grad()
+        engine.model(x).pow(2).mean().backward()
+        engine.optimizer.step()
+
+
+def _classification_loss(model, batch):
+    xb, yb = batch
+    return F.cross_entropy(model(xb), yb)
+
+
+def _classification_loader():
+    x = torch.randn(64, 128)
+    y = torch.randint(0, 10, (64,))
+    return torch.utils.data.DataLoader(
+        torch.utils.data.TensorDataset(x, y), batch_size=16,
+    )
+
+
+def _factorized_param_count(model: nn.Module) -> int:
+    return sum(
+        m.U.numel() + m.S.numel() + m.V.numel()
+        for m in model.modules() if isinstance(m, ZFactorizedLinear)
+    )
+
+
+class TestProjectedOptimizersSurviveOptimizerRebuild:
+    """optimizer_type="adaptive"/"galore" must keep stepping after the engine rebuilds the optimizer.
+
+    After a topology change (rank growth, ElasticRank surgery, loss-guard
+    rollback) the engine recreates the optimizer and writes back plain Adam
+    states (step / exp_avg / exp_avg_sq / compressed). ZAdaptiveOptimizer and
+    ZGaLoreOptimizer only created 'is_projected' in their lazy init, which a
+    non-empty state skips, so the next step raised KeyError: 'is_projected'.
+    """
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_train_with_rank_growth(self, opt_type):
+        torch.manual_seed(0)
+        engine = _projected_growth_engine(opt_type, _two_factorized_layers())
+        loader = torch.utils.data.DataLoader(
+            torch.utils.data.TensorDataset(torch.randn(16, 16)), batch_size=4,
+        )
+
+        summary = engine.train(
+            loader,
+            val_loader=None,
+            loss_fn=lambda m, b: m(b[0]).pow(2).mean(),
+            epochs=3,
+            early_stopping_patience=9999,
+        )
+
+        ranks = [
+            m.rank for m in engine.model.modules() if isinstance(m, ZFactorizedLinear)
+        ]
+        assert ranks == [8, 8], f"rank growth did not run (ranks={ranks})"
+        assert len(summary["train_losses"]) == 3
+        assert torch.isfinite(torch.tensor(summary["train_losses"])).all()
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_step_after_growth_continues_migrated_adam_state(self, opt_type):
+        """The migrated state must be completed, not thrown away with its momentum."""
+        torch.manual_seed(0)
+        engine = _projected_growth_engine(opt_type, _two_factorized_layers())
+        x = torch.randn(24, 16)
+        _manual_steps(engine, x, 6)
+        engine._grow_model_rank(8)
+
+        bias = next(
+            m for m in engine.model.modules() if isinstance(m, ZFactorizedLinear)
+        ).bias
+        m_before = engine.optimizer.state[bias]["exp_avg"].clone()
+        assert m_before.abs().sum() > 0, "precondition: growth migrated the bias momentum"
+
+        _manual_steps(engine, x, 1)
+
+        state = engine.optimizer.state[bias]
+        beta1 = engine.optimizer.param_groups[0]["betas"][0]
+        assert state["is_projected"] is False
+        assert state["step"] == 7, f"Adam step counter restarted: {state['step']}"
+        assert torch.allclose(
+            state["exp_avg"], beta1 * m_before + (1 - beta1) * bias.grad
+        ), "the step after growth did not build on the migrated exp_avg"
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_projected_param_stays_projected_after_growth(self, opt_type):
+        """A parameter on the low-rank path must not end up with full-size Adam states."""
+        torch.manual_seed(0)
+        model = nn.Sequential(
+            nn.Embedding(200, 128),  # 2D, min dim >= 128, >= 4096 elements: projected
+            ZFactorizedLinear(128, 8, rank=4, init_method="svd", bias=True),
+        )
+        engine = _projected_growth_engine(opt_type, model, galore_rank=8)
+        idx = torch.randint(0, 200, (32,))
+        _manual_steps(engine, idx, 6)
+        embedding = engine.model[0].weight
+        assert engine.optimizer.state[embedding]["is_projected"] is True, "precondition"
+
+        engine._grow_model_rank(8)
+        _manual_steps(engine, idx, 1)
+
+        state = engine.optimizer.state[embedding]
+        assert state["is_projected"] is True
+        assert tuple(state["exp_avg"].shape) == (8, 128), (
+            f"projected exp_avg became {tuple(state['exp_avg'].shape)} after growth"
+        )
+
+    def _elastic_engine(self, model, opt_type, **overrides):
+        return _projected_growth_engine(
+            opt_type,
+            model,
+            initial_rank=16,
+            max_rank=32,
+            use_elastic_rank=True,
+            elastic_rank_check_interval=1,
+            elastic_rank_ema_beta=0.0,
+            elastic_rank_sleep_patience_checks=2,
+            elastic_rank_min_age_checks=0,
+            elastic_rank_post_growth_grace_checks=0,
+            elastic_rank_post_refactor_grace_checks=0,
+            elastic_rank_min_per_layer=4,
+            elastic_rank_compact_min_dirs=2,
+            elastic_rank_wake_warmup_steps=4,
+            rank_growth_warmup_steps=2,
+            galore_rank=4,
+            **overrides,
+        )
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_training_continues_after_elastic_compaction(self, simple_model, opt_type):
+        torch.manual_seed(0)
+        engine = self._elastic_engine(simple_model, opt_type)
+        engine.train_epoch(_classification_loader(), _classification_loss, epoch=0)
+        name, module = next(engine.elastic_rank._iter_layers(engine.model))
+        rank0 = module.rank
+        engine.elastic_rank.observe(
+            engine.model, engine.optimizer, in_warmup=False, epoch=0
+        )
+        for i in range(3):
+            module.sleep_mask[i] = True
+        plan = engine.elastic_rank.build_plan(
+            engine.model, requested_rank=rank0, grow_requested=False, epoch=1,
+        )
+        engine._apply_elastic_topology(plan, epoch=1)
+        assert dict(engine.model.named_modules())[name].rank < rank0, "precondition"
+
+        loss = engine.train_epoch(_classification_loader(), _classification_loss, epoch=1)
+
+        assert torch.isfinite(torch.tensor(loss))
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_training_continues_after_loss_guard_rollback(self, simple_model, opt_type):
+        torch.manual_seed(0)
+        engine = self._elastic_engine(
+            simple_model,
+            opt_type,
+            elastic_rank_loss_guard_enabled=True,
+            elastic_rank_loss_guard_threshold=0.0,
+            elastic_rank_loss_guard_cooldown_epochs=2,
+        )
+        engine.train_epoch(_classification_loader(), _classification_loss, epoch=0)
+        engine._probe_batch = torch.zeros(1)
+        # Fewer active factor params -> higher probe loss: compaction always rolls back.
+        engine._loss_fn = lambda model, _batch: 1.0e6 / max(_factorized_param_count(model), 1)
+        name, module = next(engine.elastic_rank._iter_layers(engine.model))
+        rank0 = module.rank
+        engine.elastic_rank.observe(
+            engine.model, engine.optimizer, in_warmup=False, epoch=0
+        )
+        for i in range(8):
+            module.sleep_mask[i] = True
+        plan = engine.elastic_rank.build_plan(
+            engine.model, rank0, grow_requested=False, epoch=1,
+        )
+        engine._apply_elastic_topology_guarded(plan, epoch=1)
+        assert engine.elastic_rank._total_rollbacks == 1, "precondition"
+        assert dict(engine.model.named_modules())[name].rank == rank0, "precondition"
+
+        loss = engine.train_epoch(_classification_loader(), _classification_loss, epoch=1)
+
+        assert torch.isfinite(torch.tensor(loss))
+
+
+class TestProjectedOptimizersMigrateCompressedStates:
+    """A compressed low-rank moment must not be migrated as a full-size Adam moment.
+
+    With compress_optimizer_states=True (the default) ZAdaptiveOptimizer and
+    ZGaLoreOptimizer hold INT8 tuples whenever their step counter is a multiple
+    of compression_interval. For a projected parameter the tuple decompresses
+    to the subspace shape ((8, 128) for a (256, 128) factor), and
+    decompress_opt_state returned it without the shape check it applies to
+    plain tensors, so the engine and ElasticRank indexed it as a moment of the
+    parameter: RuntimeError on rank growth, on ElasticRank compaction (after
+    storing subspace-sized slices in the sleep bank) and on observe().
+    """
+
+    _RANK = 128  # smallest factor rank that takes the low-rank path
+
+    def _compressed_engine(self, opt_type, model, **overrides):
+        return _projected_growth_engine(
+            opt_type,
+            model,
+            initial_rank=self._RANK,
+            max_rank=192,
+            compress_optimizer_states=True,
+            galore_rank=8,
+            **overrides,
+        )
+
+    def _steps_until_compressed(self, engine, x, projected_params) -> int:
+        n = engine.optimizer.compression_interval
+        _manual_steps(engine, x, n)
+        for p in projected_params:
+            state = engine.optimizer.state[p]
+            assert state["is_projected"] is True, "precondition"
+            assert isinstance(state["exp_avg"], tuple), "precondition: compressed state"
+        return n
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_rank_growth(self, opt_type):
+        torch.manual_seed(0)
+        model = nn.Sequential(
+            nn.Embedding(200, 256),
+            ZFactorizedLinear(256, 256, rank=self._RANK, init_method="svd", bias=True),
+        )
+        engine = self._compressed_engine(opt_type, model)
+        idx = torch.randint(0, 200, (32,))
+        layer = engine.model[1]
+        n = self._steps_until_compressed(engine, idx, (layer.U, layer.V))
+
+        engine._grow_model_rank(160)
+
+        assert layer.rank == 160
+        bias_state = engine.optimizer.state[layer.bias]
+        assert bias_state["step"] == n and bias_state["exp_avg"].abs().sum() > 0, (
+            "a moment that does have the parameter's shape must still be migrated"
+        )
+        _manual_steps(engine, idx, 1)
+        for p, low_rank_shape in ((layer.U, (8, 160)), (layer.V, (160, 8))):
+            state = engine.optimizer.state[p]
+            assert state["is_projected"] is True
+            assert tuple(state["exp_avg"].shape) == low_rank_shape
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_elastic_compaction(self, opt_type):
+        torch.manual_seed(0)
+        model = nn.Sequential(
+            ZFactorizedLinear(256, 256, rank=self._RANK, init_method="svd", bias=True),
+        )
+        engine = self._compressed_engine(opt_type, model, use_elastic_rank=True)
+        x = torch.randn(32, 256)
+        name, module = next(engine.elastic_rank._iter_layers(engine.model))
+        self._steps_until_compressed(engine, x, (module.U, module.V))
+        n_sleep = engine.config.elastic_rank_compact_min_dirs
+        module.sleep_mask[:n_sleep] = True
+        plan = engine.elastic_rank.build_plan(
+            engine.model, requested_rank=self._RANK, grow_requested=False, epoch=1,
+        )
+
+        engine._apply_elastic_topology(plan, epoch=1)
+
+        assert module.rank == self._RANK - n_sleep
+        sleepers = engine.elastic_rank.bank[name]
+        assert len(sleepers) == n_sleep
+        for sd in sleepers:
+            assert sd.m_u.shape == sd.vsq_u.shape == sd.u.shape
+            assert sd.m_v.shape == sd.vsq_v.shape == sd.v.shape
+        _manual_steps(engine, x, 1)
+
+    @pytest.mark.parametrize("opt_type", _PROJECTED_OPTIMIZERS)
+    def test_elastic_observe_with_square_factor(self, opt_type):
+        """rank == in_features: V's subspace moment is (8, 128), with no row per direction."""
+        torch.manual_seed(0)
+        model = nn.Sequential(
+            ZFactorizedLinear(self._RANK, 256, rank=self._RANK, init_method="svd", bias=True),
+        )
+        engine = self._compressed_engine(opt_type, model, use_elastic_rank=True)
+        x = torch.randn(32, self._RANK)
+        name, module = next(engine.elastic_rank._iter_layers(engine.model))
+        self._steps_until_compressed(engine, x, (module.U, module.V))
+
+        engine.elastic_rank.observe(engine.model, engine.optimizer, in_warmup=False, epoch=0)
+
+        update_ema = engine.elastic_rank._states[name].update_ema
+        assert update_ema.shape == (self._RANK,)
+        assert torch.isfinite(update_ema).all()

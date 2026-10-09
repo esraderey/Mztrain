@@ -126,16 +126,33 @@ class GPT(nn.Module):
         heads: int,
         lin: Callable[[int, int], nn.Module],
         ln_eps: float = 1e-5,
+        emb_std: Optional[float] = 0.02,
     ):
         super().__init__()
         if d % heads != 0:
             raise ValueError("d debe ser multiplo de heads")
+        if emb_std is not None and not (
+            isinstance(emb_std, numbers.Real) and not isinstance(emb_std, bool) and math.isfinite(emb_std) and emb_std > 0
+        ):
+            raise ValueError("emb_std debe ser None (init N(0, 1) de nn.Embedding) o un real finito > 0")
         self.vocab, self.seq, self.d, self.heads = vocab, seq, d, heads
         # eps de LayerNorm es configuracion (widen lo reescala y no viaja en el
-        # state_dict): reconstruir con GPT(..., ln_eps=model.ln_eps).
+        # state_dict): reconstruir con GPT(..., ln_eps=model.ln_eps). emb_std solo
+        # decide el init (un state_dict cargado lo pisa); se guarda como traza.
         self.ln_eps = ln_eps
+        self.emb_std = emb_std
         self.tok = nn.Embedding(vocab, d)
         self.pos = nn.Embedding(seq, d)
+        # Linea base sana (v1.5.0; docs/evidencia/T20-VEREDICTO.md): tok y pos ~ N(0, emb_std^2).
+        # Con la cabeza atada, el N(0, 1) de nn.Embedding arranca prediciendo el token actual con
+        # margen ~0.645*d (BPC inicial de cientos a d=768); con 0.02 es el del uniforme. El N(0, 1)
+        # recien sorteado se ESCALA (no se vuelve a sortear): no consume RNG, asi que a igual
+        # semilla los bloques y el estado del RNG global son los de 1.4.0, y tok/pos son
+        # exactamente emb_std por los de 1.4.0.
+        if emb_std is not None:
+            with torch.no_grad():
+                self.tok.weight.mul_(emb_std)
+                self.pos.weight.mul_(emb_std)
         self.blocks = nn.ModuleList([Block(d, heads, lin, eps=ln_eps) for _ in range(layers)])
         self.lnf = nn.LayerNorm(d, eps=ln_eps)
 

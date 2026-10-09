@@ -7,6 +7,7 @@ activation checkpointing y entrenamiento progresivo por rango.
 """
 
 import copy
+import math
 import time
 import logging
 from typing import Dict, List, Any, Optional, Callable
@@ -169,6 +170,10 @@ class ZTrainEngine:
         # Rank growth warmup state
         self._rank_growth_warmup_remaining: int = 0
         self._rank_growth_warmup_base_lr: float = self.config.learning_rate
+        # Calendario de LR del engine (v1.5.0): se arma en train()
+        self._lr_schedule_active: bool = False
+        self._lr_total_steps: Optional[int] = None
+        self._lr_step0: int = 0
 
         # Global step counter para refactorizacion periodica
         self._global_step: int = 0
@@ -199,6 +204,8 @@ class ZTrainEngine:
             return ZAdaptiveOptimizer(
                 self.model.parameters(),
                 lr=self.config.learning_rate,
+                betas=tuple(self.config.betas),
+                eps=self.config.eps,
                 weight_decay=self.config.weight_decay,
                 rank=self.config.galore_rank,
                 block_size=self.config.adaptive_block_size,
@@ -210,6 +217,8 @@ class ZTrainEngine:
             return ZGaLoreOptimizer(
                 self.model.parameters(),
                 lr=self.config.learning_rate,
+                betas=tuple(self.config.betas),
+                eps=self.config.eps,
                 weight_decay=self.config.weight_decay,
                 rank=self.config.galore_rank,
                 projection_update_freq=self.config.galore_update_freq,
@@ -219,9 +228,77 @@ class ZTrainEngine:
             return ZCompressedAdam(
                 self.model.parameters(),
                 lr=self.config.learning_rate,
+                betas=tuple(self.config.betas),
+                eps=self.config.eps,
                 weight_decay=self.config.weight_decay,
                 compress_states=self.config.compress_optimizer_states,
             )
+
+    # ------------------------------------------------------------------
+    # Calendario de LR de la linea base sana (v1.5.0): rampa + coseno por paso
+    # ------------------------------------------------------------------
+    def lr_warmup_efectivo(self) -> int:
+        """Pasos de rampa efectivos: warmup_steps con tope en lr_warmup_max_fraction del presupuesto
+        de la llamada (una corrida de 250 pasos no gasta 200 en rampa ni se queda sin llegar al pico)."""
+        w, total = self.config.warmup_steps, self._lr_total_steps
+        if total is None:
+            return w
+        return max(0, min(w, int(total * self.config.lr_warmup_max_fraction)))
+
+    def lr_factor(self, t: int) -> float:
+        """Factor del calendario tras t pasos completados (el LR del paso t+1): lr_warmup_floor en
+        t = 0, 1.0 al acabar la rampa efectiva y lr_final_factor en t = presupuesto (y despues).
+        Misma convencion de pasos que LrWarmup. Sin rampa efectiva, arranca en 1.0."""
+        w, floor, fin = self.lr_warmup_efectivo(), self.config.lr_warmup_floor, self.config.lr_final_factor
+        total = self._lr_total_steps
+        if w > 0 and t < w:
+            return floor + (1.0 - floor) * t / w
+        if total is None or total <= w:
+            return 1.0
+        p = min(1.0, max(0.0, (t - w) / (total - w)))
+        return fin + (1.0 - fin) * 0.5 * (1.0 + math.cos(math.pi * p))
+
+    def _rank_growth_warmup_factor_en(self, remaining: int) -> float:
+        """Factor del warmup post-crecimiento para el paso siguiente cuando quedan `remaining`
+        pasos de warmup; 1.0 sin warmup. Reproduce la secuencia de 1.4.0 (para total = 4:
+        0.1, 0.1, 0.325, 0.55 y despues 1.0): alli el paso siguiente a un decremento se escribia
+        con el progreso de antes de decrementar."""
+        total = self.config.rank_growth_warmup_steps
+        if remaining <= 0 or total <= 0:
+            return 1.0
+        return 0.1 + 0.9 * (1.0 - min(total, remaining + 1) / total)
+
+    def _apply_lr_schedule(self) -> None:
+        """Escribe en todos los grupos el LR del paso siguiente: pico x calendario x warmup
+        post-crecimiento. Solo actua dentro de train() sin scheduler externo y con
+        lr_schedule = "warmup_cosine"; con "none" el LR queda como antes de 1.5.0."""
+        if not self._lr_schedule_active:
+            return
+        lr = (self.config.learning_rate * self.lr_factor(self._global_step - self._lr_step0)
+              * self._rank_growth_warmup_factor_en(self._rank_growth_warmup_remaining))
+        for pg in self.optimizer.param_groups:
+            pg["lr"] = lr
+
+    def _armar_calendario_lr(self, scheduler, epochs: int, train_loader) -> None:
+        """Arma el calendario para UNA llamada a train(): rampa + coseno sobre su presupuesto,
+        contados desde el paso global actual. Un scheduler externo o lr_schedule="none" lo dejan
+        inactivo (comportamiento de 1.4.0)."""
+        self._lr_schedule_active = scheduler is None and self.config.lr_schedule == "warmup_cosine"
+        self._lr_step0 = self._global_step
+        self._lr_total_steps = int(epochs) * len(train_loader) if self._lr_schedule_active else None
+
+    def _desarmar_calendario_lr(self) -> None:
+        """Al salir de train() (tambien por excepcion o early stopping): el calendario deja de
+        actuar y el LR vuelve a learning_rate (por el factor de un warmup post-crecimiento aun en
+        curso), como quedaba en 1.4.0. Asi una train_epoch directa posterior no hereda ni el
+        presupuesto ni un LR de 0."""
+        if not self._lr_schedule_active:
+            return
+        self._lr_schedule_active = False
+        lr = self.config.learning_rate * self._rank_growth_warmup_factor_en(self._rank_growth_warmup_remaining)
+        for pg in self.optimizer.param_groups:
+            pg["lr"] = lr
+        self._rank_growth_warmup_base_lr = self.config.learning_rate
 
     def _apply_activation_checkpointing(self) -> None:
         """Envolver capas del modelo con activation checkpointing comprimido.
@@ -1149,7 +1226,9 @@ class ZTrainEngine:
                     % self.config.vram_governor_interval == 0):
                 self.vram_governor.observe(self.device)
 
-            # Aplicar warmup post rank-growth (step a step)
+            # Aplicar warmup post rank-growth (step a step). Con el calendario del
+            # engine activo, _apply_lr_schedule (abajo) recompone el LR del paso
+            # siguiente: pico x calendario x factor del warmup.
             if self._rank_growth_warmup_remaining > 0:
                 self._apply_rank_growth_warmup_step()
 
@@ -1183,6 +1262,9 @@ class ZTrainEngine:
                     warmup_start_lr = old_lr * 0.1
                     for pg in self.optimizer.param_groups:
                         pg['lr'] = warmup_start_lr
+
+            # Calendario de LR de la linea base sana: LR del paso siguiente
+            self._apply_lr_schedule()
 
             if batch_idx % self.config.log_interval == 0:
                 avg_loss = total_loss / num_batches
@@ -1253,6 +1335,32 @@ class ZTrainEngine:
                 )
 
     def train(
+        self,
+        train_loader: DataLoader,
+        val_loader: Optional[DataLoader],
+        loss_fn: Callable,
+        epochs: int = 50,
+        early_stopping_patience: int = 7,
+        scheduler: Optional[Any] = None,
+        callbacks: Optional[List[Callable]] = None,
+    ) -> Dict[str, Any]:
+        """Entrenamiento completo con todas las optimizaciones MZTrain (argumentos: ver _train_impl).
+
+        Calendario de LR (v1.5.0): sin `scheduler` y con config.lr_schedule = "warmup_cosine", cada
+        llamada recorre una rampa y un coseno completos sobre SU presupuesto
+        (epochs * len(train_loader)), por paso. Llamar otra vez (tambien tras load_checkpoint)
+        empieza el calendario de nuevo; al salir, por la via que sea, el LR vuelve a
+        config.learning_rate. Para continuar un calendario a medias pasa un scheduler propio.
+        """
+        self._armar_calendario_lr(scheduler, epochs, train_loader)
+        try:
+            return self._train_impl(
+                train_loader, val_loader, loss_fn, epochs, early_stopping_patience, scheduler, callbacks
+            )
+        finally:
+            self._desarmar_calendario_lr()
+
+    def _train_impl(
         self,
         train_loader: DataLoader,
         val_loader: Optional[DataLoader],
@@ -1374,6 +1482,11 @@ class ZTrainEngine:
                 self._grow_model_rank(new_rank)
                 self.rank_scheduler.current_rank = new_rank
 
+            # LR del primer paso del epoch: el programado (al empezar, el suelo de la rampa) y,
+            # tras un cambio estructural, por el arranque de su warmup (no un LR leido a mitad
+            # de otro warmup). Inerte sin calendario.
+            self._apply_lr_schedule()
+
             # 2. Entrenar epoch
             train_loss = self.train_epoch(train_loader, loss_fn, epoch)
             self._metrics["train_losses"].append(train_loss)
@@ -1462,7 +1575,6 @@ class ZTrainEngine:
 
         total_time = time.time() - start_time
         self._metrics["total_train_time"] = total_time
-
         logger.info(
             f"[MZTrain] ========== ENTRENAMIENTO COMPLETO ==========\n"
             f"  Tiempo total:           {total_time:.1f}s ({total_time/60:.1f}min)\n"
@@ -1635,7 +1747,9 @@ class ZTrainEngine:
             self.rank_scheduler.current_rank = checkpoint["rank_scheduler"]["current_rank"]
 
         # No arrastrar un warmup espurio activado por la reconstruccion: el LR
-        # correcto ya vino en el optimizer_state_dict cargado.
+        # correcto ya vino en el optimizer_state_dict cargado. (Con el calendario
+        # del engine, la siguiente llamada a train() lo reescribe al armarse: el
+        # calendario no se reanuda, empieza de nuevo sobre el presupuesto restante.)
         self._rank_growth_warmup_remaining = 0
 
         logger.info(f"[MZTrain] Checkpoint cargado: {path}")

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mztrain"
-version = "1.4.0"
+version = "1.5.0"
 description = "Motor de Entrenamiento en Espacio Comprimido - Entrenamiento de modelos de IA con factorizacion SVD y compresion de memoria via MNEME"
 readme = "README.md"
 license = {text = "MIT"}

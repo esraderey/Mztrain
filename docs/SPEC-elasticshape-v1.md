@@ -52,6 +52,11 @@ mayoría de tokens procesados en la fase barata.
    test, ahora documentado). La deriva se MIDE con probe en cada growth y el warmup de LR
    absorbe el transitorio de entrenamiento (no "borra" la deriva). Umbral de test toy: 7%
    (banda medida + margen de seed).
+   **Nota 1.5.0:** estas bandas son con embeddings N(0, 1) (`GPT(emb_std=None)`). Con la línea
+   base sana por defecto (`emb_std=0.02`) la deriva medida en el init del toy d=48→72 es
+   4,3–13,1% (20 seeds, 12 por encima del 7%) y 3,8–9,4% a 96→144 (10 seeds); no está medida en
+   modelos entrenados. Los tests de cota fijan `emb_std=None`; la deriva se sigue MIDIENDO con
+   probe en cada growth.
 6. **Profundidad es EXACTA:** un bloque residual nuevo con U=0 **y bias=0** en `proj` y
    `fc2` es la identidad (x + 0; con bias≠0 sería x + b_proj + b_fc2, hallazgo G4-A).
    Primitiva `zero_block_outputs`: el bloque nace muerto-exacto y despierta por gradiente

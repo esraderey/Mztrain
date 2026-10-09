@@ -329,6 +329,16 @@ class ZGaLoreOptimizer(torch.optim.Optimizer):
                 grad = p.grad
                 state = self.state[p]
 
+                # Estado Adam plano escrito desde fuera (el engine lo migra asi
+                # al recrear el optimizer tras un cambio de topologia): no trae
+                # 'is_projected'. Sin proyeccion vale tal cual; con proyeccion
+                # sus momentos no tienen la forma del subespacio y se reinicia.
+                if state and 'is_projected' not in state:
+                    if self._should_project(p):
+                        state.clear()
+                    else:
+                        state['is_projected'] = False
+
                 # === INIT ===
                 if len(state) == 0:
                     state['step'] = 0

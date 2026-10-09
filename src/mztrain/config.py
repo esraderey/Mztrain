@@ -6,6 +6,7 @@ de entrenamiento en espacio comprimido.
 """
 
 import math
+import numbers
 import logging
 from typing import Optional
 from dataclasses import dataclass, field
@@ -166,18 +167,46 @@ class ZTrainConfig:
     checkpoint_every_n_layers: int = 2
     """Checkpoint cada N capas del modelo."""
 
-    # --- Training ---
+    # --- Training (linea base sana, v1.5.0: docs/evidencia/T20-VEREDICTO.md) ---
     learning_rate: float = 3e-4
-    """Tasa de aprendizaje inicial."""
+    """Tasa de aprendizaje de pico."""
 
-    weight_decay: float = 1e-4
-    """Decaimiento de pesos (AdamW)."""
+    weight_decay: float = 0.01
+    """Decaimiento de pesos desacoplado (AdamW). Linea base sana: 0.01 (antes 1e-4)."""
 
-    warmup_steps: int = 100
-    """Pasos de warmup para learning rate."""
+    betas: tuple = (0.9, 0.95)
+    """Momentos de Adam. Linea base sana: beta2 = 0.95 (antes 0.999): en T20 gana a 0.999 en el
+    denso y evita los picos de perdida del factorizado con LR alto."""
+
+    eps: float = 1e-8
+    """Epsilon de Adam."""
+
+    warmup_steps: int = 200
+    """Pasos de rampa lineal del LR (desde lr_warmup_floor * learning_rate hasta el pico). La rampa
+    efectiva tiene tope en lr_warmup_max_fraction del presupuesto de la llamada a train()."""
+
+    lr_warmup_max_fraction: float = 0.1
+    """Fraccion maxima del presupuesto (epochs * len(train_loader)) que puede ocupar la rampa: con
+    0.1, una corrida de 250 pasos usa 25 de rampa y no 200. En el regimen medido (T20: 200 de
+    6000 y de 18 000) no actua."""
+
+    lr_schedule: str = "warmup_cosine"
+    """Calendario de LR del engine cuando train() no recibe scheduler: "warmup_cosine" (rampa de
+    warmup_steps y coseno hasta lr_final_factor * learning_rate en el ultimo paso del presupuesto
+    epochs * len(train_loader)) o "none" (LR constante, comportamiento anterior a 1.5.0). Un
+    scheduler externo pasado a train() manda sobre esto. El calendario cubre UNA llamada a
+    train(): otra llamada (tambien tras load_checkpoint) empieza rampa y coseno de nuevo sobre su
+    presupuesto, y al salir el LR vuelve a learning_rate. Para continuar un calendario a medias,
+    pasa un scheduler propio o usa "none"."""
+
+    lr_warmup_floor: float = 0.1
+    """Fraccion del pico con la que arranca la rampa (misma convencion que LrWarmup)."""
+
+    lr_final_factor: float = 0.0
+    """Fraccion del pico al final del coseno (0.0 = decae a cero)."""
 
     max_grad_norm: float = 1.0
-    """Norma maxima de gradientes (gradient clipping)."""
+    """Norma maxima de gradientes (recorte global, entre backward y step)."""
 
     use_amp: bool = True
     """Usar mixed precision (AMP) cuando hay GPU CUDA."""
@@ -459,6 +488,28 @@ class ZTrainConfig:
             raise ValueError(f"energy_retention debe estar en (0, 1], recibido: {self.energy_retention}")
         if self.learning_rate <= 0:
             raise ValueError(f"learning_rate debe ser > 0, recibido: {self.learning_rate}")
+
+        def _real(x) -> bool:      # real finito (admite escalares de numpy; no bool, no NaN/inf)
+            return isinstance(x, numbers.Real) and not isinstance(x, bool) and math.isfinite(x)
+
+        if not (_real(self.weight_decay) and self.weight_decay >= 0):
+            raise ValueError(f"weight_decay debe ser un real finito >= 0, recibido: {self.weight_decay!r}")
+        if not (isinstance(self.betas, (tuple, list)) and len(self.betas) == 2
+                and all(_real(b) and 0.0 <= b < 1.0 for b in self.betas)):
+            raise ValueError(f"betas debe ser una tupla o lista de dos reales en [0, 1), recibido: {self.betas!r}")
+        if not (_real(self.eps) and self.eps > 0):
+            raise ValueError(f"eps debe ser un real finito > 0, recibido: {self.eps!r}")
+        if not (isinstance(self.warmup_steps, numbers.Integral) and not isinstance(self.warmup_steps, bool)
+                and self.warmup_steps >= 0):
+            raise ValueError(f"warmup_steps debe ser un entero >= 0, recibido: {self.warmup_steps!r}")
+        if self.lr_schedule not in ("warmup_cosine", "none"):
+            raise ValueError(f"lr_schedule debe ser 'warmup_cosine' o 'none', recibido: {self.lr_schedule!r}")
+        if not (_real(self.lr_warmup_floor) and 0.0 <= self.lr_warmup_floor <= 1.0):
+            raise ValueError(f"lr_warmup_floor debe estar en [0, 1], recibido: {self.lr_warmup_floor!r}")
+        if not (_real(self.lr_final_factor) and 0.0 <= self.lr_final_factor <= 1.0):
+            raise ValueError(f"lr_final_factor debe estar en [0, 1], recibido: {self.lr_final_factor!r}")
+        if not (_real(self.lr_warmup_max_fraction) and 0.0 < self.lr_warmup_max_fraction <= 1.0):
+            raise ValueError(f"lr_warmup_max_fraction debe estar en (0, 1], recibido: {self.lr_warmup_max_fraction!r}")
         if self.max_grad_norm <= 0:
             raise ValueError(f"max_grad_norm debe ser > 0, recibido: {self.max_grad_norm}")
         if not 0.0 < self.gradient_top_k_ratio <= 1.0:

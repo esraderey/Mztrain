@@ -568,6 +568,7 @@ class TestM7WarmupZero:
             refactorize_interval=1,                # refactorizar cada batch
             rank_growth_warmup_steps=0,
             use_amp=False,
+            lr_schedule="none",                    # aislar la ruta refactor del calendario (v1.5.0)
         )
         eng = ZTrainEngine(model, cfg)
         lr0 = eng.optimizer.param_groups[0]["lr"]

@@ -93,7 +93,9 @@ def decompress_opt_state(
     - tensor plano con shape del parametro (Adam estandar / GaLore / adaptive),
     - tuplas comprimidas de ZCompressedAdam (INT8 lineal para m, INT8 log
       para v) usando los decompresores del propio optimizer,
-    - cualquier otro caso -> None (el caller trata como zeros).
+    - cualquier otro caso -> None (el caller trata como zeros). Incluye el
+      momento de un parametro proyectado (GaLore / adaptive), plano o
+      comprimido: tiene la shape del subespacio, no la del parametro.
     """
     if not state:
         return None
@@ -105,17 +107,16 @@ def decompress_opt_state(
             return val.detach().to(torch.float32)
         return None
     if state.get("compressed", False):
+        out = None
         try:
             if key == "exp_avg_sq" and hasattr(optimizer, "_decompress_v"):
-                return optimizer._decompress_v(val, torch.float32).detach().to(
-                    torch.float32
-                )
-            if hasattr(optimizer, "_decompress_state"):
-                return optimizer._decompress_state(val, torch.float32).detach().to(
-                    torch.float32
-                )
+                out = optimizer._decompress_v(val, torch.float32)
+            elif hasattr(optimizer, "_decompress_state"):
+                out = optimizer._decompress_state(val, torch.float32)
         except Exception as e:  # pragma: no cover - defensivo
             logger.debug(f"[ElasticRank] decompress fallback ({key}): {e}")
+        if out is not None and tuple(out.shape) == tuple(param.shape):
+            return out.detach().to(torch.float32)
     return None
 
 

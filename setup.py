@@ -28,7 +28,7 @@ def read_requirements():
 
 setup(
     name="mztrain",
-    version="1.4.0",
+    version="1.5.0",
     author="Esraderey and Raul Cruz Acosta",
     author_email="msc.framework@gmail.com",
     description=(

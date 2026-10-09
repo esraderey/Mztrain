@@ -27,9 +27,14 @@ def _tokens(b=2):
     return torch.randint(0, VOCAB, (b, SEQ), generator=g)
 
 
+# Las cotas de deriva de ElasticShape (SPEC-elasticshape-v1) se midieron con el init N(0, 1) de
+# nn.Embedding; con la linea base sana (emb_std=0.02, v1.5.0) la deriva relativa de widen en el
+# init es mayor (0.04-0.13 en el toy 48 -> 72, 20 semillas; 12 por encima del 7 %; vigilada en
+# tests/test_linea_base_sana.py). Los tests de cota de deriva fijan el contrato en su regimen de
+# especificacion; el resto de este fichero corre con el valor por defecto.
 def _fact_gpt(d=48, layers=2, heads=2, r=12, seed=1):
     torch.manual_seed(seed)
-    return GPT(VOCAB, SEQ, d, layers, heads, fact_lin(r))
+    return GPT(VOCAB, SEQ, d, layers, heads, fact_lin(r), emb_std=None)
 
 
 # ---------- compensacion de varianza de LN (SPEC §5) ----------
@@ -184,7 +189,7 @@ def test_event_widen_plus_deepen_sin_factorize():
 def test_heads3_widen_drift():
     """G4-A gap: heads distinto de 2 (interleaving por cabeza)."""
     torch.manual_seed(16)
-    model = GPT(VOCAB, SEQ, 48, 2, 3, fact_lin(12))
+    model = GPT(VOCAB, SEQ, 48, 2, 3, fact_lin(12), emb_std=None)   # cotas de deriva: regimen N(0, 1)
     x = _tokens()
     with torch.no_grad():
         ref, _ = model(x)
